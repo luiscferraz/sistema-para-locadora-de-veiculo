@@ -6,7 +6,8 @@ Created on 25/06/2012
 
 class Pessoa(object):
     
-    def __init__(self,nome,endereco,telefone,cep,bairro,cidade,uf,email):     
+    def __init__(self,cpf,nome,endereco,telefone,cep,bairro,cidade,uf,email):    
+        self.__cpf = cpf 
         self.__nome = nome
         self.__endereco = endereco
         self.__telefone = telefone
