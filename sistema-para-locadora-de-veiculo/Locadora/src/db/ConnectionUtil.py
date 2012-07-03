@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 '''
 Created on 27/06/2012
 
@@ -12,8 +13,9 @@ class ConnectionUtil():
     def conectar():
         connection = None
         try:
-            connection = lite.connect('..\banco\Locadora.db')            
-            #print "Conexão criada com sucesso!"            
+            connection = lite.connect('..\db\Locadora.db')            
+            print "Conexão criada com sucesso!"  
+            print connection          
             return connection
         except lite.Error, e:
             if connection:
@@ -29,6 +31,6 @@ class ConnectionUtil():
             conexao.close()
         
         
-            
+#ConnectionUtil.conectar()           
 
         
