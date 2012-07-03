@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 '''
 Created on 25/06/2012
 

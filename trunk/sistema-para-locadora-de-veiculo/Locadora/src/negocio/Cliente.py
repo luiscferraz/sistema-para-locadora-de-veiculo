@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 from negocio.Pessoa import * 
 
 '''
