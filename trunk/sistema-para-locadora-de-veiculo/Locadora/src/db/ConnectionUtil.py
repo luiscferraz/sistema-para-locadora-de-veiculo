@@ -14,8 +14,8 @@ class ConnectionUtil():
         connection = None
         try:
             connection = lite.connect('..\db\Locadora.db')            
-            print "Conexão criada com sucesso!"  
-            print connection          
+            #print "Conexão criada com sucesso!"  
+            #print connection          
             return connection
         except lite.Error, e:
             if connection:
