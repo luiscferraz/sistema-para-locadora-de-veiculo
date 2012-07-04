@@ -35,9 +35,33 @@ class ClienteDAO(object):
                     sys.exit(1)   
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
+                
+                
+    def verificarExistenciaCliente(self, cpf):
+        
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM CLIENTES WHERE CPF = ? ", (cpf,))
+                print "Verificou no banco"
+                retorno = cur.fetchone()
+                                
+                if retorno is not None:
+                    return True
+                else:
+                    return False
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
             
 
 
 #cliente = Cliente("111.111.111-11","nome", "endereco", "telefone" , "cep" , "bairro" , "cidade", "uf", "email")
 #dao = ClienteDAO()
 #dao.insertCliente(cliente)
+#print dao.verificarExistenciaCliente("111.111.111-11")
