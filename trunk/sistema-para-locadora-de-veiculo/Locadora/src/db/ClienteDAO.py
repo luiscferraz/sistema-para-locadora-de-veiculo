@@ -59,9 +59,31 @@ class ClienteDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
+    def deleteCliente(self, cpf):
+                
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                if self.verificarExistenciaCliente(cpf) is True:
+                    cur.execute("DELETE FROM CLIENTES WHERE CPF = ?" , (cpf,))
+                    print "Removeu do banco"
+                    conexao.commit()
+                else:
+                    print "Cliente não encontrado ou já foi removido!"
+            
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
+            
 
 
 #cliente = Cliente("111.111.111-11","nome", "endereco", "telefone" , "cep" , "bairro" , "cidade", "uf", "email")
 #dao = ClienteDAO()
 #dao.insertCliente(cliente)
-#print dao.verificarExistenciaCliente("111.111.111-11")
+#print dao.verificarExistenciaCliente("211.111.111-11")
+#dao.deleteCliente("111.111.111-11")
