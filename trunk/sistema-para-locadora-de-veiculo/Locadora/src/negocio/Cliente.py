@@ -31,3 +31,16 @@ class Cliente(Pessoa):
         email = self.getEmail()
        
         return [nome , endereco, telefone , cep , bairro , cidade, uf, email, cpf]  
+    
+    def toString(self):
+        print "\nId: %d"  %self.getIdCliente() + \
+            "\nCPF: " + self.getCpf() + \
+            "\nNome: " + self.getNome() + \
+            "\nEndereço: " + self.getEndereco() + \
+            "\nTelefone: " + self.getTelefone() + \
+            "\nCEP: " + self.getCep() + \
+            "\nBairro: " + self.getBairro() + \
+            "\nCidade: " + self.getCidade() + \
+            "\nUF: " + self.getUf() + \
+            "\nE-mail: " + self.getEmail()
+            

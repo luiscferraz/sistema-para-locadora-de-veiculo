@@ -80,6 +80,32 @@ class ClienteDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
+    def procurarCliente(self, cpf):
+                
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM CLIENTES WHERE CPF = ?", (cpf,))
+                print "\nBuscou no banco"
+                row = cur.fetchone()
+                #print row
+                clienteEncontrado = Cliente(row[1],row[2],row[3],row[4],row[5],\
+                                                row[6],row[7],row[8],row[9])
+                clienteEncontrado.setIdCliente(row[0])     
+                
+                return clienteEncontrado
+            
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1) 
+        except:
+            print "\nCliente Inexistente"   
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
+            
 
 
 #cliente = Cliente("111.111.111-11","nome", "endereco", "telefone" , "cep" , "bairro" , "cidade", "uf", "email")
@@ -87,3 +113,6 @@ class ClienteDAO(object):
 #dao.insertCliente(cliente)
 #print dao.verificarExistenciaCliente("211.111.111-11")
 #dao.deleteCliente("111.111.111-11")
+#cliente_encontrado1 = dao.procurarCliente("001.111.222-33")
+#cliente_encontrado = dao.procurarCliente("000.111.222-33")
+#cliente_encontrado.toString()
