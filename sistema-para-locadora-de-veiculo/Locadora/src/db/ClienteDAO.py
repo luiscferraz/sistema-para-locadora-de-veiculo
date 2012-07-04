@@ -10,7 +10,13 @@ from negocio.Cliente import *
 
 class ClienteDAO(object):
     
+                     
     def insertCliente(self,cliente):
+        
+        INSERT_CLIENTE = "INSERT INTO CLIENTES (NOME, ENDERECO, TELEFONE , CEP , \
+                     BAIRRO, CIDADE , UF , EMAIL , CPF)  VALUES ( ?, ?, ?, ? , ? , ? , ?, ? , ?)"
+                     
+                     
         if(cliente != None):
             try:
                 lista = cliente.getAtributos()
@@ -18,10 +24,8 @@ class ClienteDAO(object):
                                 
                 with conexao:
                     cur = conexao.cursor()
-                    cur.execute("INSERT INTO CLIENTES (NOME, ENDERECO, TELEFONE , CEP , \
-                     BAIRRO, CIDADE , UF , EMAIL , CPF)  VALUES ( ?, ?, ?, ? , ? , ? , ?, ? , ?)" , \
-                     tuple(lista))
-                    
+                    cur.execute(INSERT_CLIENTE , tuple(lista))
+                                        
                 conexao.commit()
                 print "Salvou no banco"
             except lite.Error, e:
