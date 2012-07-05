@@ -249,7 +249,7 @@ class frmCliente(wx.Frame):
             print "Erro ao salvar no banco."
 
     def OnBtnCancelarButton(self, event):
-        event.Skip()
+        self.clearTextfield()
 
     def OnBtnEditarButton(self, event):
         event.Skip()
