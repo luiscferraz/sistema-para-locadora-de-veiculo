@@ -7,7 +7,7 @@ Created on 05/07/2012
 class TipoVeiculo:
 
     def __init__ (self, taxaBase, precoKm, idTipoVeiculo, descricao, caucao):
-        self.__taxaBase = taxaBase 
+        self.__taxaBase = 0
         self.__precoKm = precoKm
         self.__idTipoVeiculo = idTipoVeiculo
         self.__descricao = descricao
