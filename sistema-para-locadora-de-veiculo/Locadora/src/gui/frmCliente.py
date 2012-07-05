@@ -1,8 +1,11 @@
+# -*- coding: latin-1 -*-
 #Boa:Frame:frmCliente
 
 import wx
 import wx.lib.buttons
 import wx.lib.masked.textctrl
+from negocio.Cliente import *
+from db.ClienteDAO import *
 
 def create(parent):
     return frmCliente(parent)
@@ -234,7 +237,16 @@ class frmCliente(wx.Frame):
         return lista
 
     def OnBtnIncluirButton(self, event):
-        event.Skip()
+        #Método que inclui um Cliente no banco de dados.                
+        try:
+            lista = self.obterDadosInformados()
+            cliente = Cliente(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8]) 
+                                        
+            dao = ClienteDAO()
+            dao.insertCliente(cliente)
+            self.clearTextfield()
+        except:
+            print "Erro ao salvar no banco."
 
     def OnBtnCancelarButton(self, event):
         event.Skip()
