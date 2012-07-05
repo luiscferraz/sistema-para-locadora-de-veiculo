@@ -203,6 +203,23 @@ class frmCliente(wx.Frame):
         self.txtCidade.Clear()
         self.txtEmail.Clear()
         self.lstEstados.Clear()
+        
+    def obterDadosInformados(self):
+        #Método para obter os dados fornecidos
+        cpf = self.txtCpf.GetValue()
+        nome = self.txtNome.GetValue()
+        endereco = self.txtEndereco.GetValue()
+        telefone = self.txtTelefone.GetValue()
+        cep = self.txtCep.GetValue()
+        bairro = self.txtBairro.GetValue()
+        cidade = self.txtCidade.GetValue()
+        email = self.txtEmail.GetValue()        
+        uf = self.lstEstados.GetLabelText()
+        
+        #a lista será usada posteriormente na ação do botão de incluir um cliente
+        lista = [nome,endereco,telefone,cep,bairro,cidade,uf,email,cpf]
+        
+        return lista
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
