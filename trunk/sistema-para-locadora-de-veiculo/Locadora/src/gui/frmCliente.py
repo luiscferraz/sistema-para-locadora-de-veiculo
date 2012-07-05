@@ -229,10 +229,10 @@ class frmCliente(wx.Frame):
         bairro = self.txtBairro.GetValue()
         cidade = self.txtCidade.GetValue()
         email = self.txtEmail.GetValue()        
-        uf = self.lstEstados.GetLabelText()
+        uf = self.lstEstados.GetStringSelection()
         
         #a lista será usada posteriormente na ação do botão de incluir um cliente
-        lista = [nome,endereco,telefone,cep,bairro,cidade,uf,email,cpf]
+        lista = [cpf,nome,endereco,telefone,cep,bairro,cidade,uf,email]
         
         return lista
 
