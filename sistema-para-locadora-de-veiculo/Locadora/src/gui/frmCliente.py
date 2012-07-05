@@ -191,7 +191,18 @@ class frmCliente(wx.Frame):
 
     def OnLstEstadosChoice(self, event):
         event.Skip()
-
+    
+    def clearTextfield(self):
+        #Método responsável por limpar os campos
+        self.txtCpf.Clear()
+        self.txtNome.Clear()
+        self.txtEndereco.Clear()
+        self.txtTelefone.Clear()
+        self.txtCep.Clear()
+        self.txtBairro.Clear()
+        self.txtCidade.Clear()
+        self.txtEmail.Clear()
+        self.lstEstados.Clear()
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
