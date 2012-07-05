@@ -1,6 +1,7 @@
-#Tue Jul 03 20:57:26 GMT-03:00 2012
+#Wed Jul 04 22:29:47 GMT-03:00 2012
 eclipse.preferences.version=1
 encoding//src/db/ClienteDAO.py=latin1
 encoding//src/db/ConnectionUtil.py=latin1
+encoding//src/gui/frmCliente.py=latin1
 encoding//src/negocio/Cliente.py=latin1
 encoding//src/negocio/Pessoa.py=latin1

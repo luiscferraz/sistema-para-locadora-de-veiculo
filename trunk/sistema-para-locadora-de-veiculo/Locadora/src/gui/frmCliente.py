@@ -25,7 +25,7 @@ class frmCliente(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMCLIENTE, name=u'frmCliente',
-              parent=prnt, pos=wx.Point(430, 98), size=wx.Size(641, 523),
+              parent=prnt, pos=wx.Point(430, 98), size=wx.Size(641, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Cliente')
         self.SetClientSize(wx.Size(625, 488))
@@ -148,6 +148,8 @@ class frmCliente(wx.Frame):
               wx.BITMAP_TYPE_PNG), id=wxID_FRMCLIENTEBTNPESQUISAR,
               name=u'btnPesquisar', parent=self.pnlCliente, pos=wx.Point(568,
               280), size=wx.Size(31, 32), style=0)
+        self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
+              id=wxID_FRMCLIENTEBTNPESQUISAR)
 
         self.stEmail = wx.StaticText(id=wxID_FRMCLIENTESTEMAIL,
               label=u'E-mail :', name=u'stEmail', parent=self.pnlCliente,
@@ -156,22 +158,32 @@ class frmCliente(wx.Frame):
         self.btnIncluir = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNINCLUIR,
               label=u'Incluir', name=u'btnIncluir', parent=self.pnlCliente,
               pos=wx.Point(24, 24), size=wx.Size(76, 25), style=0)
+        self.btnIncluir.Bind(wx.EVT_BUTTON, self.OnBtnIncluirButton,
+              id=wxID_FRMCLIENTEBTNINCLUIR)
 
         self.btnEditar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNEDITAR,
               label=u'Editar', name=u'btnEditar', parent=self.pnlCliente,
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
+        self.btnEditar.Bind(wx.EVT_BUTTON, self.OnBtnEditarButton,
+              id=wxID_FRMCLIENTEBTNEDITAR)
 
         self.btnAualizar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNAUALIZAR,
               label=u'Atualizar', name=u'btnAualizar', parent=self.pnlCliente,
               pos=wx.Point(24, 312), size=wx.Size(76, 25), style=0)
+        self.btnAualizar.Bind(wx.EVT_BUTTON, self.OnBtnAualizarButton,
+              id=wxID_FRMCLIENTEBTNAUALIZAR)
 
         self.btnExcluir = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNEXCLUIR,
               label=u'Excluir', name=u'btnExcluir', parent=self.pnlCliente,
               pos=wx.Point(24, 360), size=wx.Size(76, 25), style=0)
+        self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
+              id=wxID_FRMCLIENTEBTNEXCLUIR)
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar', parent=self.pnlCliente,
               pos=wx.Point(24, 64), size=wx.Size(76, 25), style=0)
+        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
+              id=wxID_FRMCLIENTEBTNCANCELAR)
 
         self.stPesquisa = wx.StaticBox(id=wxID_FRMCLIENTESTPESQUISA,
               label=u'Pesquisa por CPF', name=u'stPesquisa',
@@ -220,6 +232,24 @@ class frmCliente(wx.Frame):
         lista = [nome,endereco,telefone,cep,bairro,cidade,uf,email,cpf]
         
         return lista
+
+    def OnBtnIncluirButton(self, event):
+        event.Skip()
+
+    def OnBtnCancelarButton(self, event):
+        event.Skip()
+
+    def OnBtnEditarButton(self, event):
+        event.Skip()
+
+    def OnBtnAualizarButton(self, event):
+        event.Skip()
+
+    def OnBtnExcluirButton(self, event):
+        event.Skip()
+
+    def OnBtnPesquisarButton(self, event):
+        event.Skip()
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
