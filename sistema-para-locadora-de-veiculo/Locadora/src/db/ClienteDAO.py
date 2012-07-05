@@ -108,8 +108,7 @@ class ClienteDAO(object):
     
     def updateCliente(self, cliente):
         if(cliente != None):
-            try:                
-                                             
+            try:                                                             
                 conexao = ConnectionUtil.conectar()
                 with conexao:
                     cur = conexao.cursor()
@@ -160,6 +159,5 @@ class ClienteDAO(object):
 #cliente_encontrado = dao.procurarCliente("000.111.222-33")
 #cliente_encontrado.toString()
 #cliente_encontrado.setNome("ALLAN DO AMARAL")
-#cliente_encontrado.setCpf("100.111.222-33")
 #cliente_encontrado.toString()
 #dao.updateCliente(cliente_encontrado)
