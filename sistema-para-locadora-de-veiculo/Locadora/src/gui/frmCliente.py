@@ -25,6 +25,18 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(30)]
 
 class frmCliente(wx.Frame):
+    def _init_coll_lstClientes_Columns(self, parent):
+        # generated method, don't edit
+
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='CPF',
+              width=100)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Nome',
+              width=150)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
+              heading='Telefone', width=100)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
+              width=100)
+
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMCLIENTE, name=u'frmCliente',
@@ -195,7 +207,8 @@ class frmCliente(wx.Frame):
 
         self.lstClientes = wx.ListCtrl(id=wxID_FRMCLIENTELSTCLIENTES,
               name=u'lstClientes', parent=self.pnlCliente, pos=wx.Point(144,
-              328), size=wx.Size(456, 128), style=wx.LC_ICON)
+              328), size=wx.Size(456, 128), style=wx.LC_REPORT)
+        self._init_coll_lstClientes_Columns(self.lstClientes)
 
         self.stCep = wx.StaticText(id=wxID_FRMCLIENTESTCEP, label=u'CEP :',
               name=u'stCep', parent=self.pnlCliente, pos=wx.Point(360, 136),
