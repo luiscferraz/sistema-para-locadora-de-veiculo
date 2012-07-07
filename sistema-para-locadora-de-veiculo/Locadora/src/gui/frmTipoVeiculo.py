@@ -24,33 +24,33 @@ class frmTipoVeiculo(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMTIPOVEICULO, name=u'frmTipoVeiculo',
-              parent=prnt, pos=wx.Point(390, 126), size=wx.Size(641, 523),
+              parent=prnt, pos=wx.Point(486, 85), size=wx.Size(720, 523),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Tipo de Ve\xedculos')
-        self.SetClientSize(wx.Size(625, 488))
+        self.SetClientSize(wx.Size(704, 488))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlTipoVeiculo = wx.Panel(id=wxID_FRMTIPOVEICULOPNLTIPOVEICULO,
               name=u'pnlTipoVeiculo', parent=self, pos=wx.Point(0, 0),
-              size=wx.Size(625, 488), style=wx.TAB_TRAVERSAL)
+              size=wx.Size(704, 488), style=wx.TAB_TRAVERSAL)
 
         self.stVeiculo = wx.StaticBox(id=wxID_FRMTIPOVEICULOSTVEICULO,
               label=u'Dados do Ve\xedculo', name=u'stVeiculo',
               parent=self.pnlTipoVeiculo, pos=wx.Point(128, 8),
-              size=wx.Size(488, 144), style=0)
+              size=wx.Size(568, 144), style=0)
 
         self.stTaxa = wx.StaticText(id=wxID_FRMTIPOVEICULOSTTAXA,
               label=u'Taxa Base (R$) :', name=u'stTaxa',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(240, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(248, 40),
               size=wx.Size(82, 13), style=0)
 
         self.txtTaxa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTTAXA,
-              name=u'txtTaxa', parent=self.pnlTipoVeiculo, pos=wx.Point(240,
-              56), size=wx.Size(112, 21), style=0, value=u'')
+              name=u'txtTaxa', parent=self.pnlTipoVeiculo, pos=wx.Point(248,
+              56), size=wx.Size(136, 21), style=0, value=u'')
 
         self.txtDescricao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTDESCRICAO,
               name=u'txtDescricao', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(144, 104), size=wx.Size(456, 21), style=0,
+              pos=wx.Point(144, 104), size=wx.Size(536, 21), style=0,
               value=u'')
 
         self.stDescricao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTDESCRICAO,
@@ -59,22 +59,22 @@ class frmTipoVeiculo(wx.Frame):
               size=wx.Size(54, 13), style=0)
 
         self.txtPreco = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPRECO,
-              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(376,
-              56), size=wx.Size(88, 21), style=0, value=u'')
+              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(408,
+              56), size=wx.Size(112, 21), style=0, value=u'')
 
         self.stCor = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCOR,
               label=u'Pre\xe7o KM (R$) :', name=u'stCor',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(376, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(408, 40),
               size=wx.Size(76, 13), style=0)
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
-              200), size=wx.Size(400, 21), style=0, value=u'')
+              200), size=wx.Size(480, 21), style=0, value=u'')
 
         self.btnPesquisar = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMTIPOVEICULOBTNPESQUISAR,
               name=u'btnPesquisar', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(568, 192), size=wx.Size(31, 32), style=0)
+              pos=wx.Point(648, 192), size=wx.Size(31, 32), style=0)
         self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
               id=wxID_FRMTIPOVEICULOBTNPESQUISAR)
 
@@ -87,16 +87,16 @@ class frmTipoVeiculo(wx.Frame):
         self.stPesquisa = wx.StaticBox(id=wxID_FRMTIPOVEICULOSTPESQUISA,
               label=u'Pesquisa por C\xf3digo', name=u'stPesquisa',
               parent=self.pnlTipoVeiculo, pos=wx.Point(128, 168),
-              size=wx.Size(488, 312), style=0)
+              size=wx.Size(568, 312), style=0)
 
         self.stCaucao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCAUCAO,
               label=u'Valor Cau\xe7\xe3o (R$) :', name=u'stCaucao',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(488, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(544, 40),
               size=wx.Size(95, 13), style=0)
 
         self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
               name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(144, 240), size=wx.Size(456, 216), style=wx.LC_ICON)
+              pos=wx.Point(144, 240), size=wx.Size(536, 216), style=wx.LC_ICON)
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar',
@@ -120,11 +120,11 @@ class frmTipoVeiculo(wx.Frame):
 
         self.txtCodigo = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCODIGO,
               name=u'txtCodigo', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
-              56), size=wx.Size(72, 21), style=0, value=u'')
+              56), size=wx.Size(80, 21), style=0, value=u'')
 
         self.txtCaucao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCAUCAO,
-              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(488,
-              56), size=wx.Size(112, 21), style=0, value=u'')
+              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(544,
+              56), size=wx.Size(136, 21), style=0, value=u'')
 
         self.stCodigo = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCODIGO,
               label=u'C\xf3digo :', name=u'stCodigo',
