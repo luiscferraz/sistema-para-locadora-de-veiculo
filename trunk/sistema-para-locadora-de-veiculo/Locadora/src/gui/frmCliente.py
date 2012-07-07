@@ -227,6 +227,7 @@ class frmCliente(wx.Frame):
         
         #precisa ser comentado para funcionar no boa
         self.gerarListctrl(self)
+        self.btnAualizar.Disable()
         
     
     #método responsável pela gerarListctrl
@@ -315,11 +316,80 @@ class frmCliente(wx.Frame):
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
         
+        #Habilitando os botões outra vez caso o botão cancelar seja usado na edição.
+        self.txtCpf.Enable()
+        self.btnIncluir.Enable()
+        self.btnExcluir.Enable()
+        self.btnEditar.Enable()
+        self.btnAualizar.Disable()
+        
     def OnBtnEditarButton(self, event):
-        event.Skip()
+        #Método para editar um cliente selecionado na Listctrl
+        
+        dao = ClienteDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstClientes.GetFocusedItem()
+        
+        #desabilitando os botões desnecessários
+        self.btnAualizar.Enable()
+        self.btnIncluir.Disable()
+        self.btnExcluir.Disable()
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            cpf = self.lstClientes.GetItemText(indice)
+            
+            #busca o cliente selecionado no banco de dados         
+            clienteSelecionado = dao.procurarCliente(cpf)
+            
+            #Colocando os valores do banco nos campos da tela
+            self.txtCpf.SetValue(str(clienteSelecionado.getCpf()))
+            #O CPF não pode ser editado
+            self.txtCpf.Disable()               
+            self.txtNome.SetValue(clienteSelecionado.getNome())
+            self.txtEndereco.SetValue(clienteSelecionado.getEndereco())
+            self.txtBairro.SetValue(clienteSelecionado.getBairro())
+            self.txtCidade.SetValue(clienteSelecionado.getCidade())
+            self.txtCep.SetValue(clienteSelecionado.getCep())
+            self.lstEstados.SetLabel(clienteSelecionado.getUf())                          
+            self.txtTelefone.SetValue(clienteSelecionado.getTelefone())
+            self.txtEmail.SetValue(clienteSelecionado.getEmail())     
+            
+            self.btnEditar.Disable()       
+                        
+        else:            
+            dlg = wx.MessageDialog(self,'Selecione um cliente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            #Voltando o estado dos botões
+            self.btnAualizar.Disable()
+            self.btnIncluir.Enable()
+            self.btnExcluir.Enable()
+        
+        
 
     def OnBtnAualizarButton(self, event):
-        event.Skip()
+        #Método para atualizar cliente
+        
+        #obtendo informações dos campos da tela  
+        lista = self.obterDadosInformados()
+        #guardando informações em um cliente
+        cliente = Cliente(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8]) 
+        
+        dao = ClienteDAO()
+        #atualizando um cliente no banco de dados
+        dao.updateCliente(cliente)
+        
+        #atualiza a Listctrl
+        self.updateListctrl()
+        
+        #limpando os campos
+        self.clearTextfield()
+                
+        #retornando o estado incial dos botões
+        self.btnAtualizar.Disable()
+        self.btnExcluir.Enable()
+        self.txtCpf.Enable()
 
     def OnBtnExcluirButton(self, event):       
                 
@@ -337,7 +407,7 @@ class frmCliente(wx.Frame):
                 #para atualizar a Listctrl retirando o cliente q existia nela
                 self.updateListctrl()                
             except:
-                #caso o cliente nçao seja removido, uma caixa de diálogo será mostrada
+                #caso o cliente não seja removido, uma caixa de diálogo será mostrada
                 caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
