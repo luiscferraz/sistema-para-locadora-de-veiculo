@@ -253,10 +253,7 @@ class frmTipoVeiculo(wx.Frame):
         self.btnAtualizar.Disable()
 
     def OnBtnEditarButton(self, event):        
-        event.Skip()
-    
-    def OnBtnAtualizarButton(self, event):
-         #Método para editar um tipo de veículo selecionado na Listctrl
+        #Método para editar um tipo de veículo selecionado na Listctrl
         
         dao = TipoVeiculoDAO()
         
@@ -291,6 +288,9 @@ class frmTipoVeiculo(wx.Frame):
             self.btnAtualizar.Disable()
             self.btnIncluir.Enable()
             self.btnExcluir.Enable()
+    
+    def OnBtnAtualizarButton(self, event):
+         event.Skip()
 
     def OnBtnExcluirButton(self, event):
         dao = TipoVeiculoDAO()
