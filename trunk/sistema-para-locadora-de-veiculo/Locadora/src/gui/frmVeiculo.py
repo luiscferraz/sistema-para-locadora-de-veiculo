@@ -23,7 +23,7 @@ class frmVeiculo(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMVEICULO, name=u'frmVeiculo',
-              parent=prnt, pos=wx.Point(390, 126), size=wx.Size(641, 523),
+              parent=prnt, pos=wx.Point(390, 126), size=wx.Size(641, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Ve\xedculos')
         self.SetClientSize(wx.Size(625, 488))
@@ -127,14 +127,20 @@ class frmVeiculo(wx.Frame):
         self.btnEditar = wx.lib.buttons.GenButton(id=wxID_FRMVEICULOBTNEDITAR,
               label=u'Editar', name=u'btnEditar', parent=self.pnlVeiculo,
               pos=wx.Point(24, 184), size=wx.Size(76, 25), style=0)
+        self.btnEditar.Bind(wx.EVT_BUTTON, self.OnBtnEditarButton,
+              id=wxID_FRMVEICULOBTNEDITAR)
 
         self.btnAtualizar = wx.lib.buttons.GenButton(id=wxID_FRMVEICULOBTNATUALIZAR,
               label=u'Atualizar', name=u'btnAtualizar', parent=self.pnlVeiculo,
               pos=wx.Point(24, 224), size=wx.Size(76, 25), style=0)
+        self.btnAtualizar.Bind(wx.EVT_BUTTON, self.OnBtnAtualizarButton,
+              id=wxID_FRMVEICULOBTNATUALIZAR)
 
         self.btnExcluir = wx.lib.buttons.GenButton(id=wxID_FRMVEICULOBTNEXCLUIR,
               label=u'Excluir', name=u'btnExcluir', parent=self.pnlVeiculo,
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
+        self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
+              id=wxID_FRMVEICULOBTNEXCLUIR)
 
     def __init__(self, parent):
         self._init_ctrls(parent)
@@ -158,16 +164,9 @@ class frmVeiculo(wx.Frame):
         #a lista será usada posteriormente na ação do botão de incluir um veículo
         lista = [tipo,placa,marca,cor,modelo]
 
-    def OnBtnCancelarButton(self, event):
-        self.clearTextfield()
 
-    def OnBtnEditarButton(self, event):
-        event.Skip()
 
-    def OnBtnAualizarButton(self, event):
-        event.Skip()
-
-    def OnBtnExcluirButton(self, event):
+    def OnLstTipoChoice(self, event):
         event.Skip()
 
     def OnBtnPesquisarButton(self, event):
@@ -176,7 +175,16 @@ class frmVeiculo(wx.Frame):
     def OnBtnIncluirButton(self, event):
         event.Skip()
 
-    def OnLstTipoChoice(self, event):
+    def OnBtnCancelarButton(self, event):
+        event.Skip()
+
+    def OnBtnEditarButton(self, event):
+        event.Skip()
+
+    def OnBtnAtualizarButton(self, event):
+        event.Skip()
+
+    def OnBtnExcluirButton(self, event):
         event.Skip()
 
 if __name__ == '__main__':
