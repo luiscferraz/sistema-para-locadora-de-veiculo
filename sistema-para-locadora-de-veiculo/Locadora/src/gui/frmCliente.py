@@ -44,6 +44,7 @@ class frmCliente(wx.Frame):
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Cliente')
         self.SetClientSize(wx.Size(625, 488))
+        self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlCliente = wx.Panel(id=wxID_FRMCLIENTEPNLCLIENTE,
               name=u'pnlCliente', parent=self, pos=wx.Point(0, 0),
