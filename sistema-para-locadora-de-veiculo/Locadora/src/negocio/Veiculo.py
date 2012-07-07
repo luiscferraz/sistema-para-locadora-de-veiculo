@@ -13,10 +13,9 @@ class Veiculo:
         self.__marca = marca
         self.__cor = cor
         self.__modelo = modelo
-        self.__disponibilidade = "Disponível"
+        self.__disponibilidade = "Disponivel"
         self.__quilometragemAtual = quilometragemAtual
         self.__idVeiculo = None
-        self.__idLocacao = None
         self.__idTipoVeiculo = None
         
     def getPlaca(self):
@@ -58,11 +57,6 @@ class Veiculo:
         return self.__idVeiculo
     def setIdVeiculo(self, idVeiculo):
         self.__idVeiculo = idVeiculo
-    
-    def getIdLocacao(self):
-        return self.__idLocacao
-    def setIdLocacao(self, idLocacao):
-        self.__idLocacao = idLocacao
         
     def getIdTipoVeiculo(self):
         return self.__idTipoVeiculo
@@ -76,6 +70,5 @@ class Veiculo:
             "\nModelo: " + self.getModelo() + \
             "\nDisponibilidade: " + self.getDisponibilidade() + \
             "\nQuilometragem Atual: " + self.getQuilometragemAtual() + \
-            "\nId Locação:" + self.getIdLocacao() + \
             "\nCódigo Tipo Veículo:" + self.getIdTipoVeiculo()
             
