@@ -266,10 +266,10 @@ class frmTipoVeiculo(wx.Frame):
         
         #se o indice for -1 é pq nada foi selecionado
         if indice != -1:
-            id = self.lstTipoVeiculos.GetItemText(indice)
+            idTipoVeiculo = self.lstTipoVeiculos.GetItemText(indice)
             try:                
                 #deleta o tipo do banco
-                dao.deleteTipoVeiculo(id)
+                dao.deleteTipoVeiculo(idTipoVeiculo)
                 #para atualizar a Listctrl retirando o tipo que existia nela
                 self.updateListctrl()                
             except:
