@@ -4,6 +4,12 @@
 import wx
 import wx.lib.buttons
 
+#para funcionar no Boa tem que comentar esta parte
+from negocio.TipoVeiculo import *
+from db.TipoVeiculoDAO import *
+from wx.tools.Editra.src.ebmlib.miscutil import Singleton
+#comentar até a linha acima
+
 def create(parent):
     return frmTipoVeiculo(parent)
 
@@ -21,6 +27,9 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(22)]
 
 class frmTipoVeiculo(wx.Frame):
+    #Luís explicou que é para que não abra mais de uma página de cliente.
+    __metaclass__ = Singleton
+    
     def _init_coll_lstTipoVeiculos_Columns(self, parent):
         # generated method, don't edit
 
@@ -107,12 +116,13 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Valor Cau\xe7\xe3o (R$) :', name=u'stCaucao',
               parent=self.pnlTipoVeiculo, pos=wx.Point(488, 40),
               size=wx.Size(95, 13), style=0)
-
-        self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
-              name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(144, 240), size=wx.Size(456, 216),
-              style=wx.LC_REPORT)
-        self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
+        #Para funcionar no boa o comentário começa nesta linha
+##        self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
+##              name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
+##              pos=wx.Point(144, 240), size=wx.Size(456, 216),
+##              style=wx.LC_REPORT)
+##        self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
+        
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar',
@@ -146,6 +156,21 @@ class frmTipoVeiculo(wx.Frame):
               label=u'C\xf3digo :', name=u'stCodigo',
               parent=self.pnlTipoVeiculo, pos=wx.Point(144, 40),
               size=wx.Size(41, 13), style=0)
+        
+        self.gerarListctrl(self)
+        
+        self.btnAtualizar.Disable()
+    
+    def gerarListctrl(self,event):
+        self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
+              name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
+              pos=wx.Point(144, 240), size=wx.Size(456, 216),
+              style=wx.LC_REPORT)
+        self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
+        
+        self.inserirInformacoesNaListctrl(self.lstTipoVeiculos)
+        
+        return self.lstTipoVeiculos
 
     def __init__(self, parent):
         self._init_ctrls(parent)
@@ -168,6 +193,29 @@ class frmTipoVeiculo(wx.Frame):
         
         #a lista será usada posteriormente na ação do botão de incluir um tipo de veículo
         lista = [codigo,taxa,preco,descricao,caucao]
+        
+    def updateListctrl(self):
+        #Método responsável por atualizar a listctrl após inserir,deletar e atualizar um tipo de veículo.
+        self.lstTipoVeiculos.Destroy()
+        self.gerarListctrl(self)
+        
+    def inserirInformacoesNaListctrl(self,lista):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        dao = TipoVeiculoDAO()
+        #Pega todos os tipos de veículos presentes no banco de dados
+        rows = dao.getAllTipos()
+        if rows:
+            for row in rows:
+                num_itens = lista.GetItemCount()
+                lista.InsertStringItem(num_itens,str(row[0]))
+                #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete
+                #do banco de dados. 
+                lista.SetStringItem(num_itens,1,row[3])
+                lista.SetStringItem(num_itens,2,str(row[1]))
+                lista.SetStringItem(num_itens,3,str(row[2]))
+                lista.SetStringItem(num_itens,4,str(row[3]))
+
+
     
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
