@@ -143,15 +143,21 @@ class frmTipoVeiculo(wx.Frame):
         self.btnEditar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNEDITAR,
               label=u'Editar', name=u'btnEditar', parent=self.pnlTipoVeiculo,
               pos=wx.Point(24, 184), size=wx.Size(76, 25), style=0)
+        self.btnEditar.Bind(wx.EVT_BUTTON, self.OnBtnEditarButton,
+              id=wxID_FRMTIPOVEICULOBTNEDITAR)
 
         self.btnAtualizar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNATUALIZAR,
               label=u'Atualizar', name=u'btnAtualizar',
               parent=self.pnlTipoVeiculo, pos=wx.Point(24, 224),
               size=wx.Size(76, 25), style=0)
+        self.btnAtualizar.Bind(wx.EVT_BUTTON, self.OnBtnAtualizarButton,
+              id=wxID_FRMTIPOVEICULOBTNATUALIZAR)
 
         self.btnExcluir = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNEXCLUIR,
               label=u'Excluir', name=u'btnExcluir', parent=self.pnlTipoVeiculo,
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
+        self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
+              id=wxID_FRMTIPOVEICULOBTNEXCLUIR)
 
            
 
@@ -246,10 +252,12 @@ class frmTipoVeiculo(wx.Frame):
         self.btnEditar.Enable()
         self.btnAtualizar.Disable()
 
-    def OnBtnEditarButton(self, event):
+    def OnBtnEditarButton(self, event):        
         event.Skip()
+       
+        
 
-    def OnBtnAualizarButton(self, event):
+    def OnBtnAtualizarButton(self, event):
         event.Skip()
 
     def OnBtnExcluirButton(self, event):
