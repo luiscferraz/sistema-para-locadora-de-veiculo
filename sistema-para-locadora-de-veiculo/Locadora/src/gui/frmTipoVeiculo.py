@@ -149,9 +149,28 @@ class frmTipoVeiculo(wx.Frame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
-
+        
+    def clearTextfield(self):
+        #Método responsável por limpar os campos
+        self.txtTaxa.Clear()
+        self.txtDescricao.Clear()
+        self.txtPreco.Clear()
+        self.txtCaucao.Clear()
+        self.txtCodigo.Clear()
+    
+    def obterDadosInformados(self):
+        #Método para obter os dados fornecidos
+        taxa = self.txtTaxa.GetValue()
+        preco = self.txtPreco.GetValue()
+        descricao = self.txtDescricao.GetValue()
+        caucao = self.txtCaucao.GetValue()      
+        codigo = self.txtCodigo.GetValue()
+        
+        #a lista será usada posteriormente na ação do botão de incluir um tipo de veículo
+        lista = [codigo,taxa,preco,descricao,caucao]
+    
     def OnBtnCancelarButton(self, event):
-        event.Skip()
+        self.clearTextfield()
 
     def OnBtnEditarButton(self, event):
         event.Skip()
