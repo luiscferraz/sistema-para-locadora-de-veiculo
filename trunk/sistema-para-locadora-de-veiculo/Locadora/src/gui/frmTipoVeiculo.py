@@ -256,7 +256,41 @@ class frmTipoVeiculo(wx.Frame):
         event.Skip()
     
     def OnBtnAtualizarButton(self, event):
-        event.Skip()
+         #Método para editar um tipo de veículo selecionado na Listctrl
+        
+        dao = TipoVeiculoDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstTipoVeiculos.GetFocusedItem()
+        
+        #desabilitando os botões desnecessários
+        self.btnAtualizar.Enable()
+        self.btnIncluir.Disable()
+        self.btnExcluir.Disable()
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            idTipoVeiculo = self.lstTipoVeiculos.GetItemText(indice)
+            
+            #busca o tipo de veículo selecionado no banco de dados         
+            tipoSelecionado = dao.procurarTipo(idTipoVeiculo)
+            
+            #Colocando os valores do banco nos campos da tela
+            self.txtCodigo.SetValue(str(tipoSelecionado.getIdTipoVeiculo()))            
+            #O código não pode ser editado
+            self.txtCodigo.Disable()               
+            self.txtTaxa.SetValue(str(tipoSelecionado.getTaxaBase()))
+            self.txtPreco.SetValue(str(tipoSelecionado.getPrecoKm()))
+            self.txtCaucao.SetValue(str(tipoSelecionado.getCaucao()))
+            self.txtDescricao.SetValue((tipoSelecionado.getDescricao()))
+            self.btnEditar.Disable()
+        else:            
+            caixaDeMensagem = wx.MessageDialog(self,'Selecione um tipo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeMensagem.ShowModal()
+            caixaDeMensagem.Destroy()
+            #Voltando o estado dos botões
+            self.btnAtualizar.Disable()
+            self.btnIncluir.Enable()
+            self.btnExcluir.Enable()
 
     def OnBtnExcluirButton(self, event):
         dao = TipoVeiculoDAO()
