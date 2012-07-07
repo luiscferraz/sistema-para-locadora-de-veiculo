@@ -114,10 +114,10 @@ class ClienteDAO(object):
                     cur = conexao.cursor()
                     if self.verificarExistenciaCliente(cliente.getCpf()) is True:
                         lista = cliente.getAtributos()
-                        cur.execute("UPDATE CLIENTES SET CPF=?, NOME =? , ENDERECO = ?, TELEFONE =? , CEP=? , \
-                     BAIRRO=?, CIDADE=? , UF =? , EMAIL =?   WHERE ID_CLIENTE = ?", \
-                                    tuple([lista[8],lista[0],lista[1],lista[2],lista[3],\
-                                          lista[4],lista[5],lista[6],lista[7], cliente.getIdCliente()]))
+                        cur.execute("UPDATE CLIENTES SET NOME =? , ENDERECO = ?, TELEFONE =? , CEP=? , \
+                     BAIRRO=?, CIDADE=? , UF =? , EMAIL =?   WHERE CPF = ?", \
+                                    tuple([lista[0],lista[1],lista[2],lista[3],\
+                                          lista[4],lista[5],lista[6],lista[7], lista[8]]))
 
                         print "Atualizou no banco"
                         conexao.commit()
