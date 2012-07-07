@@ -111,7 +111,7 @@ class frmTipoVeiculo(wx.Frame):
         self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
               name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
               pos=wx.Point(144, 240), size=wx.Size(456, 216),
-              style=wx.LC_REPORT | wx.LC_ICON)
+              style=wx.LC_REPORT)
         self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNCANCELAR,
