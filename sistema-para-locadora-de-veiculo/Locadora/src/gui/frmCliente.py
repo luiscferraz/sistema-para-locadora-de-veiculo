@@ -4,8 +4,13 @@
 import wx
 import wx.lib.buttons
 import wx.lib.masked.textctrl
+
+#para funcionar no Boa tem que comentar esta parte
 from negocio.Cliente import *
 from db.ClienteDAO import *
+from wx.tools.Editra.src.ebmlib.miscutil import Singleton
+#comentar até a linha acima
+
 
 def create(parent):
     return frmCliente(parent)
@@ -25,6 +30,8 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(30)]
 
 class frmCliente(wx.Frame):
+    #Luís explicou que é para que não abra mais de uma página de cliente.
+    __metaclass__ = Singleton
     def _init_coll_lstClientes_Columns(self, parent):
         # generated method, don't edit
 
@@ -205,15 +212,36 @@ class frmCliente(wx.Frame):
               label=u'Pesquisa por CPF', name=u'stPesquisa',
               parent=self.pnlCliente, pos=wx.Point(128, 256), size=wx.Size(488,
               224), style=0)
-
+        
+        #Para funcionar no boa o comentário começa nesta linha
+##        self.lstClientes = wx.ListCtrl(id=wxID_FRMCLIENTELSTCLIENTES,
+##              name=u'lstClientes', parent=self.pnlCliente, pos=wx.Point(144,
+##              328), size=wx.Size(456, 128), style=wx.LC_REPORT)
+##        self._init_coll_lstClientes_Columns(self.lstClientes)
+        #Para funcionar no boa o comentário termina nesta linha
+        
+        
+        self.stCep = wx.StaticText(id=wxID_FRMCLIENTESTCEP, label=u'CEP :',
+              name=u'stCep', parent=self.pnlCliente, pos=wx.Point(360, 136),
+              size=wx.Size(27, 13), style=0)
+        
+        #precisa ser comentado para funcionar no boa
+        self.gerarListctrl(self)
+        
+    
+    #método responsável pela gerarListctrl
+    #Para funcionar no Boa tem que comentar todo esse método
+    def gerarListctrl(self,event):
         self.lstClientes = wx.ListCtrl(id=wxID_FRMCLIENTELSTCLIENTES,
               name=u'lstClientes', parent=self.pnlCliente, pos=wx.Point(144,
               328), size=wx.Size(456, 128), style=wx.LC_REPORT)
         self._init_coll_lstClientes_Columns(self.lstClientes)
-
-        self.stCep = wx.StaticText(id=wxID_FRMCLIENTESTCEP, label=u'CEP :',
-              name=u'stCep', parent=self.pnlCliente, pos=wx.Point(360, 136),
-              size=wx.Size(27, 13), style=0)
+        
+        self.inserirInformacoesNaListctrl(self.lstClientes)
+        
+        return self.lstClientes
+        
+        
 
     def __init__(self, parent):
         self._init_ctrls(parent)
@@ -249,6 +277,26 @@ class frmCliente(wx.Frame):
         lista = [cpf,nome,endereco,telefone,cep,bairro,cidade,uf,email]
         
         return lista
+    
+    def updateListctrl(self):
+        #Método responsável por atualizar a listctrl após inserir,deletar e atualizar um cliente.
+        self.lstClientes.Destroy()
+        self.gerarListctrl(self)
+        
+    def inserirInformacoesNaListctrl(self,lista):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        dao = ClienteDAO()
+        #Pega todos os clientes presentes no banco de dados
+        rows = dao.getAllClientes()
+        if rows:
+            for row in rows:
+                num_itens = lista.GetItemCount()
+                lista.InsertStringItem(num_itens,str(row[1]))
+                #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete
+                #do banco de dados. 
+                lista.SetStringItem(num_itens,1,row[2])
+                lista.SetStringItem(num_itens,2,row[4])
+                lista.SetStringItem(num_itens,3,row[9])
 
     def OnBtnIncluirButton(self, event):
         #Método que inclui um Cliente no banco de dados.                
@@ -258,13 +306,16 @@ class frmCliente(wx.Frame):
                                         
             dao = ClienteDAO()
             dao.insertCliente(cliente)
+            
+            self.updateListctrl()
+            
             self.clearTextfield()
         except:
             print "Erro ao salvar no banco."
 
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
-
+        
     def OnBtnEditarButton(self, event):
         event.Skip()
 
