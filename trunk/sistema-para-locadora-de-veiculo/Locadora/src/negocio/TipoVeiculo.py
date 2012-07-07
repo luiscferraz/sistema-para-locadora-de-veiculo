@@ -39,10 +39,10 @@ class TipoVeiculo:
         self.__caucao = caucao
         
     def getAtributos(self):
-        ID = self.getIdTipoVeiculo()
+        idTipoVeiculo = self.getIdTipoVeiculo()
         taxaBase = self.getTaxaBase()
         precoKm = self.getPrecoKm()
         descricao = self.getDescricao()
         caucao = self.getCaucao()
         
-        return [ID, taxaBase, precoKm, descricao, caucao]
+        return [idTipoVeiculo, taxaBase, precoKm, descricao, caucao]
