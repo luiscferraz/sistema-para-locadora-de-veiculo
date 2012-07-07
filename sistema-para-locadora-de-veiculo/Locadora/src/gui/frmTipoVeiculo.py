@@ -254,14 +254,33 @@ class frmTipoVeiculo(wx.Frame):
 
     def OnBtnEditarButton(self, event):        
         event.Skip()
-       
-        
-
+    
     def OnBtnAtualizarButton(self, event):
         event.Skip()
 
     def OnBtnExcluirButton(self, event):
-        event.Skip()
+        dao = TipoVeiculoDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstTipoVeiculos.GetFocusedItem()
+        
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1:
+            id = self.lstTipoVeiculos.GetItemText(indice)
+            try:                
+                #deleta o tipo do banco
+                dao.deleteTipoVeiculo(id)
+                #para atualizar a Listctrl retirando o tipo que existia nela
+                self.updateListctrl()                
+            except:
+                #caso o tipo não seja removido, uma caixa de diálogo será mostrada
+                caixaDeDialogo = wx.MessageDialog(self,'Tipo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Selecione um tipo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
         
     def OnBtnPesquisarButton(self, event):
         event.Skip()
