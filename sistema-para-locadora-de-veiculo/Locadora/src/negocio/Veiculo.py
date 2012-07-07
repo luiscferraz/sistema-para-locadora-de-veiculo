@@ -8,17 +8,16 @@ Created on 05/07/2012
 
 class Veiculo:
     
-    def __init__(self,placa,marca,cor,modelo):
+    def __init__(self,placa,marca,cor,modelo,quilometragemAtual):
         self.__placa = placa
         self.__marca = marca
         self.__cor = cor
         self.__modelo = modelo
-        self.__disponivel = True
-        self.__quilometragemAtual = None
-        self.__numeroDelocacoes = None
+        self.__disponibilidade = "Disponível"
+        self.__quilometragemAtual = quilometragemAtual
         self.__idVeiculo = None
         self.__idLocacao = None
-        self.__idCodTipoVeiculo = None
+        self.__idTipoVeiculo = None
         
     def getPlaca(self):
         return self.__placa
@@ -40,10 +39,10 @@ class Veiculo:
     def setModelo(self, modelo):
         self.__modelo = modelo
         
-    def getDisponivel(self):
-        return self.__disponivel
-    def setDisponivel(self, disponivel):
-        self.__disponivel = disponivel
+    def getDisponibilidade(self):
+        return self.__disponibilidade
+    def setDisponibilidade(self, disponibilidade):
+        self.__disponibilidade = disponibilidade
         
     def getQuilometragemAtual(self):
         return self.__quilometragemAtual
@@ -65,19 +64,18 @@ class Veiculo:
     def setIdLocacao(self, idLocacao):
         self.__idLocacao = idLocacao
         
-    def getIdCodTipoVeiculo(self):
-        return self.__idCodTipoVeiculo
-    def setIdCodTipoVeiculo(self, idCodTipoVeiculo):
-        self.__idCodTipoVeiculo = idCodTipoVeiculo
+    def getIdTipoVeiculo(self):
+        return self.__idTipoVeiculo
+    def setIdTipoVeiculo(self, idTipoVeiculo):
+        self.__idTipoVeiculo = idTipoVeiculo
     
     def toString(self):
         print "\nPlaca: %d"  %self.getPlaca() + \
             "\nMarca: " + self.getMarca() + \
             "\nCor: " + self.getCor() + \
             "\nModelo: " + self.getModelo() + \
-            "\nDisponivel: " + self.getDisponivel() + \
-            "\nQuilometragemAtual: " + self.getQuilometragemAtual() + \
-            "\nNumeroDeLocacoes: " + self.getNumeroDeLocacoes() + \
-            "\nIdLocacao:" + self.getIdLocacao() + \
-            "\nIdCodTipoVeiculo:" + self.getIdCodTipoVeiculo()
+            "\nDisponibilidade: " + self.getDisponibilidade() + \
+            "\nQuilometragem Atual: " + self.getQuilometragemAtual() + \
+            "\nId Locação:" + self.getIdLocacao() + \
+            "\nCódigo Tipo Veículo:" + self.getIdTipoVeiculo()
             
