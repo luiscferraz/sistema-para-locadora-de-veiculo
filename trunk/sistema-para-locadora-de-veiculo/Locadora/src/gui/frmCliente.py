@@ -387,9 +387,13 @@ class frmCliente(wx.Frame):
         self.clearTextfield()
                 
         #retornando o estado incial dos botões
-        self.btnAtualizar.Disable()
-        self.btnExcluir.Enable()
         self.txtCpf.Enable()
+        self.btnExcluir.Enable()
+        self.btnIncluir.Enable()
+        self.btnEditar.Enable()
+        self.btnAualizar.Disable()
+        
+        
 
     def OnBtnExcluirButton(self, event):       
                 
