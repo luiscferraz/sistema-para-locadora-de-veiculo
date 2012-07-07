@@ -235,6 +235,13 @@ class frmTipoVeiculo(wx.Frame):
     
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
+        
+        #Habilitando os botões outra vez caso o botão cancelar seja usado na edição.
+        self.txtCodigo.Enable()
+        self.btnIncluir.Enable()
+        self.btnExcluir.Enable()
+        self.btnEditar.Enable()
+        self.btnAualizar.Disable()
 
     def OnBtnEditarButton(self, event):
         event.Skip()
