@@ -28,6 +28,7 @@ class frmTipoVeiculo(wx.Frame):
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Tipo de Ve\xedculos')
         self.SetClientSize(wx.Size(625, 488))
+        self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlTipoVeiculo = wx.Panel(id=wxID_FRMTIPOVEICULOPNLTIPOVEICULO,
               name=u'pnlTipoVeiculo', parent=self, pos=wx.Point(0, 0),
