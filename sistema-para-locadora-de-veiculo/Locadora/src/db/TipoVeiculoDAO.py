@@ -20,7 +20,6 @@ class TipoVeiculoDAO(object):
         if(tipoVeiculo != None):
             try:
                 lista = tipoVeiculo.getAtributos()
-                print "Lista - ", lista
                 conexao = ConnectionUtil.conectar()
                                 
                 with conexao:
@@ -38,13 +37,13 @@ class TipoVeiculoDAO(object):
                 ConnectionUtil.fecharConexao(cur, conexao) 
                 
                 
-    def verificarExistenciaTipo(self, id):
+    def verificarExistenciaTipo(self, idTipoVeiculo):
         
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                cur.execute("SELECT * FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ? ", (id,))
+                cur.execute("SELECT * FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ? ", (idTipoVeiculo,))
                 print "Verificou no banco"
                 retorno = cur.fetchone()
                                 
@@ -60,18 +59,18 @@ class TipoVeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def deleteTipo(self, id):
+    def deleteTipo(self, idTipoVeiculo):
                 
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                if self.verificarExistenciaTipo(id) is True:
-                    cur.execute("DELETE FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ?" , (id,))
+                if self.verificarExistenciaTipo(idTipoVeiculo) is True:
+                    cur.execute("DELETE FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ?" , (idTipoVeiculo,))
                     print "Removeu do banco"
                     conexao.commit()
                 else:
-                    print "Tipo de veículo não encontrado ou já foi removido!"
+                    print "Tipo de veículo não encontrado ou já foi removidTipoVeiculoo!"
             
         except lite.Error, e:
             if conexao:
@@ -81,13 +80,13 @@ class TipoVeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def procurarTipo(self, id):
+    def procurarTipo(self, idTipoVeiculo):
                 
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                cur.execute("SELECT * FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ?", (id,))
+                cur.execute("SELECT * FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ?", (idTipoVeiculo,))
                 print "\nBuscou no banco"
                 row = cur.fetchone()
                 #print row

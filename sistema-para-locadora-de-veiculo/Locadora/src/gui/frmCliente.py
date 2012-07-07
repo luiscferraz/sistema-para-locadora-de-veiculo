@@ -423,7 +423,7 @@ class frmCliente(wx.Frame):
 
 
     def OnBtnPesquisarButton(self, event):
-        event.Skip()
+        event.skip()
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
