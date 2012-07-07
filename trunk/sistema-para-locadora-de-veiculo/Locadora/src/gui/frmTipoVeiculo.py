@@ -290,7 +290,29 @@ class frmTipoVeiculo(wx.Frame):
             self.btnExcluir.Enable()
     
     def OnBtnAtualizarButton(self, event):
-         event.Skip()
+        #Método para atualizar tipo
+        
+        #obtendo informações dos campos da tela  
+        lista = self.obterDadosInformados()
+        #guardando informações em um tipo
+        tipo = TipoVeiculo(lista[0],lista[1],lista[2],lista[3],lista[4]) 
+        
+        dao = TipoVeiculoDAO()
+        #atualizando um tipo no banco de dados
+        dao.updateTipo(tipo)
+        
+        #atualiza a Listctrl
+        self.updateListctrl()
+        
+        #limpando os campos
+        self.clearTextfield()
+                
+        #retornando o estado incial dos botões
+        self.txtCodigo.Enable()
+        self.btnExcluir.Enable()
+        self.btnIncluir.Enable()
+        self.btnEditar.Enable()
+        self.btnAtualizar.Disable()
 
     def OnBtnExcluirButton(self, event):
         dao = TipoVeiculoDAO()
