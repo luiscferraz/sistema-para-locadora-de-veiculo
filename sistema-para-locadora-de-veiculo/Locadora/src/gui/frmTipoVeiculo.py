@@ -66,11 +66,23 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Taxa Base (R$) :', name=u'stTaxa',
               parent=self.pnlTipoVeiculo, pos=wx.Point(240, 40),
               size=wx.Size(82, 13), style=0)
+        
+        self.txtCodigo = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCODIGO,
+              name=u'txtCodigo', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
+              56), size=wx.Size(72, 21), style=0, value=u'')
 
         self.txtTaxa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTTAXA,
               name=u'txtTaxa', parent=self.pnlTipoVeiculo, pos=wx.Point(240,
               56), size=wx.Size(112, 21), style=0, value=u'')
-
+        
+        self.txtPreco = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPRECO,
+              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(376,
+              56), size=wx.Size(88, 21), style=0, value=u'')
+        
+        self.txtCaucao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCAUCAO,
+              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(488,
+              56), size=wx.Size(112, 21), style=0, value=u'')
+        
         self.txtDescricao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTDESCRICAO,
               name=u'txtDescricao', parent=self.pnlTipoVeiculo,
               pos=wx.Point(144, 104), size=wx.Size(456, 21), style=0,
@@ -80,10 +92,7 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Descri\xe7\xe3o :', name=u'stDescricao',
               parent=self.pnlTipoVeiculo, pos=wx.Point(144, 88),
               size=wx.Size(54, 13), style=0)
-
-        self.txtPreco = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPRECO,
-              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(376,
-              56), size=wx.Size(88, 21), style=0, value=u'')
+        
 
         self.stCor = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCOR,
               label=u'Pre\xe7o KM (R$) :', name=u'stCor',
@@ -144,13 +153,7 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Excluir', name=u'btnExcluir', parent=self.pnlTipoVeiculo,
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
 
-        self.txtCodigo = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCODIGO,
-              name=u'txtCodigo', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
-              56), size=wx.Size(72, 21), style=0, value=u'')
-
-        self.txtCaucao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCAUCAO,
-              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(488,
-              56), size=wx.Size(112, 21), style=0, value=u'')
+           
 
         self.stCodigo = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCODIGO,
               label=u'C\xf3digo :', name=u'stCodigo',
@@ -215,7 +218,7 @@ class frmTipoVeiculo(wx.Frame):
                 lista.SetStringItem(num_itens,1,row[3])
                 lista.SetStringItem(num_itens,2,str(row[1]))
                 lista.SetStringItem(num_itens,3,str(row[2]))
-                lista.SetStringItem(num_itens,4,str(row[3]))
+                lista.SetStringItem(num_itens,4,str(row[4]))
     
     def OnBtnIncluirButton(self, event):
         #Método que inclui um tipo de veículo no banco de dados.                
@@ -251,7 +254,7 @@ class frmTipoVeiculo(wx.Frame):
 
     def OnBtnExcluirButton(self, event):
         event.Skip()
-
+        
     def OnBtnPesquisarButton(self, event):
         event.Skip()
 
