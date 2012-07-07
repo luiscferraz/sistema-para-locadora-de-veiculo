@@ -241,7 +241,7 @@ class frmTipoVeiculo(wx.Frame):
         self.btnIncluir.Enable()
         self.btnExcluir.Enable()
         self.btnEditar.Enable()
-        self.btnAualizar.Disable()
+        self.btnAtualizar.Disable()
 
     def OnBtnEditarButton(self, event):
         event.Skip()
