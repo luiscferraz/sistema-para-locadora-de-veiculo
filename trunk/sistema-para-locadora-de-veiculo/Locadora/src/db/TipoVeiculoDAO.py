@@ -59,7 +59,7 @@ class TipoVeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def deleteTipo(self, idTipoVeiculo):
+    def deleteTipoVeiculo(self, idTipoVeiculo):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -70,7 +70,7 @@ class TipoVeiculoDAO(object):
                     print "Removeu do banco"
                     conexao.commit()
                 else:
-                    print "Tipo de veículo não encontrado ou já foi removidTipoVeiculoo!"
+                    print "Tipo de veículo não encontrado ou já foi removido"
             
         except lite.Error, e:
             if conexao:
