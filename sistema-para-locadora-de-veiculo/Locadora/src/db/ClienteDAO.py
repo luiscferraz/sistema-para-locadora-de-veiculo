@@ -147,6 +147,9 @@ class ClienteDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+                
+    def getClienteByNome(self):
+        pass
             
 
 
