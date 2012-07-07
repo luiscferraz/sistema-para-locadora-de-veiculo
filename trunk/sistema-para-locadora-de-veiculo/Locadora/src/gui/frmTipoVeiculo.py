@@ -194,6 +194,8 @@ class frmTipoVeiculo(wx.Frame):
         #a lista será usada posteriormente na ação do botão de incluir um tipo de veículo
         lista = [codigo,taxa,preco,descricao,caucao]
         
+        return lista
+        
     def updateListctrl(self):
         #Método responsável por atualizar a listctrl após inserir,deletar e atualizar um tipo de veículo.
         self.lstTipoVeiculos.Destroy()
@@ -214,7 +216,21 @@ class frmTipoVeiculo(wx.Frame):
                 lista.SetStringItem(num_itens,2,str(row[1]))
                 lista.SetStringItem(num_itens,3,str(row[2]))
                 lista.SetStringItem(num_itens,4,str(row[3]))
-
+    
+    def OnBtnIncluirButton(self, event):
+        #Método que inclui um tipo de veículo no banco de dados.                
+        try:
+            lista = self.obterDadosInformados()
+            tipo = TipoVeiculo(lista[0],lista[1],lista[2],lista[3],lista[4]) 
+                                        
+            dao = TipoVeiculoDAO()
+            dao.insertTipo(tipo)
+            
+            self.updateListctrl()
+            
+            self.clearTextfield()
+        except:
+            print "Erro ao salvar no banco."
 
     
     def OnBtnCancelarButton(self, event):
@@ -230,9 +246,6 @@ class frmTipoVeiculo(wx.Frame):
         event.Skip()
 
     def OnBtnPesquisarButton(self, event):
-        event.Skip()
-
-    def OnBtnIncluirButton(self, event):
         event.Skip()
 
 if __name__ == '__main__':
