@@ -155,7 +155,7 @@ class frmVeiculo(wx.Frame):
         modelo = self.txtModelo.GetValue()      
         tipo = self.lstVeiculos.GetStringSelection()
         
-        #a lista será usada posteriormente na ação do botão de incluir um cliente
+        #a lista será usada posteriormente na ação do botão de incluir um veículo
         lista = [tipo,placa,marca,cor,modelo]
 
     def OnBtnCancelarButton(self, event):
