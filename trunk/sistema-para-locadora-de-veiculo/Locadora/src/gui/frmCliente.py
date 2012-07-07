@@ -259,7 +259,6 @@ class frmCliente(wx.Frame):
         self.txtBairro.Clear()
         self.txtCidade.Clear()
         self.txtEmail.Clear()
-        self.lstEstados.Clear()
         
     def obterDadosInformados(self):
         #Método para obter os dados fornecidos
@@ -322,8 +321,32 @@ class frmCliente(wx.Frame):
     def OnBtnAualizarButton(self, event):
         event.Skip()
 
-    def OnBtnExcluirButton(self, event):
-        event.Skip()
+    def OnBtnExcluirButton(self, event):       
+                
+        dao = ClienteDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstClientes.GetFocusedItem()
+        
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1:
+            cpf = self.lstClientes.GetItemText(indice)
+            try:                
+                #deleta o cliente do banco
+                dao.deleteCliente(cpf)
+                #para atualizar a Listctrl retirando o cliente q existia nela
+                self.updateListctrl()                
+            except:
+                #caso o cliente nçao seja removido, uma caixa de diálogo será mostrada
+                caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Selecione um cliente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+         
+
 
     def OnBtnPesquisarButton(self, event):
         event.Skip()
