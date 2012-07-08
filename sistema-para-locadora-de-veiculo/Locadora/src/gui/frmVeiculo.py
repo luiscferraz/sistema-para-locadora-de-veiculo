@@ -8,6 +8,7 @@ from db.TipoVeiculoDAO import *
 from negocio.Veiculo import *
 from db.VeiculoDAO import *
 from db.VeiculoDAO import VeiculoDAO
+from negocio.Veiculo import *
 
 def create(parent):
     return frmVeiculo(parent)
@@ -280,7 +281,40 @@ class frmVeiculo(wx.Frame):
         self.btnAtualizar.Disable()
 
     def OnBtnEditarButton(self, event):
-        event.Skip()
+        #Método para editar um veículo selecionado na Listctrl
+        
+        dao = VeiculoDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstVeiculos.GetFocusedItem()
+        
+        #desabilitando os botões desnecessários
+        self.btnAtualizar.Enable()
+        self.btnIncluir.Disable()
+        self.btnExcluir.Disable()
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            placa = self.lstVeiculos.GetItemText(indice)
+            
+            #busca o veículo selecionado no banco de dados         
+            veiculoSelecionado = dao.procurarVeiculo(placa)
+            
+            #Colocando os valores do banco nos campos da tela
+            self.txtPlaca.SetValue(veiculoSelecionado.getPlaca())            
+            #A placa não pode ser editada
+            self.txtPlaca.Disable()  
+            self.txtMarca.SetValue(veiculoSelecionado.getMarca())             
+            self.txtModelo.SetValue(veiculoSelecionado.getModelo())
+            self.txtCor.SetValue(veiculoSelecionado.getCor())
+            self.btnEditar.Disable()
+        else:            
+            caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeMensagem.ShowModal()
+            caixaDeMensagem.Destroy()
+            #Voltando o estado dos botões
+            self.btnAtualizar.Disable()
+            self.btnIncluir.Enable()
+            self.btnExcluir.Enable()
 
     def OnBtnAtualizarButton(self, event):
         event.Skip()
