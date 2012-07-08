@@ -1,4 +1,4 @@
-#Sat Jul 07 14:57:30 GMT-03:00 2012
+#Sat Jul 07 20:59:47 GMT-03:00 2012
 =\=\=\=\=\=\=
 <<<<<<<=.mine
 >>>>>>>=.r40
@@ -10,5 +10,6 @@ encoding//src/gui/frmCliente.py=latin1
 encoding//src/gui/frmTipoVeiculo.py=latin1
 encoding//src/gui/frmVeiculo.py=latin1
 encoding//src/negocio/Cliente.py=latin1
+encoding//src/negocio/Locacao.py=latin1
 encoding//src/negocio/Pessoa.py=latin1
 encoding//src/negocio/Veiculo.py=latin1
