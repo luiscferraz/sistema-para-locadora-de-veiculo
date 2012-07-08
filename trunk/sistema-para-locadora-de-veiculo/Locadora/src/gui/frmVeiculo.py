@@ -24,22 +24,47 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(22)]
 
 class frmVeiculo(wx.Frame):
+    def _init_coll_lstVeiculos_Columns(self, parent):
+        # generated method, don't edit
+
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Placa',
+              width=80)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Marca',
+              width=130)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
+              width=130)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='Cor',
+              width=130)
+        parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT,
+              heading='Disponibilidade', width=130)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
+              heading='C\xf3digo do Tipo do Ve\xedculo', width=155)
+        
+    def _init_opcoes_tipo_veiculo(self):
+        #Método feito para colocar todos os tipos
+        tipos = TipoVeiculoDAO().getAllTipos()
+        listaTipos = []
+        for i in tipos:
+            listaTipos.append(i[3])
+        return listaTipos
+
+
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMVEICULO, name=u'frmVeiculo',
-              parent=prnt, pos=wx.Point(390, 126), size=wx.Size(641, 526),
+              parent=prnt, pos=wx.Point(377, 152), size=wx.Size(967, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Ve\xedculos')
-        self.SetClientSize(wx.Size(625, 488))
+        self.SetClientSize(wx.Size(951, 488))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlVeiculo = wx.Panel(id=wxID_FRMVEICULOPNLVEICULO,
               name=u'pnlVeiculo', parent=self, pos=wx.Point(0, 0),
-              size=wx.Size(625, 488), style=wx.TAB_TRAVERSAL)
+              size=wx.Size(951, 488), style=wx.TAB_TRAVERSAL)
 
         self.stVeiculo = wx.StaticBox(id=wxID_FRMVEICULOSTVEICULO,
               label=u'Dados do Ve\xedculo', name=u'stVeiculo',
-              parent=self.pnlVeiculo, pos=wx.Point(128, 8), size=wx.Size(488,
+              parent=self.pnlVeiculo, pos=wx.Point(128, 8), size=wx.Size(800,
               144), style=0)
 
         self.txtPlaca = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMVEICULOTXTPLACA,
@@ -63,26 +88,26 @@ class frmVeiculo(wx.Frame):
 
         self.stMarca = wx.StaticText(id=wxID_FRMVEICULOSTMARCA,
               label=u'Marca :', name=u'stMarca', parent=self.pnlVeiculo,
-              pos=wx.Point(272, 40), size=wx.Size(37, 13), style=0)
+              pos=wx.Point(264, 40), size=wx.Size(37, 13), style=0)
 
         self.txtMarca = wx.TextCtrl(id=wxID_FRMVEICULOTXTMARCA,
-              name=u'txtMarca', parent=self.pnlVeiculo, pos=wx.Point(272, 56),
-              size=wx.Size(152, 21), style=0, value=u'')
+              name=u'txtMarca', parent=self.pnlVeiculo, pos=wx.Point(264, 56),
+              size=wx.Size(192, 21), style=0, value=u'')
 
         self.txtModelo = wx.TextCtrl(id=wxID_FRMVEICULOTXTMODELO,
-              name=u'txtModelo', parent=self.pnlVeiculo, pos=wx.Point(144, 104),
-              size=wx.Size(224, 21), style=0, value=u'')
+              name=u'txtModelo', parent=self.pnlVeiculo, pos=wx.Point(472, 56),
+              size=wx.Size(328, 21), style=0, value=u'')
 
         self.stModelo = wx.StaticText(id=wxID_FRMVEICULOSTMODELO,
               label=u'Modelo :', name=u'stModelo', parent=self.pnlVeiculo,
-              pos=wx.Point(144, 88), size=wx.Size(42, 13), style=0)
+              pos=wx.Point(472, 40), size=wx.Size(42, 13), style=0)
 
         self.txtCor = wx.TextCtrl(id=wxID_FRMVEICULOTXTCOR, name=u'txtCor',
-              parent=self.pnlVeiculo, pos=wx.Point(448, 56), size=wx.Size(152,
+              parent=self.pnlVeiculo, pos=wx.Point(144, 104), size=wx.Size(152,
               21), style=0, value=u'')
 
         self.stCor = wx.StaticText(id=wxID_FRMVEICULOSTCOR, label=u'Cor :',
-              name=u'stCor', parent=self.pnlVeiculo, pos=wx.Point(448, 40),
+              name=u'stCor', parent=self.pnlVeiculo, pos=wx.Point(144, 88),
               size=wx.Size(25, 13), style=0)
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMVEICULOTXTPESQUISA,
@@ -104,28 +129,27 @@ class frmVeiculo(wx.Frame):
 
         self.stPesquisa = wx.StaticBox(id=wxID_FRMVEICULOSTPESQUISA,
               label=u'Pesquisa por Placa', name=u'stPesquisa',
-              parent=self.pnlVeiculo, pos=wx.Point(128, 168), size=wx.Size(488,
+              parent=self.pnlVeiculo, pos=wx.Point(128, 168), size=wx.Size(800,
               312), style=0)
-        
-        tipos = TipoVeiculoDAO().getAllTipos()
-        listaTipos = []
-        for i in tipos:
-            listaTipos.append(i[3])
-        
+
         self.stTipo = wx.StaticText(id=wxID_FRMVEICULOSTTIPO,
               label=u'Tipo de Veículo :', name=u'stTipo',
-              parent=self.pnlVeiculo, pos=wx.Point(392, 88), size=wx.Size(90,
+              parent=self.pnlVeiculo, pos=wx.Point(312, 88), size=wx.Size(90,
               13), style=0)
 
-        self.lstTipo = wx.Choice(choices=listaTipos, id=wxID_FRMVEICULOLSTTIPO,
-              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(392, 104),
-              size=wx.Size(208, 21), style=0)
+        self.lstTipo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMVEICULOLSTTIPO,
+              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(312, 104),
+              size=wx.Size(488, 21), style=0)
         self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,
               id=wxID_FRMVEICULOLSTTIPO)
-
-        self.lstVeiculos = wx.ListCtrl(id=wxID_FRMVEICULOLSTVEICULOS,
-              name=u'lstVeiculos', parent=self.pnlVeiculo, pos=wx.Point(144,
-              240), size=wx.Size(456, 216), style=wx.LC_ICON)
+          
+          #Para funcionar no boa o comentário começa nesta linha
+##        self.lstVeiculos = wx.ListCtrl(id=wxID_FRMVEICULOLSTVEICULOS,
+##              name=u'lstVeiculos', parent=self.pnlVeiculo, pos=wx.Point(144,
+##              240), size=wx.Size(760, 216), style=wx.LC_REPORT)
+##        self.lstVeiculos.Show(True)
+##        self.lstVeiculos.SetAutoLayout(False)
+##        self._init_coll_lstVeiculos_Columns(self.lstVeiculos)
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMVEICULOBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar', parent=self.pnlVeiculo,
@@ -150,7 +174,28 @@ class frmVeiculo(wx.Frame):
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
         self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
               id=wxID_FRMVEICULOBTNEXCLUIR)
-
+        
+        #precisa ser comentado para funcionar no boa
+        self.gerarListctrl(self)
+        
+        self.btnAtualizar.Disable()
+    
+    #método responsável pela gerarListctrl
+    #Para funcionar no Boa tem que comentar todo esse método
+    def gerarListctrl(self,event):
+        
+        self.lstVeiculos = wx.ListCtrl(id=wxID_FRMVEICULOLSTVEICULOS,
+              name=u'lstVeiculos', parent=self.pnlVeiculo, pos=wx.Point(144,
+              240), size=wx.Size(760, 216), style=wx.LC_REPORT)
+        self.lstVeiculos.Show(True)
+        self.lstVeiculos.SetAutoLayout(False)
+        self._init_coll_lstVeiculos_Columns(self.lstVeiculos)
+        
+        self.inserirInformacoesNaListctrl(self.lstVeiculos)
+        
+        return self.lstVeiculos
+        
+        
     def __init__(self, parent):
         self._init_ctrls(parent)
         
@@ -183,6 +228,26 @@ class frmVeiculo(wx.Frame):
         #a lista será usada posteriormente na ação do botão de incluir um veículo
         return [placa,marca,cor,modelo,tipo]
     
+    def updateListctrl(self):
+        #Método responsável por atualizar a listctrl após inserir,deletar e atualizar um cliente.
+        self.lstVeiculos.Destroy()
+        self.gerarListctrl(self)
+    
+    def inserirInformacoesNaListctrl(self,lista):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        dao = VeiculoDAO()
+        #Pega todos os tipos de veículos presentes no banco de dados
+        rows = dao.getAllVeiculos()
+        if rows:
+            for row in rows:
+                num_itens = lista.GetItemCount()
+                lista.InsertStringItem(num_itens,str(row[1]))
+                lista.SetStringItem(num_itens,1,row[2])
+                lista.SetStringItem(num_itens,2,row[4])
+                lista.SetStringItem(num_itens,3,row[3])
+                lista.SetStringItem(num_itens,4,row[5])
+                lista.SetStringItem(num_itens,5,str(row[6]))
+    
     def OnLstTipoChoice(self, event):
         event.Skip()
 
@@ -194,9 +259,11 @@ class frmVeiculo(wx.Frame):
         try:
             lista = self.obterDadosInformados()
             veiculo = Veiculo(lista[0],lista[1],lista[2],lista[3],lista[4])                        
+            
             dao = VeiculoDAO()
             dao.insertVeiculo(veiculo)
                 
+            self.updateListctrl()
                            
             self.clearTextfield()
         except:

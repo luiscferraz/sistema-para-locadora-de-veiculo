@@ -34,15 +34,15 @@ class frmTipoVeiculo(wx.Frame):
         # generated method, don't edit
 
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT,
-              heading='C\xf3digo', width=-1)
+              heading='COD', width=65)
         parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT,
-              heading='Descri\xe7\xe3o', width=-1)
+              heading='Descri\xe7\xe3o', width=260)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
-              heading='Taxa Base - R$', width=-1)
+              heading='Taxa Base - R$', width=95)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT,
-              heading='Pre\xe7o/Km - R$', width=-1)
+              heading='Pre\xe7o/Km - R$', width=90)
         parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT,
-              heading='Cau\xe7\xe3o - R$', width=-1)
+              heading='Cau\xe7\xe3o - R$', width=90)
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
@@ -50,17 +50,17 @@ class frmTipoVeiculo(wx.Frame):
               parent=prnt, pos=wx.Point(390, 126), size=wx.Size(697, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Tipo de Ve\xedculos')
-        self.SetClientSize(wx.Size(681, 488))
+        self.SetClientSize(wx.Size(781, 488))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlTipoVeiculo = wx.Panel(id=wxID_FRMTIPOVEICULOPNLTIPOVEICULO,
               name=u'pnlTipoVeiculo', parent=self, pos=wx.Point(0, 0),
-              size=wx.Size(681, 488), style=wx.TAB_TRAVERSAL)
+              size=wx.Size(781, 488), style=wx.TAB_TRAVERSAL)
 
         self.stVeiculo = wx.StaticBox(id=wxID_FRMTIPOVEICULOSTVEICULO,
               label=u'Dados do Ve\xedculo', name=u'stVeiculo',
               parent=self.pnlTipoVeiculo, pos=wx.Point(128, 8),
-              size=wx.Size(536, 144), style=0)
+              size=wx.Size(636, 144), style=0)
 
         self.stTaxa = wx.StaticText(id=wxID_FRMTIPOVEICULOSTTAXA,
               label=u'Taxa Base (R$) :', name=u'stTaxa',
@@ -119,7 +119,7 @@ class frmTipoVeiculo(wx.Frame):
         self.stPesquisa = wx.StaticBox(id=wxID_FRMTIPOVEICULOSTPESQUISA,
               label=u'Pesquisa por C\xf3digo', name=u'stPesquisa',
               parent=self.pnlTipoVeiculo, pos=wx.Point(128, 168),
-              size=wx.Size(536, 312), style=0)
+              size=wx.Size(636, 312), style=0)
 
         self.stCaucao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCAUCAO,
               label=u'Valor Cau\xe7\xe3o (R$) :', name=u'stCaucao',
@@ -173,7 +173,7 @@ class frmTipoVeiculo(wx.Frame):
     def gerarListctrl(self,event):
         self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
               name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(144, 240), size=wx.Size(456, 216),
+              pos=wx.Point(144, 240), size=wx.Size(606, 216),
               style=wx.LC_REPORT)
         self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
         
