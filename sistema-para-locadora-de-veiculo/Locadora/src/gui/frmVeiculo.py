@@ -206,8 +206,24 @@ class frmVeiculo(wx.Frame):
         for i in tipos:
             if (i[3] == self.lstTipo.GetStringSelection()):
                 self.idTipo = i[0]
-                print self.idTipo
+                #print self.idTipo
                 return self.idTipo
+            
+    def getDescricaoById(self,idTipoVeiculo):
+        #Método feito para colocar todos os tipos
+        tipos = TipoVeiculoDAO().getAllTipos()
+        listaTipos = []
+        for i in tipos:
+            listaTipos.append(i[0])
+        
+        posicao = 0
+        for j in listaTipos:            
+            if j==idTipoVeiculo:
+                #print j
+                #print posicao
+                return posicao
+            posicao = posicao + 1    
+        
     
     def clearTextfield(self):
         #Método responsável por limpar os campos
@@ -279,6 +295,7 @@ class frmVeiculo(wx.Frame):
         self.btnExcluir.Enable()
         self.btnEditar.Enable()
         self.btnAtualizar.Disable()
+        
 
     def OnBtnEditarButton(self, event):
         #Método para editar um veículo selecionado na Listctrl
@@ -298,15 +315,21 @@ class frmVeiculo(wx.Frame):
             
             #busca o veículo selecionado no banco de dados         
             veiculoSelecionado = dao.procurarVeiculo(placa)
+            idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
+            
+            #pegando a posição que este id tá no lstTipo
+            posicao = self.getDescricaoById(idTipoVeiculo)
             
             #Colocando os valores do banco nos campos da tela
             self.txtPlaca.SetValue(veiculoSelecionado.getPlaca())            
-            #A placa não pode ser editada
-            self.txtPlaca.Disable()  
+            #A placa não pode ser editada      
+            self.txtPlaca.Disable() 
+            self.lstTipo.Select(posicao)
             self.txtMarca.SetValue(veiculoSelecionado.getMarca())             
             self.txtModelo.SetValue(veiculoSelecionado.getModelo())
             self.txtCor.SetValue(veiculoSelecionado.getCor())
             self.btnEditar.Disable()
+            
         else:            
             caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeMensagem.ShowModal()
