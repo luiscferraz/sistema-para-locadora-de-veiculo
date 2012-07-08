@@ -8,15 +8,15 @@ Created on 05/07/2012
 
 class Veiculo:
     
-    def __init__(self,placa,marca,cor,modelo,quilometragemAtual):
+    def __init__(self,placa,marca,cor,modelo,idTipoVeiculo):
         self.__placa = placa
         self.__marca = marca
         self.__cor = cor
         self.__modelo = modelo
-        self.__disponibilidade = "Disponivel"
-        self.__quilometragemAtual = quilometragemAtual
+        self.__disponibilidade = "DISPONIVEL"
+        self.__idTipoVeiculo = idTipoVeiculo
         self.__idVeiculo = None
-        self.__idTipoVeiculo = None
+        
         
     def getPlaca(self):
         return self.__placa
@@ -42,17 +42,7 @@ class Veiculo:
         return self.__disponibilidade
     def setDisponibilidade(self, disponibilidade):
         self.__disponibilidade = disponibilidade
-        
-    def getQuilometragemAtual(self):
-        return self.__quilometragemAtual
-    def setQuilometragemAtual(self, quilometragemAtual):
-        self.__quilometragemAtual = quilometragemAtual
-        
-    def getNumeroDeLocacoes(self):
-        return self.__numeroDelocacoes
-    def setNumeroDeLocacoes(self, numeroDelocacoes):
-        self.__numeroDelocacoes = numeroDelocacoes
-        
+
     def getIdVeiculo(self):
         return self.__idVeiculo
     def setIdVeiculo(self, idVeiculo):
@@ -62,6 +52,16 @@ class Veiculo:
         return self.__idTipoVeiculo
     def setIdTipoVeiculo(self, idTipoVeiculo):
         self.__idTipoVeiculo = idTipoVeiculo
+        
+    def getAtributos(self):
+        placa = self.getPlaca()
+        marca = self.getMarca()
+        cor = self.getCor()
+        modelo = self.getModelo()
+        disponibilidade = self.getDisponibilidade()
+        idTipoVeiculo = self.getIdTipoVeiculo()
+        
+        return [placa,marca,cor,modelo,disponibilidade,idTipoVeiculo]
     
     def toString(self):
         print "\nPlaca: %d"  %self.getPlaca() + \
@@ -69,6 +69,5 @@ class Veiculo:
             "\nCor: " + self.getCor() + \
             "\nModelo: " + self.getModelo() + \
             "\nDisponibilidade: " + self.getDisponibilidade() + \
-            "\nQuilometragem Atual: " + self.getQuilometragemAtual() + \
             "\nCódigo Tipo Veículo:" + self.getIdTipoVeiculo()
             
