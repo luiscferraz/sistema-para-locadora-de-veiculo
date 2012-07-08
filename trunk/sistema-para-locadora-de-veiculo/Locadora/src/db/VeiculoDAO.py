@@ -89,11 +89,9 @@ class VeiculoDAO(object):
                 cur.execute("SELECT * FROM VEICULOS WHERE PLACA = ?", (placa,))
                 print "\nBuscou no banco"
                 row = cur.fetchone()
-                print row
+                #print row
                 veiculoEncontrado = Veiculo(row[1],row[2],row[3],row[4],row[6])
-                print veiculoEncontrado.getAtributos()  
-                print veiculoEncontrado.toString()   
-                #veiculoEncontrado.setPlaca(row[1])
+                veiculoEncontrado.setIdVeiculo(row[0])   
                 
                 return veiculoEncontrado
             
@@ -113,13 +111,11 @@ class VeiculoDAO(object):
                 conexao = ConnectionUtil.conectar()
                 with conexao:
                     cur = conexao.cursor()
-                    print veiculo.getPlaca()
-                    print self.verificarExistenciaVeiculo(veiculo.getPlaca())
                     if self.verificarExistenciaVeiculo(veiculo.getPlaca()) is True:
                         lista = veiculo.getAtributos()
                         cur.execute("UPDATE VEICULOS SET MARCA=?, COR=?, MODELO=? , \
                      DISPONIBILIDADE=?, FK_ID_TIPO_VEICULO=?  WHERE PLACA = ?", \
-                                    tuple([lista[1],lista[2],lista[3],lista[4], lista[5]]))
+                                    tuple([lista[1],lista[2],lista[3],lista[4], lista[5], lista[0]]))
 
                         print "Atualizou no banco"
                         conexao.commit()
@@ -134,7 +130,7 @@ class VeiculoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
                 
-    def getAllClientes(self):
+    def getAllVeiculos(self):
         try:    
             conexao = ConnectionUtil.conectar()
             with conexao:
@@ -152,14 +148,16 @@ class VeiculoDAO(object):
 
     
         
-#veiculo = Veiculo("WHK-2010","HONDA", "PRATA", "CIVIC" , 30)
+#veiculo = Veiculo("WHK-2510","HONDA", "PRATA", "FIT" , 30)
 dao = VeiculoDAO()
 #dao.insertVeiculo(veiculo)
 #print dao.verificarExistenciaVeiculo("WHK-2010")
 #dao.deleteVeiculo("WHK-2010")
 #veiculo_encontrado1 = dao.procurarVeiculo("WHK-2010")
 veiculo_encontrado = dao.procurarVeiculo("HZG-1000")
-veiculo_encontrado.toString()
-#veiculo_encontrado.setMarca("CHEVROLET")
+print veiculo_encontrado.getAtributos()
 #veiculo_encontrado.toString()
-#dao.updateVeiculo(veiculo_encontrado)
+veiculo_encontrado.setMarca("CHEVROLET")
+print veiculo_encontrado.getAtributos()
+#veiculo_encontrado.toString()
+dao.updateVeiculo(veiculo_encontrado)
