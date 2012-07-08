@@ -5,6 +5,9 @@ import wx
 import wx.lib.buttons
 import wx.lib.masked.textctrl
 from db.TipoVeiculoDAO import *
+from negocio.Veiculo import *
+from db.VeiculoDAO import *
+from db.VeiculoDAO import VeiculoDAO
 
 def create(parent):
     return frmVeiculo(parent)
@@ -151,7 +154,7 @@ class frmVeiculo(wx.Frame):
     def __init__(self, parent):
         self._init_ctrls(parent)
         
-    def getIdTipo(self, event):
+    def getIdTipo(self,event):
         # pega o id do tipo de veículo selecionado
         tipos = TipoVeiculoDAO().getAllTipos()
         for i in tipos:
@@ -166,7 +169,7 @@ class frmVeiculo(wx.Frame):
         self.txtMarca.Clear()
         self.txtCor.Clear()
         self.txtModelo.Clear()
-        self.lstVeiculos.Clear()
+        
         
     def obterDadosInformados(self):
         #Método para obter os dados fornecidos
@@ -174,13 +177,12 @@ class frmVeiculo(wx.Frame):
         marca = self.txtMarca.GetValue()
         cor = self.txtCor.GetValue()
         modelo = self.txtModelo.GetValue()      
-        tipo = self.lstVeiculos.GetStringSelection()
+        tipo = frmVeiculo.getIdTipo(self, self.lstTipo)
+        
         
         #a lista será usada posteriormente na ação do botão de incluir um veículo
-        lista = [tipo,placa,marca,cor,modelo]
-
-
-
+        return [placa,marca,cor,modelo,tipo]
+    
     def OnLstTipoChoice(self, event):
         event.Skip()
 
@@ -188,7 +190,17 @@ class frmVeiculo(wx.Frame):
         event.Skip()
 
     def OnBtnIncluirButton(self, event):
-        event.Skip()
+        #Método que inclui um tipo de veículo no banco de dados.                
+        try:
+            lista = self.obterDadosInformados()
+            veiculo = Veiculo(lista[0],lista[1],lista[2],lista[3],lista[4])                        
+            dao = VeiculoDAO()
+            dao.insertVeiculo(veiculo)
+                
+                           
+            self.clearTextfield()
+        except:
+            print "Erro ao salvar no banco."
 
     def OnBtnCancelarButton(self, event):
         event.Skip()
