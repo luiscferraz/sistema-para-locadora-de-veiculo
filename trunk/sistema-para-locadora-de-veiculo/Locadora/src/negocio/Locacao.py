@@ -10,7 +10,7 @@ class Locacao:
     def __init__(self, idLocacao, quilometragemDeSaida, quilometragemDeEntrada, total):
         self.__idLocacao = idLocacao
         self.__quilometragemDeSaida = quilometragemDeSaida
-        self.__quilomeetragemDeEntrada = quilometragemDeEntrada
+        self.__quilometragemDeEntrada = quilometragemDeEntrada
         self.__total = total
         self.__idCliente = None
         self.__idVeiculo = None
@@ -58,11 +58,11 @@ class Locacao:
     
     def toString(self):
         print "ID Locação %d: " %self.getIdLocacao() + \
-            "\nQuilometragem de saida: " + self.getQuilometragemDeSaida() + \
+            "\nQuilometragem de saída: " + self.getQuilometragemDeSaida() + \
             "\nQuilometragem de Entrada: " + self.getQuilometragemDeEntrada() + \
             "\nTotal: " + self.getTotal() + \
             "\nID Cliente: " + self.getIdCliente() + \
-            "\nID Veiculo: " + self.getIdVeiculo()
+            "\nID Veículo: " + self.getIdVeiculo()
             
         
         
