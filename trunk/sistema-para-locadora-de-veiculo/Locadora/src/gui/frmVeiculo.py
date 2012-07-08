@@ -4,6 +4,7 @@
 import wx
 import wx.lib.buttons
 import wx.lib.masked.textctrl
+from db.TipoVeiculoDAO import *
 
 def create(parent):
     return frmVeiculo(parent)
@@ -102,13 +103,18 @@ class frmVeiculo(wx.Frame):
               label=u'Pesquisa por Placa', name=u'stPesquisa',
               parent=self.pnlVeiculo, pos=wx.Point(128, 168), size=wx.Size(488,
               312), style=0)
-
+        
+        tipos = TipoVeiculoDAO().getAllTipos()
+        listaTipos = []
+        for i in tipos:
+            listaTipos.append(i[3])
+        
         self.stTipo = wx.StaticText(id=wxID_FRMVEICULOSTTIPO,
-              label=u'Tipo de Ve\xedculo :', name=u'stTipo',
-              parent=self.pnlVeiculo, pos=wx.Point(392, 88), size=wx.Size(79,
+              label=u'Tipo de Veículo :', name=u'stTipo',
+              parent=self.pnlVeiculo, pos=wx.Point(392, 88), size=wx.Size(90,
               13), style=0)
 
-        self.lstTipo = wx.Choice(choices=[], id=wxID_FRMVEICULOLSTTIPO,
+        self.lstTipo = wx.Choice(choices=listaTipos, id=wxID_FRMVEICULOLSTTIPO,
               name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(392, 104),
               size=wx.Size(208, 21), style=0)
         self.lstTipo.Bind(wx.EVT_CHOICE, self.OnLstTipoChoice,
