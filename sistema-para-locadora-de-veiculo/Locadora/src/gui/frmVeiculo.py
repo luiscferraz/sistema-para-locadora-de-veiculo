@@ -117,7 +117,7 @@ class frmVeiculo(wx.Frame):
         self.lstTipo = wx.Choice(choices=listaTipos, id=wxID_FRMVEICULOLSTTIPO,
               name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(392, 104),
               size=wx.Size(208, 21), style=0)
-        self.lstTipo.Bind(wx.EVT_CHOICE, self.OnLstTipoChoice,
+        self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,
               id=wxID_FRMVEICULOLSTTIPO)
 
         self.lstVeiculos = wx.ListCtrl(id=wxID_FRMVEICULOLSTVEICULOS,
@@ -150,6 +150,15 @@ class frmVeiculo(wx.Frame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        
+    def getIdTipo(self, event):
+        # pega o id do tipo de veículo selecionado
+        tipos = TipoVeiculoDAO().getAllTipos()
+        for i in tipos:
+            if (i[3] == self.lstTipo.GetStringSelection()):
+                self.idTipo = i[0]
+                print self.idTipo
+                return self.idTipo
     
     def clearTextfield(self):
         #Método responsável por limpar os campos
