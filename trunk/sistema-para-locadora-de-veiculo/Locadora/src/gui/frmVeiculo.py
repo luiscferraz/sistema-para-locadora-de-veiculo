@@ -270,7 +270,14 @@ class frmVeiculo(wx.Frame):
             print "Erro ao salvar no banco."
 
     def OnBtnCancelarButton(self, event):
-        event.Skip()
+        self.clearTextfield()
+        
+        #Habilitando os botões outra vez caso o botão cancelar seja usado na edição.
+        self.txtPlaca.Enable()
+        self.btnIncluir.Enable()
+        self.btnExcluir.Enable()
+        self.btnEditar.Enable()
+        self.btnAtualizar.Disable()
 
     def OnBtnEditarButton(self, event):
         event.Skip()
@@ -279,7 +286,28 @@ class frmVeiculo(wx.Frame):
         event.Skip()
 
     def OnBtnExcluirButton(self, event):
-        event.Skip()
+        dao = VeiculoDAO()
+        
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.lstVeiculos.GetFocusedItem()
+        
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1:
+            placa = self.lstVeiculos.GetItemText(indice)
+            try:                
+                #deleta o veículo do banco
+                dao.deleteVeiculo(placa)
+                #para atualizar a Listctrl retirando o veículo que existia nela
+                self.updateListctrl()                
+            except:
+                #caso o veículo não seja removido, uma caixa de diálogo será mostrada
+                caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
