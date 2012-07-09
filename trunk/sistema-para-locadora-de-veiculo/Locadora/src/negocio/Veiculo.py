@@ -71,3 +71,20 @@ class Veiculo:
             "\nDisponibilidade: " + self.getDisponibilidade() + \
             "\nCódigo Tipo Veículo:" + str(self.getIdTipoVeiculo())
             
+    def validarPlaca(self):
+        for i in range (0,3):
+            if((self.getPlaca()[i]== '0' )or (self.getPlaca()[i]== '1' ) or (self.getPlaca()[i]== '2' ) or\
+               (self.getPlaca()[i]== '3' )or (self.getPlaca()[i]== '4' ) or (self.getPlaca()[i]== '5' ) or\
+               (self.getPlaca()[i]== '6' )or (self.getPlaca()[i]== '7' ) or (self.getPlaca()[i]== '8' ) or\
+               (self.getPlaca()[i]== '9' )):
+                #print self.getPlaca()[i]
+                return False
+        for i in range (4,8):
+            if((self.getPlaca()[i]!= '0' )and (self.getPlaca()[i]!= '1' ) and (self.getPlaca()[i]!= '2' ) and\
+               (self.getPlaca()[i]!= '3' )and (self.getPlaca()[i]!= '4' ) and (self.getPlaca()[i]!= '5' ) and\
+               (self.getPlaca()[i]!= '6' )and (self.getPlaca()[i]!= '7' ) and (self.getPlaca()[i]!= '8' ) and\
+               (self.getPlaca()[i]!= '9' )):
+                #print self.getPlaca()[i]
+                return False
+        return True
+            
