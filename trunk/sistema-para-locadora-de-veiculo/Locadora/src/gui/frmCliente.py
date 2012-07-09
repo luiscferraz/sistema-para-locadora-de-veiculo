@@ -36,13 +36,13 @@ class frmCliente(wx.Frame):
         # generated method, don't edit
 
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='CPF',
-              width=100)
+              width=130)
         parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Nome',
-              width=150)
+              width=190)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
-              heading='Telefone', width=100)
+              heading='Telefone', width=120)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
-              width=100)
+              width=210)
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
@@ -50,7 +50,7 @@ class frmCliente(wx.Frame):
               parent=prnt, pos=wx.Point(430, 98), size=wx.Size(641, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Cliente')
-        self.SetClientSize(wx.Size(625, 488))
+        self.SetClientSize(wx.Size(825, 488))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlCliente = wx.Panel(id=wxID_FRMCLIENTEPNLCLIENTE,
@@ -59,7 +59,7 @@ class frmCliente(wx.Frame):
 
         self.stCliente = wx.StaticBox(id=wxID_FRMCLIENTESTCLIENTE,
               label=u'Dados Pessoais', name=u'stCliente',
-              parent=self.pnlCliente, pos=wx.Point(128, 8), size=wx.Size(488,
+              parent=self.pnlCliente, pos=wx.Point(128, 8), size=wx.Size(688,
               232), style=0)
 
         self.txtCpf = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMCLIENTETXTCPF,
@@ -85,12 +85,12 @@ class frmCliente(wx.Frame):
               size=wx.Size(35, 13), style=0)
 
         self.txtNome = wx.TextCtrl(id=wxID_FRMCLIENTETXTNOME, name=u'txtNome',
-              parent=self.pnlCliente, pos=wx.Point(320, 56), size=wx.Size(280,
+              parent=self.pnlCliente, pos=wx.Point(320, 56), size=wx.Size(480,
               21), style=0, value=u'')
 
         self.txtEndereco = wx.TextCtrl(id=wxID_FRMCLIENTETXTENDERECO,
               name=u'txtEndereco', parent=self.pnlCliente, pos=wx.Point(144,
-              104), size=wx.Size(280, 21), style=0, value=u'')
+              104), size=wx.Size(390, 21), style=0, value=u'')
 
         self.stEndereco = wx.StaticText(id=wxID_FRMCLIENTESTENDERECO,
               label=u'Endere\xe7o :', name=u'stEndereco',
@@ -98,23 +98,23 @@ class frmCliente(wx.Frame):
               13), style=0)
 
         self.txtBairro = wx.TextCtrl(id=wxID_FRMCLIENTETXTBAIRRO,
-              name=u'txtBairro', parent=self.pnlCliente, pos=wx.Point(448, 104),
-              size=wx.Size(152, 21), style=0, value=u'')
+              name=u'txtBairro', parent=self.pnlCliente, pos=wx.Point(560, 104),
+              size=wx.Size(242, 21), style=0, value=u'')
 
         self.stBairro = wx.StaticText(id=wxID_FRMCLIENTESTBAIRRO,
               label=u'Bairro :', name=u'stBairro', parent=self.pnlCliente,
-              pos=wx.Point(448, 88), size=wx.Size(36, 13), style=0)
+              pos=wx.Point(560, 88), size=wx.Size(36, 13), style=0)
 
         self.stCidade = wx.StaticText(id=wxID_FRMCLIENTESTCIDADE,
               label=u'Cidade :', name=u'stCidade', parent=self.pnlCliente,
-              pos=wx.Point(144, 136), size=wx.Size(41, 13), style=0)
+              pos=wx.Point(144, 136), size=wx.Size(61, 13), style=0)
 
         self.txtCidade = wx.TextCtrl(id=wxID_FRMCLIENTETXTCIDADE,
               name=u'txtCidade', parent=self.pnlCliente, pos=wx.Point(144, 152),
-              size=wx.Size(192, 21), style=0, value=u'')
+              size=wx.Size(390, 21), style=0, value=u'')
 
         self.txtCep = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMCLIENTETXTCEP,
-              name=u'txtCep', parent=self.pnlCliente, pos=wx.Point(360, 152),
+              name=u'txtCep', parent=self.pnlCliente, pos=wx.Point(560, 152),
               size=wx.Size(152, 21), style=0, value=u'  .   -   ')
         self.txtCep.SetAutoformat('')
         self.txtCep.SetMask(u'XX.XXX-XXX')
@@ -132,13 +132,13 @@ class frmCliente(wx.Frame):
               "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE",
               "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"],
               id=wxID_FRMCLIENTELSTESTADOS, name=u'lstEstados',
-              parent=self.pnlCliente, pos=wx.Point(536, 152), size=wx.Size(64,
+              parent=self.pnlCliente, pos=wx.Point(736, 152), size=wx.Size(64,
               21), style=0)
         self.lstEstados.Bind(wx.EVT_CHOICE, self.OnLstEstadosChoice,
               id=wxID_FRMCLIENTELSTESTADOS)
 
         self.stUf = wx.StaticText(id=wxID_FRMCLIENTESTUF, label=u'UF :',
-              name=u'stUf', parent=self.pnlCliente, pos=wx.Point(536, 136),
+              name=u'stUf', parent=self.pnlCliente, pos=wx.Point(736, 136),
               size=wx.Size(21, 13), style=0)
 
         self.stTelefone = wx.StaticText(id=wxID_FRMCLIENTESTTELEFONE,
@@ -161,7 +161,7 @@ class frmCliente(wx.Frame):
 
         self.txtEmail = wx.TextCtrl(id=wxID_FRMCLIENTETXTEMAIL,
               name=u'txtEmail', parent=self.pnlCliente, pos=wx.Point(376, 200),
-              size=wx.Size(224, 21), style=0, value=u'')
+              size=wx.Size(424, 21), style=0, value=u'')
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMCLIENTETXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlCliente, pos=wx.Point(144,
@@ -210,19 +210,19 @@ class frmCliente(wx.Frame):
 
         self.stPesquisa = wx.StaticBox(id=wxID_FRMCLIENTESTPESQUISA,
               label=u'Pesquisa por CPF', name=u'stPesquisa',
-              parent=self.pnlCliente, pos=wx.Point(128, 256), size=wx.Size(488,
+              parent=self.pnlCliente, pos=wx.Point(128, 256), size=wx.Size(688,
               224), style=0)
         
         #Para funcionar no boa o comentário começa nesta linha
 ##        self.lstClientes = wx.ListCtrl(id=wxID_FRMCLIENTELSTCLIENTES,
 ##              name=u'lstClientes', parent=self.pnlCliente, pos=wx.Point(144,
-##              328), size=wx.Size(456, 128), style=wx.LC_REPORT)
+##              328), size=wx.Size(656, 128), style=wx.LC_REPORT)
 ##        self._init_coll_lstClientes_Columns(self.lstClientes)
         #Para funcionar no boa o comentário termina nesta linha
         
         
         self.stCep = wx.StaticText(id=wxID_FRMCLIENTESTCEP, label=u'CEP :',
-              name=u'stCep', parent=self.pnlCliente, pos=wx.Point(360, 136),
+              name=u'stCep', parent=self.pnlCliente, pos=wx.Point(560, 136),
               size=wx.Size(27, 13), style=0)
         
         #precisa ser comentado para funcionar no boa
@@ -235,7 +235,7 @@ class frmCliente(wx.Frame):
     def gerarListctrl(self,event):
         self.lstClientes = wx.ListCtrl(id=wxID_FRMCLIENTELSTCLIENTES,
               name=u'lstClientes', parent=self.pnlCliente, pos=wx.Point(144,
-              328), size=wx.Size(456, 128), style=wx.LC_REPORT)
+              328), size=wx.Size(656, 128), style=wx.LC_REPORT)
         self._init_coll_lstClientes_Columns(self.lstClientes)
         
         self.inserirInformacoesNaListctrl(self.lstClientes)
