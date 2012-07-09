@@ -127,10 +127,12 @@ class frmCliente(wx.Frame):
         self.txtCep.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
               u'Tahoma'))
         self.txtCep.SetInsertionPoint(9)
-
-        self.lstEstados = wx.Choice(choices=["AC", "AL", "AP", "AM", "BA", "CE",
+        
+        self.listaEstados = ["AC", "AL", "AP", "AM", "BA", "CE",
               "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE",
-              "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"],
+              "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]
+        
+        self.lstEstados = wx.Choice(choices= self.listaEstados,
               id=wxID_FRMCLIENTELSTESTADOS, name=u'lstEstados',
               parent=self.pnlCliente, pos=wx.Point(736, 152), size=wx.Size(64,
               21), style=0)
@@ -250,6 +252,17 @@ class frmCliente(wx.Frame):
     def OnLstEstadosChoice(self, event):
         event.Skip()
     
+    def getEstado(self,uf):
+        #Método feito para colocar todos os tipos
+        
+        posicao = 0
+        for j in self.listaEstados:            
+            if j==uf:
+                #print j
+                #print posicao
+                return posicao
+            posicao = posicao + 1  
+    
     def clearTextfield(self):
         #Método responsável por limpar os campos
         self.txtCpf.Clear()
@@ -323,6 +336,8 @@ class frmCliente(wx.Frame):
         self.btnEditar.Enable()
         self.btnAualizar.Disable()
         
+        self.getEstado('PE')
+        
     def OnBtnEditarButton(self, event):
         #Método para editar um cliente selecionado na Listctrl
         
@@ -353,7 +368,8 @@ class frmCliente(wx.Frame):
             self.txtCep.SetValue(clienteSelecionado.getCep())
             self.lstEstados.SetLabel(clienteSelecionado.getUf())                          
             self.txtTelefone.SetValue(clienteSelecionado.getTelefone())
-            self.txtEmail.SetValue(clienteSelecionado.getEmail())     
+            self.txtEmail.SetValue(clienteSelecionado.getEmail()) 
+            self.lstEstados.Select(self.getEstado(clienteSelecionado.getUf()))    
             
             self.btnEditar.Disable()       
                         
