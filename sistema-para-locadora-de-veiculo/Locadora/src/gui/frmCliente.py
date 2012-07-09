@@ -274,6 +274,8 @@ class frmCliente(wx.Frame):
         self.txtCidade.Clear()
         self.txtEmail.Clear()
         
+        self.lstEstados.Select(-1)
+        
     def obterDadosInformados(self):
         #Método para obter os dados fornecidos
         cpf = self.txtCpf.GetValue()
@@ -336,7 +338,8 @@ class frmCliente(wx.Frame):
         self.btnEditar.Enable()
         self.btnAualizar.Disable()
         
-        self.getEstado('PE')
+        #volta a não apresentar nada na lista de estados
+        self.lstEstados.Select(-1)
         
     def OnBtnEditarButton(self, event):
         #Método para editar um cliente selecionado na Listctrl
