@@ -197,6 +197,12 @@ class frmCliente(wx.Frame):
               pos=wx.Point(24, 24), size=wx.Size(76, 25), style=0)
         self.btnIncluir.Bind(wx.EVT_BUTTON, self.OnBtnIncluirButton,
               id=wxID_FRMCLIENTEBTNINCLUIR)
+        
+        self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNCANCELAR,
+              label=u'Cancelar', name=u'btnCancelar', parent=self.pnlCliente,
+              pos=wx.Point(24, 64), size=wx.Size(76, 25), style=0)
+        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
+              id=wxID_FRMCLIENTEBTNCANCELAR)
 
         self.btnEditar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNEDITAR,
               label=u'Editar', name=u'btnEditar', parent=self.pnlCliente,
@@ -216,11 +222,7 @@ class frmCliente(wx.Frame):
         self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
               id=wxID_FRMCLIENTEBTNEXCLUIR)
 
-        self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMCLIENTEBTNCANCELAR,
-              label=u'Cancelar', name=u'btnCancelar', parent=self.pnlCliente,
-              pos=wx.Point(24, 64), size=wx.Size(76, 25), style=0)
-        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
-              id=wxID_FRMCLIENTEBTNCANCELAR)
+        
 
         self.stPesquisa = wx.StaticBox(id=wxID_FRMCLIENTESTPESQUISA,
               label=u'Pesquisa por CPF', name=u'stPesquisa',
