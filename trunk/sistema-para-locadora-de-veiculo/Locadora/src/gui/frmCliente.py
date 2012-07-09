@@ -43,6 +43,18 @@ class frmCliente(wx.Frame):
               heading='Telefone', width=120)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
               width=210)
+    
+    def _init_coll_lstResultado_Columns(self, parent):
+        # generated method, don't edit
+
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='CPF',
+              width=130)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Nome',
+              width=190)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
+              heading='Telefone', width=120)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
+              width=210)
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
@@ -243,8 +255,7 @@ class frmCliente(wx.Frame):
         self.inserirInformacoesNaListctrl(self.lstClientes)
         
         return self.lstClientes
-        
-        
+              
 
     def __init__(self, parent):
         self._init_ctrls(parent)
@@ -312,7 +323,17 @@ class frmCliente(wx.Frame):
                 lista.SetStringItem(num_itens,1,row[2])
                 lista.SetStringItem(num_itens,2,row[4])
                 lista.SetStringItem(num_itens,3,row[9])
-
+    
+    def inserirResultadoDeBusca(self,lista,cpf):
+        dao = ClienteDAO()
+        clienteEncontrado = dao.procurarCliente(cpf)
+        #print clienteEncontrado.toString()
+        num_itens = lista.GetItemCount()
+        lista.InsertStringItem(num_itens,str(clienteEncontrado.getCpf()))
+        lista.SetStringItem(num_itens,1,clienteEncontrado.getNome())
+        lista.SetStringItem(num_itens,2,clienteEncontrado.getTelefone())
+        lista.SetStringItem(num_itens,3,clienteEncontrado.getTelefone())
+     
     def OnBtnIncluirButton(self, event):
         #Método que inclui um Cliente no banco de dados.                
         try:
@@ -340,6 +361,10 @@ class frmCliente(wx.Frame):
         
         #volta a não apresentar nada na lista de estados
         self.lstEstados.Select(-1)
+        
+        #Caso seja feita usado após alguma pesquisa
+        self.btnPesquisar.Enable()
+        self.txtPesquisa.Clear()
         
     def OnBtnEditarButton(self, event):
         #Método para editar um cliente selecionado na Listctrl
@@ -442,7 +467,39 @@ class frmCliente(wx.Frame):
 
 
     def OnBtnPesquisarButton(self, event):
-        event.skip()
+        cpf = self.txtPesquisa.GetValue()
+        
+        dao = ClienteDAO()
+        try:
+            clienteSelecionado  = dao.procurarCliente(cpf)
+            self.txtCpf.SetValue(clienteSelecionado.getCpf())
+            self.txtNome.SetValue(clienteSelecionado.getNome())
+            self.txtEndereco.SetValue(clienteSelecionado.getEndereco())
+            self.txtBairro.SetValue(clienteSelecionado.getBairro())
+            self.txtCidade.SetValue(clienteSelecionado.getCidade())
+            self.txtCep.SetValue(clienteSelecionado.getCep())
+            self.lstEstados.SetLabel(clienteSelecionado.getUf())                          
+            self.txtTelefone.SetValue(clienteSelecionado.getTelefone())
+            self.txtEmail.SetValue(clienteSelecionado.getEmail()) 
+            self.lstEstados.Select(self.getEstado(clienteSelecionado.getUf()))
+            
+            self.btnAualizar.Disable()
+            self.btnIncluir.Disable()
+            self.btnEditar.Disable()
+            self.btnExcluir.Disable()
+            self.btnPesquisar.Disable()
+            
+            
+        except:
+            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+            
+            self.txtPesquisa.Clear()
+        
+        
+    
+        
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
