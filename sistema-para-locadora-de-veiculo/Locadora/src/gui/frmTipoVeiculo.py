@@ -64,28 +64,28 @@ class frmTipoVeiculo(wx.Frame):
 
         self.stTaxa = wx.StaticText(id=wxID_FRMTIPOVEICULOSTTAXA,
               label=u'Taxa Base (R$) :', name=u'stTaxa',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(240, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(260, 40),
               size=wx.Size(82, 13), style=0)
         
         self.txtCodigo = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCODIGO,
               name=u'txtCodigo', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
-              56), size=wx.Size(72, 21), style=0, value=u'')
+              56), size=wx.Size(102, 21), style=0, value=u'')
 
         self.txtTaxa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTTAXA,
-              name=u'txtTaxa', parent=self.pnlTipoVeiculo, pos=wx.Point(240,
-              56), size=wx.Size(112, 21), style=0, value=u'')
+              name=u'txtTaxa', parent=self.pnlTipoVeiculo, pos=wx.Point(260,
+              56), size=wx.Size(152, 21), style=0, value=u'')
         
         self.txtPreco = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPRECO,
-              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(376,
-              56), size=wx.Size(88, 21), style=0, value=u'')
+              name=u'txtPreco', parent=self.pnlTipoVeiculo, pos=wx.Point(430,
+              56), size=wx.Size(152, 21), style=0, value=u'')
         
         self.txtCaucao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTCAUCAO,
-              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(488,
-              56), size=wx.Size(112, 21), style=0, value=u'')
+              name=u'txtCaucao', parent=self.pnlTipoVeiculo, pos=wx.Point(598,
+              56), size=wx.Size(152, 21), style=0, value=u'')
         
         self.txtDescricao = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTDESCRICAO,
               name=u'txtDescricao', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(144, 104), size=wx.Size(456, 21), style=0,
+              pos=wx.Point(144, 104), size=wx.Size(606, 21), style=0,
               value=u'')
 
         self.stDescricao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTDESCRICAO,
@@ -96,7 +96,7 @@ class frmTipoVeiculo(wx.Frame):
 
         self.stCor = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCOR,
               label=u'Pre\xe7o KM (R$) :', name=u'stCor',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(376, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(430, 40),
               size=wx.Size(76, 13), style=0)
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPESQUISA,
@@ -123,7 +123,7 @@ class frmTipoVeiculo(wx.Frame):
 
         self.stCaucao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCAUCAO,
               label=u'Valor Cau\xe7\xe3o (R$) :', name=u'stCaucao',
-              parent=self.pnlTipoVeiculo, pos=wx.Point(488, 40),
+              parent=self.pnlTipoVeiculo, pos=wx.Point(598, 40),
               size=wx.Size(95, 13), style=0)
         #Para funcionar no boa o comentário começa nesta linha
 ##        self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
