@@ -56,7 +56,7 @@ class frmVeiculo(wx.Frame):
               parent=prnt, pos=wx.Point(377, 152), size=wx.Size(967, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Ve\xedculos')
-        self.SetClientSize(wx.Size(951, 488))
+        self.SetClientSize(wx.Size(941, 488))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlVeiculo = wx.Panel(id=wxID_FRMVEICULOPNLVEICULO,
@@ -231,6 +231,8 @@ class frmVeiculo(wx.Frame):
         self.txtMarca.Clear()
         self.txtCor.Clear()
         self.txtModelo.Clear()
+        
+        self.lstTipo.Select(-1)
         
         
     def obterDadosInformados(self):
