@@ -196,12 +196,12 @@ class frmTipoVeiculo(wx.Frame):
         #Método para obter os dados fornecidos
         taxa = self.txtTaxa.GetValue()
         preco = self.txtPreco.GetValue()
-        descricao = self.txtDescricao.GetValue()
+        descricao = str(self.txtDescricao.GetValue())
         caucao = self.txtCaucao.GetValue()      
         codigo = self.txtCodigo.GetValue()
         
         #a lista será usada posteriormente na ação do botão de incluir um tipo de veículo
-        lista = [codigo,taxa,preco,descricao,caucao]
+        lista = [codigo,taxa,preco,descricao.upper(),caucao]
         
         return lista
         
@@ -251,7 +251,11 @@ class frmTipoVeiculo(wx.Frame):
         self.btnExcluir.Enable()
         self.btnEditar.Enable()
         self.btnAtualizar.Disable()
-
+        
+        #Caso seja feita usado após alguma pesquisa
+        self.txtPesquisa.Clear()
+        self.btnPesquisar.Enable()
+        
     def OnBtnEditarButton(self, event):        
         #Método para editar um tipo de veículo selecionado na Listctrl
         
@@ -339,8 +343,32 @@ class frmTipoVeiculo(wx.Frame):
             caixaDeDialogo.Destroy()
         
     def OnBtnPesquisarButton(self, event):
-        event.Skip()
-
+        codigoInformado = int(self.txtPesquisa.GetValue())
+        print codigoInformado
+        dao = TipoVeiculoDAO()
+        
+        
+        try:
+            tipoVeiculo = dao.procurarTipo(codigoInformado)
+            
+            self.txtCodigo.SetValue (str(tipoVeiculo.getIdTipoVeiculo()))
+            self.txtTaxa.SetValue (str(tipoVeiculo.getTaxaBase()))
+            self.txtPreco.SetValue (str(tipoVeiculo.getPrecoKm()))
+            self.txtCaucao.SetValue(str(tipoVeiculo.getCaucao()))
+            self.txtDescricao.SetValue(tipoVeiculo.getDescricao())
+            
+            self.btnAtualizar.Disable()
+            self.btnIncluir.Disable()
+            self.btnEditar.Disable()
+            self.btnExcluir.Disable()
+            self.btnPesquisar.Disable()
+        except:
+            self.txtPesquisa.Clear()
+            
+            caixaDeDialogo = wx.MessageDialog(self,'Código inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+        
 if __name__ == '__main__':
     app = wx.PySimpleApp()
     frame = create(None)
