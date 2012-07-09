@@ -110,6 +110,12 @@ class frmVeiculo(wx.Frame):
         self.stCor = wx.StaticText(id=wxID_FRMVEICULOSTCOR, label=u'Cor :',
               name=u'stCor', parent=self.pnlVeiculo, pos=wx.Point(144, 88),
               size=wx.Size(25, 13), style=0)
+        
+        self.lstTipo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMVEICULOLSTTIPO,
+              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(412, 104),
+              size=wx.Size(498, 21), style=0)
+        self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,
+              id=wxID_FRMVEICULOLSTTIPO)
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMVEICULOTXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlVeiculo, pos=wx.Point(144,
@@ -138,11 +144,7 @@ class frmVeiculo(wx.Frame):
               parent=self.pnlVeiculo, pos=wx.Point(412, 88), size=wx.Size(90,
               13), style=0)
 
-        self.lstTipo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMVEICULOLSTTIPO,
-              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(412, 104),
-              size=wx.Size(498, 21), style=0)
-        self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,
-              id=wxID_FRMVEICULOLSTTIPO)
+        
           
           #Para funcionar no boa o comentário começa nesta linha
 ##        self.lstVeiculos = wx.ListCtrl(id=wxID_FRMVEICULOLSTVEICULOS,
