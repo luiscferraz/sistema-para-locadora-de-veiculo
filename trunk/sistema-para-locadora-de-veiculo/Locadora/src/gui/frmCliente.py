@@ -42,19 +42,7 @@ class frmCliente(wx.Frame):
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
               heading='Telefone', width=120)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
-              width=210)
-    
-    def _init_coll_lstResultado_Columns(self, parent):
-        # generated method, don't edit
-
-        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='CPF',
-              width=130)
-        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Nome',
-              width=190)
-        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
-              heading='Telefone', width=120)
-        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='E-mail',
-              width=210)
+              width=240)
 
     def _init_ctrls(self, prnt):
         # generated method, don't edit
