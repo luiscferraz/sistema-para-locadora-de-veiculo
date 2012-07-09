@@ -491,11 +491,13 @@ class frmCliente(wx.Frame):
             
             
         except:
+            self.txtPesquisa.Clear()
+            
             caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
-            self.txtPesquisa.Clear()
+            
         
         
     
