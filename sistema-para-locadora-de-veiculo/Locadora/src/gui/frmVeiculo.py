@@ -274,7 +274,31 @@ class frmVeiculo(wx.Frame):
         event.Skip()
 
     def OnBtnPesquisarButton(self, event):
-        event.Skip()
+        placaInformada = (self.txtPesquisa.GetValue()).upper()
+        print placaInformada.upper()
+        dao = VeiculoDAO()
+        
+        try:
+            veiculo = dao.procurarVeiculo(placaInformada)
+            idTipoVeiculo = veiculo.getIdTipoVeiculo()
+            posicao = self.getDescricaoById(idTipoVeiculo)
+            
+            self.txtMarca.SetValue (str(veiculo.getMarca()))
+            self.txtCor.SetValue (str(veiculo.getCor()))
+            self.txtModelo.SetValue (str(veiculo.getModelo()))
+            self.lstTipo.Select(posicao)
+            
+            self.btnAtualizar.Disable()
+            self.btnIncluir.Disable()
+            self.btnEditar.Disable()
+            self.btnExcluir.Disable()
+            self.btnPesquisar.Disable()
+        except:
+            self.txtPesquisa.Clear()
+            
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
 
     def OnBtnIncluirButton(self, event):
         #Método que inclui um tipo de veículo no banco de dados.                
@@ -308,6 +332,10 @@ class frmVeiculo(wx.Frame):
         self.btnExcluir.Enable()
         self.btnEditar.Enable()
         self.btnAtualizar.Disable()
+        
+        #Caso seja feita usado após alguma pesquisa
+        self.txtPesquisa.Clear()
+        self.btnPesquisar.Enable()
         
 
     def OnBtnEditarButton(self, event):
