@@ -353,7 +353,10 @@ class frmCliente(wx.Frame):
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
         except:
-            print "Erro ao salvar no banco."
+            #print "Erro ao salvar no banco."
+            caixaDeDialogo = wx.MessageDialog(self,'Não foi possível efetuar o cadastro.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
 
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
