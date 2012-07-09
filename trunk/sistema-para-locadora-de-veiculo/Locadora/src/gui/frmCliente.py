@@ -339,13 +339,19 @@ class frmCliente(wx.Frame):
         try:
             lista = self.obterDadosInformados()
             cliente = Cliente(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8]) 
-                                        
+                                                   
             dao = ClienteDAO()
-            dao.insertCliente(cliente)
+            if (dao.verificarExistenciaCliente(cliente.getCpf()) is False):
+                dao.insertCliente(cliente)
             
-            self.updateListctrl()
+                self.updateListctrl()
             
-            self.clearTextfield()
+                self.clearTextfield()
+            
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Cliente existente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
         except:
             print "Erro ao salvar no banco."
 
