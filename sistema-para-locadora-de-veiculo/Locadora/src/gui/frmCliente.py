@@ -36,7 +36,7 @@ class frmCliente(wx.Frame):
         # generated method, don't edit
 
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='CPF',
-              width=130)
+              width=100)
         parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Nome',
               width=190)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
@@ -290,17 +290,17 @@ class frmCliente(wx.Frame):
     def obterDadosInformados(self):
         #Método para obter os dados fornecidos
         cpf = self.txtCpf.GetValue()
-        nome = self.txtNome.GetValue()
-        endereco = self.txtEndereco.GetValue()
+        nome = str(self.txtNome.GetValue())
+        endereco = str(self.txtEndereco.GetValue())
         telefone = self.txtTelefone.GetValue()
         cep = self.txtCep.GetValue()
-        bairro = self.txtBairro.GetValue()
-        cidade = self.txtCidade.GetValue()
-        email = self.txtEmail.GetValue()        
+        bairro = str(self.txtBairro.GetValue())
+        cidade = str(self.txtCidade.GetValue())
+        email = str(self.txtEmail.GetValue())        
         uf = self.lstEstados.GetStringSelection()
         
         #a lista será usada posteriormente na ação do botão de incluir um cliente
-        lista = [cpf,nome,endereco,telefone,cep,bairro,cidade,uf,email]
+        lista = [cpf,nome.upper(),endereco.upper(),telefone,cep,bairro.upper(),cidade.upper(),uf,email.upper()]
         
         return lista
     
