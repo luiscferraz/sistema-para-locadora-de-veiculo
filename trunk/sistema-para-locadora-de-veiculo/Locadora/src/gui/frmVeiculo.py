@@ -93,18 +93,18 @@ class frmVeiculo(wx.Frame):
 
         self.txtMarca = wx.TextCtrl(id=wxID_FRMVEICULOTXTMARCA,
               name=u'txtMarca', parent=self.pnlVeiculo, pos=wx.Point(264, 56),
-              size=wx.Size(192, 21), style=0, value=u'')
+              size=wx.Size(292, 21), style=0, value=u'')
 
         self.txtModelo = wx.TextCtrl(id=wxID_FRMVEICULOTXTMODELO,
-              name=u'txtModelo', parent=self.pnlVeiculo, pos=wx.Point(472, 56),
-              size=wx.Size(328, 21), style=0, value=u'')
+              name=u'txtModelo', parent=self.pnlVeiculo, pos=wx.Point(572, 56),
+              size=wx.Size(338, 21), style=0, value=u'')
 
         self.stModelo = wx.StaticText(id=wxID_FRMVEICULOSTMODELO,
               label=u'Modelo :', name=u'stModelo', parent=self.pnlVeiculo,
-              pos=wx.Point(472, 40), size=wx.Size(42, 13), style=0)
+              pos=wx.Point(572, 40), size=wx.Size(42, 13), style=0)
 
         self.txtCor = wx.TextCtrl(id=wxID_FRMVEICULOTXTCOR, name=u'txtCor',
-              parent=self.pnlVeiculo, pos=wx.Point(144, 104), size=wx.Size(152,
+              parent=self.pnlVeiculo, pos=wx.Point(144, 104), size=wx.Size(252,
               21), style=0, value=u'')
 
         self.stCor = wx.StaticText(id=wxID_FRMVEICULOSTCOR, label=u'Cor :',
@@ -135,12 +135,12 @@ class frmVeiculo(wx.Frame):
 
         self.stTipo = wx.StaticText(id=wxID_FRMVEICULOSTTIPO,
               label=u'Tipo de Veículo :', name=u'stTipo',
-              parent=self.pnlVeiculo, pos=wx.Point(312, 88), size=wx.Size(90,
+              parent=self.pnlVeiculo, pos=wx.Point(412, 88), size=wx.Size(90,
               13), style=0)
 
         self.lstTipo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMVEICULOLSTTIPO,
-              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(312, 104),
-              size=wx.Size(488, 21), style=0)
+              name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(412, 104),
+              size=wx.Size(498, 21), style=0)
         self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,
               id=wxID_FRMVEICULOLSTTIPO)
           
