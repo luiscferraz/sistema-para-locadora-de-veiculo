@@ -91,8 +91,7 @@ class frmTipoVeiculo(wx.Frame):
         self.stDescricao = wx.StaticText(id=wxID_FRMTIPOVEICULOSTDESCRICAO,
               label=u'Descri\xe7\xe3o :', name=u'stDescricao',
               parent=self.pnlTipoVeiculo, pos=wx.Point(144, 88),
-              size=wx.Size(54, 13), style=0)
-        
+              size=wx.Size(54, 13), style=0)        
 
         self.stCor = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCOR,
               label=u'Pre\xe7o KM (R$) :', name=u'stCor',
@@ -125,13 +124,13 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Valor Cau\xe7\xe3o (R$) :', name=u'stCaucao',
               parent=self.pnlTipoVeiculo, pos=wx.Point(598, 40),
               size=wx.Size(95, 13), style=0)
+        
         #Para funcionar no boa o comentário começa nesta linha
 ##        self.lstTipoVeiculos = wx.ListCtrl(id=wxID_FRMTIPOVEICULOLSTTIPOVEICULOS,
 ##              name=u'lstTipoVeiculos', parent=self.pnlTipoVeiculo,
 ##              pos=wx.Point(144, 240), size=wx.Size(456, 216),
 ##              style=wx.LC_REPORT)
-##        self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)
-        
+##        self._init_coll_lstTipoVeiculos_Columns(self.lstTipoVeiculos)     
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMTIPOVEICULOBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar',
@@ -157,9 +156,7 @@ class frmTipoVeiculo(wx.Frame):
               label=u'Excluir', name=u'btnExcluir', parent=self.pnlTipoVeiculo,
               pos=wx.Point(24, 272), size=wx.Size(76, 25), style=0)
         self.btnExcluir.Bind(wx.EVT_BUTTON, self.OnBtnExcluirButton,
-              id=wxID_FRMTIPOVEICULOBTNEXCLUIR)
-
-           
+              id=wxID_FRMTIPOVEICULOBTNEXCLUIR)           
 
         self.stCodigo = wx.StaticText(id=wxID_FRMTIPOVEICULOSTCODIGO,
               label=u'C\xf3digo :', name=u'stCodigo',
@@ -346,8 +343,7 @@ class frmTipoVeiculo(wx.Frame):
         codigoInformado = int(self.txtPesquisa.GetValue())
         print codigoInformado
         dao = TipoVeiculoDAO()
-        
-        
+                
         try:
             tipoVeiculo = dao.procurarTipo(codigoInformado)
             
