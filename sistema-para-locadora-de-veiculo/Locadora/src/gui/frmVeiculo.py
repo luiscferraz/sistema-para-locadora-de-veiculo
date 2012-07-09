@@ -237,15 +237,18 @@ class frmVeiculo(wx.Frame):
         
     def obterDadosInformados(self):
         #Método para obter os dados fornecidos
-        placa = self.txtPlaca.GetValue()
-        marca = self.txtMarca.GetValue()
-        cor = self.txtCor.GetValue()
-        modelo = self.txtModelo.GetValue()      
+        placa = str(self.txtPlaca.GetValue())
+        #garantindo que ela sempre será salva com letras maiúsculas
+        #placaFormatada = placa.upper()
+        
+        marca = str(self.txtMarca.GetValue())
+        cor = str(self.txtCor.GetValue())
+        modelo = str(self.txtModelo.GetValue())      
         tipo = frmVeiculo.getIdTipo(self, self.lstTipo)
         
         
         #a lista será usada posteriormente na ação do botão de incluir um veículo
-        return [placa,marca,cor,modelo,tipo]
+        return [placa.upper(),marca.upper(),cor.upper(),modelo.upper(),tipo]
     
     def updateListctrl(self):
         #Método responsável por atualizar a listctrl após inserir,deletar e atualizar um cliente.
@@ -278,15 +281,23 @@ class frmVeiculo(wx.Frame):
         try:
             lista = self.obterDadosInformados()
             veiculo = Veiculo(lista[0],lista[1],lista[2],lista[3],lista[4])                        
-            
-            dao = VeiculoDAO()
-            dao.insertVeiculo(veiculo)
+            if (veiculo.validarPlaca() is True):
                 
-            self.updateListctrl()
+                dao = VeiculoDAO()
+                dao.insertVeiculo(veiculo)
+                
+                self.updateListctrl()
                            
-            self.clearTextfield()
+                self.clearTextfield()
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Placa inválida.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
         except:
-            print "Erro ao salvar no banco."
+            #print "Erro ao salvar no banco."
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo existente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
 
     def OnBtnCancelarButton(self, event):
         self.clearTextfield()
