@@ -274,15 +274,16 @@ class frmVeiculo(wx.Frame):
         event.Skip()
 
     def OnBtnPesquisarButton(self, event):
-        placaInformada = (self.txtPesquisa.GetValue()).upper()
-        print placaInformada.upper()
+        placaInformada = str(self.txtPesquisa.GetValue())
+        #print placaInformada.upper()
         dao = VeiculoDAO()
         
         try:
-            veiculo = dao.procurarVeiculo(placaInformada)
+            veiculo = dao.procurarVeiculo(placaInformada.upper())
             idTipoVeiculo = veiculo.getIdTipoVeiculo()
             posicao = self.getDescricaoById(idTipoVeiculo)
             
+            self.txtPlaca.SetValue(str(veiculo.getPlaca()))
             self.txtMarca.SetValue (str(veiculo.getMarca()))
             self.txtCor.SetValue (str(veiculo.getCor()))
             self.txtModelo.SetValue (str(veiculo.getModelo()))
