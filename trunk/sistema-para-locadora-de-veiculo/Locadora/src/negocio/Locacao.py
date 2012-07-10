@@ -2,17 +2,17 @@
 '''
 Created on 07/07/2012
 
-@author: Jean
+@author: Jean Karlos e Marcela Domingues
 '''
 
 class Locacao:
     
-    def __init__(self, idLocacao, quilometragemDeSaida, quilometragemDeEntrada, total):
+    def __init__(self, idLocacao,dataLocacao, quilometragemDeSaida):
         self.__idLocacao = idLocacao
+        self.__dataLocacao = dataLocacao
         self.__quilometragemDeSaida = quilometragemDeSaida
-        self.__quilometragemDeEntrada = quilometragemDeEntrada
-        self.__total = total
-        self.__idCliente = None
+        self.__valorContaParcial = 0
+        self.__cpfCliente = None
         self.__idVeiculo = None
         
     def getIdLocacao(self):
@@ -20,25 +20,25 @@ class Locacao:
     def setIdLocacao(self, idLocacao):
         self.__idLocacao = idLocacao
         
+    def getDataLocacao(self):
+        return self.__dataLocacao
+    def setDataLocacao(self, dataLocacao):
+        self.__dataLocacao = dataLocacao        
+            
     def getQuilometragemDeSaida(self):
         return self.__quilometragemDeSaida
     def setQuilometragemDeSaida(self, quilometragemDeSaida):
         self.__quilometragemDeSaida = quilometragemDeSaida
     
-    def getQuilometragemDeEntrada(self):
-        return self.__quilomeetragemDeEntrada
-    def setQuilometragemDeEntrada(self, quilometragemDeEntrada):
-        self.__quilomeetragemDeEntrada = quilometragemDeEntrada
-        
-    def getTotal(self):
-        return self.__total
-    def setTotal(self, total):
-        self.__total = total
+    def getValorContaParcial(self):
+        return self.__valorContaParcial
+    def setValorContaParcial(self, valorContaParcial):
+        self.__valorContaParcial = valorContaParcial
     
-    def getIdCliente(self):
-        return self.__idCliente
-    def setIdCliente(self, idCliente):
-        self.__idCliente = idCliente
+    def getCpfCliente(self):
+        return self.__cpfCliente
+    def setIdCliente(self, cpfCliente):
+        self.__cpfCliente = cpfCliente
         
     def getIdVeiculo(self):
         return self.__idVeiculo
@@ -48,20 +48,18 @@ class Locacao:
             
     def getAtributos(self):
         idLocacao = self.getIdLocacao()
+        dataLocacao = self.getDataLocacao()
         quilometragemDeSaida = self.getQuilometragemDeSaida()
-        quilometragemDeEntrada = self.getQuilometragemDeEntrada()
-        total = self.getTotal()
-        idCliente = self.getIdCliente()
+        cpfCliente = self.getCpfCliente()
         idVeiculo = self.getIdVeiculo()
         
-        return [idLocacao, quilometragemDeSaida, quilometragemDeEntrada, total, idCliente, idVeiculo]
+        return [idLocacao,dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo]
     
     def toString(self):
         print "ID Locação %d: " %self.getIdLocacao() + \
             "\nQuilometragem de saída: " + self.getQuilometragemDeSaida() + \
-            "\nQuilometragem de Entrada: " + self.getQuilometragemDeEntrada() + \
-            "\nTotal: " + self.getTotal() + \
-            "\nID Cliente: " + self.getIdCliente() + \
+            "\nValor Parcial: " + self.getValorContaParcial() + \
+            "\nCPF Cliente: " + self.getCpfCliente() + \
             "\nID Veículo: " + self.getIdVeiculo()
             
         
