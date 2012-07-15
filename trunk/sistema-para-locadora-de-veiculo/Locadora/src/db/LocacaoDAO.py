@@ -78,15 +78,43 @@ class LocacaoDAO(object):
                 sys.exit(1)    
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
+            
+    
+    def procurarLocacaoById(self, idLocacao):
+                
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM LOCACAO WHERE ID_LOCACAO = ?", (idLocacao,))
+                print "\nBuscou no banco"
+                row = cur.fetchone()
+                print row
+                locacaoEncontrada = Locacao(row[1],row[2],row[3],row[4],row[5])
+                                                
+                locacaoEncontrada.setIdLocacao(row[0])     
+                
+                return locacaoEncontrada
+            
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1) 
+        except:
+            print "\nLocação Inexistente"   
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
                 
 
 #hoje = datetime.today()
 #print hoje
 #locacao = Locacao(hoje,1200,833,'000.111.222-33',28)
-dao = LocacaoDAO()
+#dao = LocacaoDAO()
 #dao.insertLocacao(locacao)
 #print dao.verificarExistenciaLocacao(5)
 #print dao.verificarExistenciaLocacao(95)
-dao.deleteLocacao(4)
-    
+#dao.deleteLocacao(4)
+#locacaoEncontrada = dao.procurarLocacaoById(5)
+#locacaoEncontrada.toString()    
         

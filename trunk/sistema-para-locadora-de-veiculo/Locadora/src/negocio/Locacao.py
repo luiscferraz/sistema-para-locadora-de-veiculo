@@ -57,11 +57,13 @@ class Locacao:
         return [dataLocacao, quilometragemDeSaida, valorParcialConta,cpfCliente, idVeiculo]
     
     def toString(self):
-        print "ID Locação %d: " %self.getIdLocacao() + \
-            "\nQuilometragem de saída: " + self.getQuilometragemDeSaida() + \
-            "\nValor Parcial: " + self.getValorContaParcial() + \
-            "\nCPF Cliente: " + self.getCpfCliente() + \
-            "\nID Veículo: " + self.getIdVeiculo()
+        print "ID Locação : " + str(self.getIdLocacao()) + \
+            "\nData da Locação: " + str(self.getDataLocacao()) +\
+            "\nQuilometragem de saída: " + str(self.getQuilometragemDeSaida()) + \
+            "\nValor Parcial: " + str(self.getValorContaParcial()) + \
+            "\nCPF Cliente: " + str(self.getCpfCliente()) + \
+            "\nId Veículo: " + str(self.getIdVeiculo()) 
+            
             
         
         
