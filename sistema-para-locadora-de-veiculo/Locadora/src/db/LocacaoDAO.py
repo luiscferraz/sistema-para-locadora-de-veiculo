@@ -57,6 +57,27 @@ class LocacaoDAO(object):
                 sys.exit(1)
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
+    
+    def deleteLocacao(self, idLocacao):
+                
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                if self.verificarExistenciaLocacao(idLocacao) is True:
+                    cur.execute("DELETE FROM LOCACAO WHERE ID_LOCACAO = ?" , (idLocacao,))
+                    print "Removeu do banco"
+                    conexao.commit()
+                else:
+                    print "Locação não encontrada ou já foi removida!"
+            
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
                 
 
 #hoje = datetime.today()
@@ -66,5 +87,6 @@ dao = LocacaoDAO()
 #dao.insertLocacao(locacao)
 #print dao.verificarExistenciaLocacao(5)
 #print dao.verificarExistenciaLocacao(95)
+dao.deleteLocacao(4)
     
         
