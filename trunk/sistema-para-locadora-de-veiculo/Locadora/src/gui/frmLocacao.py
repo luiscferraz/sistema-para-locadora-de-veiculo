@@ -14,7 +14,7 @@ def create(parent):
  wxID_FRMLOCACAOSTMODELO, wxID_FRMLOCACAOSTNOME, wxID_FRMLOCACAOSTNOMECLIENTE, 
  wxID_FRMLOCACAOSTRESULTADOMODELO, wxID_FRMLOCACAOSTRESULTADOTIPO, 
  wxID_FRMLOCACAOSTTIPOVEICULO, wxID_FRMLOCACAOSTVEICULO, 
- wxID_FRMLOCACAOTEXTCTRL1, wxID_FRMLOCACAOTXTCOR, wxID_FRMLOCACAOTXTMODELO, 
+ wxID_FRMLOCACAOTXTCOR, wxID_FRMLOCACAOTXTCPF, wxID_FRMLOCACAOTXTMODELO, 
 ] = [wx.NewId() for _init_ctrls in range(19)]
 
 class frmLocacao(wx.Frame):
@@ -39,17 +39,17 @@ class frmLocacao(wx.Frame):
               name='stCPF', parent=self.panel1, pos=wx.Point(144, 32),
               size=wx.Size(27, 13), style=0)
 
-        self.textCtrl1 = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMLOCACAOTEXTCTRL1,
-              name='textCtrl1', parent=self.panel1, pos=wx.Point(144, 48),
-              size=wx.Size(176, 21), style=0, value='')
-        self.textCtrl1.SetMask('XXX.XXX.XXX-XX')
-        self.textCtrl1.SetAutoformat('')
-        self.textCtrl1.SetDatestyle('MDY')
-        self.textCtrl1.SetFormatcodes('')
-        self.textCtrl1.SetDescription('')
-        self.textCtrl1.SetExcludeChars('')
-        self.textCtrl1.SetValidRegex('')
-        self.textCtrl1.SetMaxLength(14)
+        self.txtCPF = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMLOCACAOTXTCPF,
+              name='txtCPF', parent=self.panel1, pos=wx.Point(144, 48),
+              size=wx.Size(176, 24), style=0, value='')
+        self.txtCPF.SetMask('XXX.XXX.XXX-XX')
+        self.txtCPF.SetAutoformat('')
+        self.txtCPF.SetDatestyle('MDY')
+        self.txtCPF.SetFormatcodes('')
+        self.txtCPF.SetDescription('')
+        self.txtCPF.SetExcludeChars('')
+        self.txtCPF.SetValidRegex('')
+        self.txtCPF.SetMaxLength(14)
 
         self.stNomeCliente = wx.StaticText(id=wxID_FRMLOCACAOSTNOMECLIENTE,
               label='', name='stNomeCliente', parent=self.panel1,
