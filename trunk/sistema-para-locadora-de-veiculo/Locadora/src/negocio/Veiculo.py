@@ -8,7 +8,7 @@ Created on 05/07/2012
 
 class Veiculo:
     
-    def __init__(self,placa,marca,cor,modelo,idTipoVeiculo):
+    def __init__(self,placa,marca,cor,modelo,idTipoVeiculo,quilometragemAtual):
         self.__placa = placa
         self.__marca = marca
         self.__cor = cor
@@ -16,6 +16,7 @@ class Veiculo:
         self.__disponibilidade = "DISPONIVEL"
         self.__idTipoVeiculo = idTipoVeiculo
         self.__idVeiculo = None
+        self.__quilometragemAtual = quilometragemAtual
         
         
     def getPlaca(self):
@@ -52,6 +53,12 @@ class Veiculo:
         return self.__idTipoVeiculo
     def setIdTipoVeiculo(self, idTipoVeiculo):
         self.__idTipoVeiculo = idTipoVeiculo
+    
+    def getQuilometragemAtual(self):
+        return self.__quilometragemAtual
+    def setQuilometragemAtual(self, quilometragemAtual):
+        self.__quilometragemAtual = quilometragemAtual    
+    
         
     def getAtributos(self):
         placa = self.getPlaca()
@@ -60,8 +67,9 @@ class Veiculo:
         modelo = self.getModelo()
         disponibilidade = self.getDisponibilidade()
         idTipoVeiculo = self.getIdTipoVeiculo()
+        quilometragemAtual = self.getQuilometragemAtual()
         
-        return [placa,marca,cor,modelo,disponibilidade,idTipoVeiculo]
+        return [placa,marca,cor,modelo,disponibilidade,idTipoVeiculo,quilometragemAtual]
     
     def toString(self):
         print "\nPlaca: " + self.getPlaca() + \
@@ -69,7 +77,8 @@ class Veiculo:
             "\nCor: " + self.getCor() + \
             "\nModelo: " + self.getModelo() + \
             "\nDisponibilidade: " + self.getDisponibilidade() + \
-            "\nCódigo Tipo Veículo:" + str(self.getIdTipoVeiculo())
+            "\nCódigo Tipo Veículo:" + str(self.getIdTipoVeiculo()) + \
+            "\nQuilometragem Atual: " + str(self.getQuilometragemAtual())
             
     def validarPlaca(self):
         for i in range (0,3):
