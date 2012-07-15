@@ -7,13 +7,13 @@ Created on 07/07/2012
 
 class Locacao:
     
-    def __init__(self, idLocacao,dataLocacao, quilometragemDeSaida):
-        self.__idLocacao = idLocacao
+    def __init__(self,dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo):
+        self.__idLocacao = None
         self.__dataLocacao = dataLocacao
         self.__quilometragemDeSaida = quilometragemDeSaida
         self.__valorContaParcial = 0
-        self.__cpfCliente = None
-        self.__idVeiculo = None
+        self.__cpfCliente = cpfCliente
+        self.__idVeiculo = idVeiculo
         
     def getIdLocacao(self):
         return self.__idLocacao
@@ -47,13 +47,12 @@ class Locacao:
         
             
     def getAtributos(self):
-        idLocacao = self.getIdLocacao()
         dataLocacao = self.getDataLocacao()
         quilometragemDeSaida = self.getQuilometragemDeSaida()
         cpfCliente = self.getCpfCliente()
         idVeiculo = self.getIdVeiculo()
         
-        return [idLocacao,dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo]
+        return [dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo]
     
     def toString(self):
         print "ID Locação %d: " %self.getIdLocacao() + \

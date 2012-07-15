@@ -1,10 +1,11 @@
-#Sun Jul 15 17:55:22 GMT-03:00 2012
+#Sun Jul 15 18:06:27 GMT-03:00 2012
 =\=\=\=\=\=\=
 <<<<<<<=.mine
 >>>>>>>=.r40
 eclipse.preferences.version=1
 encoding//src/db/ClienteDAO.py=latin1
 encoding//src/db/ConnectionUtil.py=latin1
+encoding//src/db/LocacaoDAO.py=latin1
 encoding//src/db/TipoVeiculoDAO.py=latin1
 encoding//src/db/VeiculoDAO.py=latin1
 encoding//src/gui/frmCliente.py=latin1
