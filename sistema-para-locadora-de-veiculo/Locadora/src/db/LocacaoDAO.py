@@ -2,7 +2,7 @@
 '''
 Created on 15/07/2012
 
-@author: Allan do Amaral
+@author: Allan do Amaral e Marcela Domingues
 '''
 from db.ConnectionUtil import *
 from negocio.Locacao import *
@@ -36,13 +36,35 @@ class LocacaoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
                 
+    def verificarExistenciaLocacao(self, idLocacao):
+        
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM LOCACAO WHERE ID_LOCACAO = ? ", (idLocacao,))
+                print "Verificou no banco"
+                retorno = cur.fetchone()
+                                
+                if retorno is not None:
+                    return True
+                else:
+                    return False
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
+                
 
 #hoje = datetime.today()
 #print hoje
 #locacao = Locacao(hoje,1200,833,'000.111.222-33',28)
-#dao = LocacaoDAO()
+dao = LocacaoDAO()
 #dao.insertLocacao(locacao)
-
-
+#print dao.verificarExistenciaLocacao(5)
+#print dao.verificarExistenciaLocacao(95)
     
         
