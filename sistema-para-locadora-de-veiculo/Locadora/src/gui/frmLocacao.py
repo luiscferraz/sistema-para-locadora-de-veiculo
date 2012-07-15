@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 #Boa:Frame:frmLocacao
 
 import wx
@@ -20,14 +21,14 @@ class frmLocacao(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMLOCACAO, name='frmLocacao',
-              parent=prnt, pos=wx.Point(346, 0), size=wx.Size(976, 693),
-              style=wx.VSCROLL | wx.DEFAULT_FRAME_STYLE,
+              parent=prnt, pos=wx.Point(346, 0), size=wx.Size(979, 703),
+              style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION,
               title='Loca\xe7\xe3o de Ve\xedculo')
-        self.SetClientSize(wx.Size(960, 655))
+        self.SetClientSize(wx.Size(963, 665))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.panel1 = wx.Panel(id=wxID_FRMLOCACAOPANEL1, name='panel1',
-              parent=self, pos=wx.Point(0, 0), size=wx.Size(960, 655),
+              parent=self, pos=wx.Point(0, 0), size=wx.Size(963, 665),
               style=wx.VSCROLL)
 
         self.stCliente = wx.StaticBox(id=wxID_FRMLOCACAOSTCLIENTE,
@@ -118,5 +119,12 @@ class frmLocacao(wx.Frame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        
+if __name__ == '__main__':
+    app = wx.PySimpleApp()
+    frame = create(None)
+    frame.Show()
+
+    app.MainLoop()
         
                 
