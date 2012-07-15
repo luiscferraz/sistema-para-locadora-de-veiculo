@@ -145,6 +145,38 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+                
+    def getVeiculosByTipo(self,idTipoVeiculo):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM VEICULOS WHERE FK_ID_TIPO_VEICULO = ? ",(idTipoVeiculo,))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
+                
+    def getVeiculosByCor(self,cor):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM VEICULOS WHERE COR = ? ",(cor,))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
 
     
         
@@ -159,3 +191,5 @@ class VeiculoDAO(object):
 #veiculo_encontrado.setMarca("FORD")
 #veiculo_encontrado.toString()
 #dao.updateVeiculo(veiculo_encontrado)
+#print dao.getVeiculosByTipo(20)
+#print dao.getVeiculosByCor('PRETO')
