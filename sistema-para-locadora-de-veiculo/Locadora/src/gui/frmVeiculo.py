@@ -31,13 +31,13 @@ class frmVeiculo(wx.Frame):
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Placa',
               width=80)
         parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Marca',
-              width=130)
+              width=120)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
-              width=130)
+              width=150)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='Cor',
-              width=130)
+              width=120)
         parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT,
-              heading='Disponibilidade', width=130)
+              heading='Disponibilidade', width=110)
         parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
               heading='C\xf3digo do Tipo do Ve\xedculo', width=155)
         
