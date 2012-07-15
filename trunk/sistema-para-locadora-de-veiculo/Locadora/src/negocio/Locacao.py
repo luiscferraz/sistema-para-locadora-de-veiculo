@@ -5,13 +5,14 @@ Created on 07/07/2012
 @author: Jean Karlos e Marcela Domingues
 '''
 
+
 class Locacao:
     
-    def __init__(self,dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo):
+    def __init__(self,dataLocacao, quilometragemDeSaida,valorContaParcial, cpfCliente, idVeiculo):
         self.__idLocacao = None
         self.__dataLocacao = dataLocacao
         self.__quilometragemDeSaida = quilometragemDeSaida
-        self.__valorContaParcial = 0
+        self.__valorContaParcial = valorContaParcial
         self.__cpfCliente = cpfCliente
         self.__idVeiculo = idVeiculo
         
@@ -49,10 +50,11 @@ class Locacao:
     def getAtributos(self):
         dataLocacao = self.getDataLocacao()
         quilometragemDeSaida = self.getQuilometragemDeSaida()
+        valorParcialConta = self.getValorContaParcial()
         cpfCliente = self.getCpfCliente()
         idVeiculo = self.getIdVeiculo()
         
-        return [dataLocacao, quilometragemDeSaida, cpfCliente, idVeiculo]
+        return [dataLocacao, quilometragemDeSaida, valorParcialConta,cpfCliente, idVeiculo]
     
     def toString(self):
         print "ID Locação %d: " %self.getIdLocacao() + \
