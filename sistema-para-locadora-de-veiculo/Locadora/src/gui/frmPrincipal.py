@@ -6,19 +6,18 @@ import wx.lib.buttons
 def create(parent):
     return frmPrincipal(parent)
 
-[wxID_FRMPRINCIPAL, wxID_FRMPRINCIPALBTNCLIENTES, 
+[wxID_FRMPRINCIPAL, wxID_FRMPRINCIPALBACKGROUND, wxID_FRMPRINCIPALBTNCLIENTES, 
  wxID_FRMPRINCIPALBTNDEVOLUCAO, wxID_FRMPRINCIPALBTNLOCACAO, 
  wxID_FRMPRINCIPALBTNPESQUISAR, wxID_FRMPRINCIPALBTNSAIR, 
  wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
- wxID_FRMPRINCIPALPNLPRINCIPAL, wxID_FRMPRINCIPALSTATICBITMAP1, 
- wxID_FRMPRINCIPALSTINDEX, 
+ wxID_FRMPRINCIPALPNLPRINCIPAL, wxID_FRMPRINCIPALSTINDEX, 
 ] = [wx.NewId() for _init_ctrls in range(11)]
 
 class frmPrincipal(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMPRINCIPAL, name=u'frmPrincipal',
-              parent=prnt, pos=wx.Point(380, 138), size=wx.Size(986, 468),
+              parent=prnt, pos=wx.Point(325, 142), size=wx.Size(986, 468),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Sistema de Loca\xe7\xe3o de Ve\xedculos')
         self.SetClientSize(wx.Size(970, 433))
@@ -60,17 +59,11 @@ class frmPrincipal(wx.Frame):
         self.btnLocacao.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
 
-        self.staticBitmap1 = wx.StaticBitmap(bitmap=wx.Bitmap(u'C:/Users/luisc/Desktop/back.png',
-              wx.BITMAP_TYPE_PNG), id=wxID_FRMPRINCIPALSTATICBITMAP1,
-              name='staticBitmap1', parent=self.pnlPrincipal, pos=wx.Point(184,
+        self.background = wx.StaticBitmap(bitmap=wx.Bitmap(u'../gui/images/back.png',
+              wx.BITMAP_TYPE_PNG), id=wxID_FRMPRINCIPALBACKGROUND,
+              name=u'background', parent=self.pnlPrincipal, pos=wx.Point(184,
               24), size=wx.Size(767, 381), style=0)
-
-        self.btnSair = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNSAIR,
-              label=u'Sair', name=u'btnSair', parent=self.pnlPrincipal,
-              pos=wx.Point(24, 368), size=wx.Size(128, 32), style=0)
-        self.btnSair.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
-              u'Tahoma'))
-
+              
         self.btnDevolucao = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNDEVOLUCAO,
               label=u'Devolu\xe7\xe3o', name=u'btnDevolucao',
               parent=self.pnlPrincipal, pos=wx.Point(24, 224), size=wx.Size(128,
@@ -84,6 +77,14 @@ class frmPrincipal(wx.Frame):
               32), style=0)
         self.btnPesquisar.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+
+        self.btnSair = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNSAIR,
+              label=u'Sair', name=u'btnSair', parent=self.pnlPrincipal,
+              pos=wx.Point(24, 368), size=wx.Size(128, 32), style=0)
+        self.btnSair.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
+              u'Tahoma'))
+
+
 
     def __init__(self, parent):
         self._init_ctrls(parent)
