@@ -10,8 +10,8 @@ from negocio.Cliente import *
 
 class ClienteDAO(object):
     
-                     
-    def insertCliente(self,cliente):
+    @staticmethod                 
+    def insertCliente(cliente):
         
         INSERT_CLIENTE = "INSERT INTO CLIENTES (NOME, ENDERECO, TELEFONE , CEP , \
                      BAIRRO, CIDADE , UF , EMAIL , CPF)  VALUES ( ?, ?, ?, ? , ? , ? , ?, ? , ?)"
@@ -36,8 +36,8 @@ class ClienteDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
                 
-                
-    def verificarExistenciaCliente(self, cpf):
+    @staticmethod             
+    def verificarExistenciaCliente(cpf):
         
         try:
             conexao = ConnectionUtil.conectar()
@@ -59,13 +59,14 @@ class ClienteDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def deleteCliente(self, cpf):
+    @staticmethod 
+    def deleteCliente(cpf):
                 
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                if self.verificarExistenciaCliente(cpf) is True:
+                if ClienteDAO.verificarExistenciaCliente(cpf) is True:
                     cur.execute("DELETE FROM CLIENTES WHERE CPF = ?" , (cpf,))
                     print "Removeu do banco"
                     conexao.commit()
@@ -80,7 +81,8 @@ class ClienteDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def procurarCliente(self, cpf):
+    @staticmethod         
+    def procurarCliente(cpf):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -106,13 +108,14 @@ class ClienteDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
     
-    def updateCliente(self, cliente):
+    @staticmethod 
+    def updateCliente(cliente):
         if(cliente != None):
             try:                                                             
                 conexao = ConnectionUtil.conectar()
                 with conexao:
                     cur = conexao.cursor()
-                    if self.verificarExistenciaCliente(cliente.getCpf()) is True:
+                    if ClienteDAO.verificarExistenciaCliente(cliente.getCpf()) is True:
                         lista = cliente.getAtributos()
                         cur.execute("UPDATE CLIENTES SET NOME =? , ENDERECO = ?, TELEFONE =? , CEP=? , \
                      BAIRRO=?, CIDADE=? , UF =? , EMAIL =?   WHERE CPF = ?", \
@@ -132,7 +135,8 @@ class ClienteDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
                 
-    def getAllClientes(self):
+    @staticmethod             
+    def getAllClientes():
         try:    
             conexao = ConnectionUtil.conectar()
             with conexao:
@@ -154,13 +158,12 @@ class ClienteDAO(object):
 
 
 #cliente = Cliente("111.111.111-11","nome", "endereco", "telefone" , "cep" , "bairro" , "cidade", "uf", "email")
-#dao = ClienteDAO()
-#dao.insertCliente(cliente)
-#print dao.verificarExistenciaCliente("211.111.111-11")
-#dao.deleteCliente("111.111.111-11")
-#cliente_encontrado1 = dao.procurarCliente("001.111.222-33")
-#cliente_encontrado = dao.procurarCliente("000.111.222-33")
+#ClienteDAO.insertCliente(cliente)
+#print ClienteDAO.verificarExistenciaCliente("211.111.111-11")
+#ClienteDAO.deleteCliente("111.111.111-11")
+#cliente_encontrado1 = ClienteDAO.procurarCliente("001.111.222-33")
+#cliente_encontrado = ClienteDAO.procurarCliente("000.111.222-33")
 #cliente_encontrado.toString()
 #cliente_encontrado.setNome("ALLAN DO AMARAL")
 #cliente_encontrado.toString()
-#dao.updateCliente(cliente_encontrado)
+#ClienteDAO.updateCliente(cliente_encontrado)
