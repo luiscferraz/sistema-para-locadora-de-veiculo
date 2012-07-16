@@ -33,6 +33,8 @@ class frmPrincipal(wx.Frame):
               pos=wx.Point(24, 32), size=wx.Size(128, 32), style=0)
         self.btnClientes.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+        self.btnClientes.Bind(wx.EVT_BUTTON, self.OnBtnClientesButton,
+              id=wxID_FRMPRINCIPALBTNCLIENTES)
 
         self.stIndex = wx.StaticBox(id=wxID_FRMPRINCIPALSTINDEX, label=u'',
               name=u'stIndex', parent=self.pnlPrincipal, pos=wx.Point(176, 8),
@@ -44,6 +46,8 @@ class frmPrincipal(wx.Frame):
               32), style=0)
         self.btnTipos.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
               u'Tahoma'))
+        self.btnTipos.Bind(wx.EVT_BUTTON, self.OnBtnTiposButton,
+              id=wxID_FRMPRINCIPALBTNTIPOS)
 
         self.btnVeiculos = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNVEICULOS,
               label=u'Ve\xedculos', name=u'btnVeiculos',
@@ -51,6 +55,8 @@ class frmPrincipal(wx.Frame):
               32), style=0)
         self.btnVeiculos.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+        self.btnVeiculos.Bind(wx.EVT_BUTTON, self.OnBtnVeiculosButton,
+              id=wxID_FRMPRINCIPALBTNVEICULOS)
 
         self.btnLocacao = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNLOCACAO,
               label=u'Loca\xe7\xe3o', name=u'btnLocacao',
@@ -58,18 +64,22 @@ class frmPrincipal(wx.Frame):
               32), style=0)
         self.btnLocacao.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+        self.btnLocacao.Bind(wx.EVT_BUTTON, self.OnBtnLocacaoButton,
+              id=wxID_FRMPRINCIPALBTNLOCACAO)
 
         self.background = wx.StaticBitmap(bitmap=wx.Bitmap(u'../gui/images/back.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMPRINCIPALBACKGROUND,
               name=u'background', parent=self.pnlPrincipal, pos=wx.Point(184,
               24), size=wx.Size(767, 381), style=0)
-              
+
         self.btnDevolucao = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNDEVOLUCAO,
               label=u'Devolu\xe7\xe3o', name=u'btnDevolucao',
               parent=self.pnlPrincipal, pos=wx.Point(24, 224), size=wx.Size(128,
               32), style=0)
         self.btnDevolucao.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+        self.btnDevolucao.Bind(wx.EVT_BUTTON, self.OnBtnDevolucaoButton,
+              id=wxID_FRMPRINCIPALBTNDEVOLUCAO)
 
         self.btnPesquisar = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNPESQUISAR,
               label=u'Pesquisar', name=u'btnPesquisar',
@@ -77,17 +87,40 @@ class frmPrincipal(wx.Frame):
               32), style=0)
         self.btnPesquisar.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
               False, u'Tahoma'))
+        self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
+              id=wxID_FRMPRINCIPALBTNPESQUISAR)
 
         self.btnSair = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNSAIR,
               label=u'Sair', name=u'btnSair', parent=self.pnlPrincipal,
               pos=wx.Point(24, 368), size=wx.Size(128, 32), style=0)
         self.btnSair.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
               u'Tahoma'))
-
-
+        self.btnSair.Bind(wx.EVT_BUTTON, self.OnBtnSairButton,
+              id=wxID_FRMPRINCIPALBTNSAIR)
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+
+    def OnBtnClientesButton(self, event):
+        event.Skip()
+
+    def OnBtnTiposButton(self, event):
+        event.Skip()
+
+    def OnBtnVeiculosButton(self, event):
+        event.Skip()
+
+    def OnBtnLocacaoButton(self, event):
+        event.Skip()
+
+    def OnBtnDevolucaoButton(self, event):
+        event.Skip()
+
+    def OnBtnPesquisarButton(self, event):
+        event.Skip()
+
+    def OnBtnSairButton(self, event):
+        event.Skip()
 
 
 if __name__ == '__main__':
