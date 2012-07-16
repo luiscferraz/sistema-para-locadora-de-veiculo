@@ -184,7 +184,7 @@ class VeiculoDAO(object):
         try:
             with conexao:
                 cur = conexao.cursor()
-                cur.execute("SELECT * FROM VEICULOS WHERE MODELO = ? ",(modelo,))
+                cur.execute("SELECT * FROM VEICULOS WHERE MODELO LIKE ? ",(modelo+"%",))
                 row = cur.fetchall()      
                 return row
         except lite.Error, e:
@@ -212,4 +212,4 @@ class VeiculoDAO(object):
 #dao.updateVeiculo(veiculo_encontrado)
 #print dao.getVeiculosByTipo(20)
 #print dao.getVeiculosByCor('PRETO')
-#print dao.getVeiculosByModelo("CELTA 1.0")
+#print dao.getVeiculosByModelo("u")
