@@ -42,7 +42,7 @@ class frmVeiculo(wx.Frame):
         parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
               heading='Cod. do tipo ', width=90)
         parent.InsertColumn(col=6, format=wx.LIST_FORMAT_LEFT,
-              heading='Km Atual', width=85)
+              heading='Km Atual', width=68)
         
     def _init_opcoes_tipo_veiculo(self):
         #Método feito para colocar todos os tipos
