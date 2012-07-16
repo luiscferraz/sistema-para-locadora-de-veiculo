@@ -267,18 +267,24 @@ class frmLocacao(wx.Frame):
             self.lsTipoVeiculo.Enable()
             self.txtModelo.Disable()
             self.txtCor.Disable()
+            self.listCtrlBuscaTipoVeiculo.Destroy()
+            self.criarTabela()
         elif (self.radioBoxTipoBusca.GetSelection() == 1):
             self.txtModelo.Enable()
             self.btnPesquisarModelo.Enable()
             self.txtCor.Disable()
             self.lsTipoVeiculo.Disable()
             self.lsTipoVeiculo.Select(-1)
+            self.listCtrlBuscaTipoVeiculo.Destroy()
+            self.criarTabela()
         elif (self.radioBoxTipoBusca.GetSelection() == 2):
             self.txtModelo.Disable()
             self.lsTipoVeiculo.Disable()
             self.lsTipoVeiculo.Select(-1)
             self.txtCor.Enable()
             self.btnPesquisarCor.Enable()
+            self.listCtrlBuscaTipoVeiculo.Destroy()
+            self.criarTabela()
 
     def OnTxtModeloTextEnter(self, event):
         event.Skip()
@@ -298,6 +304,7 @@ class frmLocacao(wx.Frame):
         modelo = str(self.txtModelo.GetValue())
         
         self.inserirInformacoesNaListctrlByModelo(self.listCtrlBuscaTipoVeiculo, modelo.upper())
+        self.txtModelo.Clear()
 
     def OnGenBitmapButton2Button(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
@@ -306,6 +313,8 @@ class frmLocacao(wx.Frame):
         cor = str(self.txtCor.GetValue())
         
         self.inserirInformacoesNaListctrlByCor(self.listCtrlBuscaTipoVeiculo, cor.upper())
+        
+        self.txtCor.Clear()
 
     def OnLsTipoVeiculoSetFocus(self, event):
         event.Skip()
