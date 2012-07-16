@@ -366,9 +366,7 @@ class frmCliente(wx.Frame):
         self.txtPesquisa.Clear()
         
     def OnBtnEditarButton(self, event):
-        #Método para editar um cliente selecionado na Listctrl
-        
-        
+        #Método para editar um cliente selecionado na Listctrl      
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstClientes.GetFocusedItem()
@@ -439,8 +437,6 @@ class frmCliente(wx.Frame):
         
 
     def OnBtnExcluirButton(self, event):       
-                
-        
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstClientes.GetFocusedItem()

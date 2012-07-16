@@ -209,9 +209,9 @@ class frmTipoVeiculo(wx.Frame):
         
     def inserirInformacoesNaListctrl(self,lista):
         #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = TipoVeiculoDAO()
+        
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = dao.getAllTipos()
+        rows = TipoVeiculoDAO.getAllTipos()
         if rows:
             for row in rows:
                 print row
@@ -229,9 +229,8 @@ class frmTipoVeiculo(wx.Frame):
         try:
             lista = self.obterDadosInformados()
             tipo = TipoVeiculo(lista[0],lista[1],lista[2],lista[3],lista[4]) 
-                                        
-            dao = TipoVeiculoDAO()
-            dao.insertTipo(tipo)
+            
+            TipoVeiculoDAO.insertTipo(tipo)
             
             self.updateListctrl()
             
@@ -256,9 +255,7 @@ class frmTipoVeiculo(wx.Frame):
         
     def OnBtnEditarButton(self, event):        
         #Método para editar um tipo de veículo selecionado na Listctrl
-        
-        dao = TipoVeiculoDAO()
-        
+                
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstTipoVeiculos.GetFocusedItem()
         
@@ -271,7 +268,7 @@ class frmTipoVeiculo(wx.Frame):
             idTipoVeiculo = self.lstTipoVeiculos.GetItemText(indice)
             
             #busca o tipo de veículo selecionado no banco de dados         
-            tipoSelecionado = dao.procurarTipo(idTipoVeiculo)
+            tipoSelecionado = TipoVeiculoDAO.procurarTipo(idTipoVeiculo)
             
             #Colocando os valores do banco nos campos da tela
             self.txtCodigo.SetValue(str(tipoSelecionado.getIdTipoVeiculo()))            
@@ -299,9 +296,9 @@ class frmTipoVeiculo(wx.Frame):
         #guardando informações em um tipo
         tipo = TipoVeiculo(lista[0],lista[1],lista[2],lista[3],lista[4]) 
         
-        dao = TipoVeiculoDAO()
+        
         #atualizando um tipo no banco de dados
-        dao.updateTipo(tipo)
+        TipoVeiculoDAO.updateTipo(tipo)
         
         #atualiza a Listctrl
         self.updateListctrl()
@@ -317,7 +314,7 @@ class frmTipoVeiculo(wx.Frame):
         self.btnAtualizar.Disable()
 
     def OnBtnExcluirButton(self, event):
-        dao = TipoVeiculoDAO()
+        
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstTipoVeiculos.GetFocusedItem()
@@ -327,7 +324,7 @@ class frmTipoVeiculo(wx.Frame):
             idTipoVeiculo = self.lstTipoVeiculos.GetItemText(indice)
             try:                
                 #deleta o tipo do banco
-                dao.deleteTipoVeiculo(idTipoVeiculo)
+                TipoVeiculoDAO.deleteTipoVeiculo(idTipoVeiculo)
                 #para atualizar a Listctrl retirando o tipo que existia nela
                 self.updateListctrl()                
             except:
@@ -343,10 +340,9 @@ class frmTipoVeiculo(wx.Frame):
     def OnBtnPesquisarButton(self, event):
         codigoInformado = int(self.txtPesquisa.GetValue())
         print codigoInformado
-        dao = TipoVeiculoDAO()
                 
         try:
-            tipoVeiculo = dao.procurarTipo(codigoInformado)
+            tipoVeiculo = TipoVeiculoDAO.procurarTipo(codigoInformado)
             
             self.txtCodigo.SetValue (str(tipoVeiculo.getIdTipoVeiculo()))
             self.txtTaxa.SetValue (str(tipoVeiculo.getTaxaBase()))

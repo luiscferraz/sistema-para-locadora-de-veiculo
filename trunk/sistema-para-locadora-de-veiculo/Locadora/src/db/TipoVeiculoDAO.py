@@ -10,8 +10,8 @@ from db.ConnectionUtil import *
 
 class TipoVeiculoDAO(object):
     
-                     
-    def insertTipo(self,tipoVeiculo):
+    @staticmethod                 
+    def insertTipo(tipoVeiculo):
         
         INSERT_TIPO = "INSERT INTO TIPO_VEICULOS (ID_TIPO_VEICULO, TAXA_BASE, PRECO_KM, DESCRICAO , CAUCAO) \
                      VALUES ( ?, ?, ?, ?, ?)"
@@ -36,8 +36,8 @@ class TipoVeiculoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
                 
-                
-    def verificarExistenciaTipo(self, idTipoVeiculo):
+    @staticmethod            
+    def verificarExistenciaTipo(idTipoVeiculo):
         
         try:
             conexao = ConnectionUtil.conectar()
@@ -58,14 +58,15 @@ class TipoVeiculoDAO(object):
                 sys.exit(1)
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
-            
-    def deleteTipoVeiculo(self, idTipoVeiculo):
+    
+    @staticmethod        
+    def deleteTipoVeiculo(idTipoVeiculo):
                 
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                if self.verificarExistenciaTipo(idTipoVeiculo) is True:
+                if TipoVeiculoDAO.verificarExistenciaTipo(idTipoVeiculo) is True:
                     cur.execute("DELETE FROM TIPO_VEICULOS WHERE ID_TIPO_VEICULO = ?" , (idTipoVeiculo,))
                     print "Removeu do banco"
                     conexao.commit()
@@ -80,7 +81,8 @@ class TipoVeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-    def procurarTipo(self, idTipoVeiculo):
+    @staticmethod
+    def procurarTipo(idTipoVeiculo):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -104,13 +106,14 @@ class TipoVeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
     
-    def updateTipo(self, tipo):
+    @staticmethod
+    def updateTipo(tipo):
         if(tipo != None):
             try:                                                             
                 conexao = ConnectionUtil.conectar()
                 with conexao:
                     cur = conexao.cursor()
-                    if self.verificarExistenciaTipo(tipo.getIdTipoVeiculo()) is True:
+                    if TipoVeiculoDAO.verificarExistenciaTipo(tipo.getIdTipoVeiculo()) is True:
                         lista = tipo.getAtributos()
                         cur.execute("UPDATE TIPO_VEICULOS SET TAXA_BASE=?, PRECO_KM=?, DESCRICAO=?, CAUCAO=?  WHERE ID_TIPO_VEICULO = ?", \
                                     tuple([lista[1],lista[2],lista[3],lista[4], lista[0]]))
@@ -127,8 +130,9 @@ class TipoVeiculoDAO(object):
                     sys.exit(1)    
             finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
-                
-    def getAllTipos(self):
+    
+    @staticmethod            
+    def getAllTipos():
         try:    
             conexao = ConnectionUtil.conectar()
             with conexao:
@@ -147,13 +151,12 @@ class TipoVeiculoDAO(object):
 
 
 #tipo = TipoVeiculo(30, 200, 12, "descricao", 23)
-#dao = TipoVeiculoDAO()
-#dao.insertTipo(tipo)
-#print dao.verificarExistenciaTipo(12)
-#dao.deleteTipo(12)
-#tipo_encontrado1 = dao.procurarTipo(12)
-#tipo_encontrado = dao.procurarTipo(1234)
+#TipoVeiculoDAO.insertTipo(tipo)
+#print TipoVeiculoDAO.verificarExistenciaTipo(12)
+#TipoVeiculoDAO.deleteTipo(12)
+#tipo_encontrado1 = TipoVeiculoDAO.procurarTipo(12)
+#tipo_encontrado = TipoVeiculoDAO.procurarTipo(1234)
 #tipo_encontrado1.toString()
 #tipo_encontrado1.setDescricao("default")
 #tipo_encontrado.toString()
-#dao.updateTipo(tipo_encontrado1)
+#TipoVeiculoDAO.updateTipo(tipo_encontrado1)
