@@ -301,9 +301,9 @@ class frmCliente(wx.Frame):
         
     def inserirInformacoesNaListctrl(self,lista):
         #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = ClienteDAO()
+        
         #Pega todos os clientes presentes no banco de dados
-        rows = dao.getAllClientes()
+        rows = ClienteDAO.getAllClientes()
         if rows:
             for row in rows:
                 num_itens = lista.GetItemCount()
@@ -315,8 +315,8 @@ class frmCliente(wx.Frame):
                 lista.SetStringItem(num_itens,3,row[9])
     
     def inserirResultadoDeBusca(self,lista,cpf):
-        dao = ClienteDAO()
-        clienteEncontrado = dao.procurarCliente(cpf)
+        
+        clienteEncontrado = ClienteDAO.procurarCliente(cpf)
         #print clienteEncontrado.toString()
         num_itens = lista.GetItemCount()
         lista.InsertStringItem(num_itens,str(clienteEncontrado.getCpf()))
@@ -330,9 +330,9 @@ class frmCliente(wx.Frame):
             lista = self.obterDadosInformados()
             cliente = Cliente(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8]) 
                                                    
-            dao = ClienteDAO()
-            if (dao.verificarExistenciaCliente(cliente.getCpf()) is False):
-                dao.insertCliente(cliente)
+            
+            if (ClienteDAO.verificarExistenciaCliente(cliente.getCpf()) is False):
+                ClienteDAO.insertCliente(cliente)
             
                 self.updateListctrl()
             
@@ -368,7 +368,7 @@ class frmCliente(wx.Frame):
     def OnBtnEditarButton(self, event):
         #Método para editar um cliente selecionado na Listctrl
         
-        dao = ClienteDAO()
+        
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstClientes.GetFocusedItem()
@@ -382,7 +382,7 @@ class frmCliente(wx.Frame):
             cpf = self.lstClientes.GetItemText(indice)
             
             #busca o cliente selecionado no banco de dados         
-            clienteSelecionado = dao.procurarCliente(cpf)
+            clienteSelecionado = ClienteDAO.procurarCliente(cpf)
             
             #Colocando os valores do banco nos campos da tela
             self.txtCpf.SetValue(str(clienteSelecionado.getCpf()))
@@ -419,9 +419,9 @@ class frmCliente(wx.Frame):
         #guardando informações em um cliente
         cliente = Cliente(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7],lista[8]) 
         
-        dao = ClienteDAO()
+        
         #atualizando um cliente no banco de dados
-        dao.updateCliente(cliente)
+        ClienteDAO.updateCliente(cliente)
         
         #atualiza a Listctrl
         self.updateListctrl()
@@ -440,7 +440,7 @@ class frmCliente(wx.Frame):
 
     def OnBtnExcluirButton(self, event):       
                 
-        dao = ClienteDAO()
+        
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstClientes.GetFocusedItem()
@@ -450,7 +450,7 @@ class frmCliente(wx.Frame):
             cpf = self.lstClientes.GetItemText(indice)
             try:                
                 #deleta o cliente do banco
-                dao.deleteCliente(cpf)
+                ClienteDAO.deleteCliente(cpf)
                 #para atualizar a Listctrl retirando o cliente q existia nela
                 self.updateListctrl()                
             except:
@@ -468,9 +468,9 @@ class frmCliente(wx.Frame):
     def OnBtnPesquisarButton(self, event):
         cpf = self.txtPesquisa.GetValue()
         
-        dao = ClienteDAO()
+        
         try:
-            clienteSelecionado  = dao.procurarCliente(cpf)
+            clienteSelecionado  = ClienteDAO.procurarCliente(cpf)
             self.txtCpf.SetValue(clienteSelecionado.getCpf())
             self.txtNome.SetValue(clienteSelecionado.getNome())
             self.txtEndereco.SetValue(clienteSelecionado.getEndereco())
@@ -496,11 +496,7 @@ class frmCliente(wx.Frame):
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
-            
-        
-        
-    
-        
+       
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
