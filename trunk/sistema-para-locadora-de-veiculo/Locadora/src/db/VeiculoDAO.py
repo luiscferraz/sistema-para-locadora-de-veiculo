@@ -168,7 +168,7 @@ class VeiculoDAO(object):
         try:
             with conexao:
                 cur = conexao.cursor()
-                cur.execute("SELECT * FROM VEICULOS WHERE COR = ? ",(cor,))
+                cur.execute("SELECT * FROM VEICULOS WHERE COR LIKE ? ",(cor+"%",))
                 row = cur.fetchall()      
                 return row
         except lite.Error, e:
