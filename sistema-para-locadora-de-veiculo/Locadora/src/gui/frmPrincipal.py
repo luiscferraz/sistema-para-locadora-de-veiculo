@@ -3,6 +3,11 @@
 import wx
 import wx.lib.buttons
 
+import frmCliente
+import frmVeiculo
+import frmTipoVeiculo
+import frmLocacao
+
 def create(parent):
     return frmPrincipal(parent)
 
@@ -102,16 +107,21 @@ class frmPrincipal(wx.Frame):
         self._init_ctrls(parent)
 
     def OnBtnClientesButton(self, event):
-        event.Skip()
+        telaCliente = frmCliente.create(None)
+        telaCliente.Show()
+        
 
     def OnBtnTiposButton(self, event):
-        event.Skip()
+        telaTipoVeiculo = frmTipoVeiculo.create(None)
+        telaTipoVeiculo.Show()
 
     def OnBtnVeiculosButton(self, event):
-        event.Skip()
+        telaVeiculo = frmVeiculo.create(None)
+        telaVeiculo.Show()
 
     def OnBtnLocacaoButton(self, event):
-        event.Skip()
+        telaLocacao = frmLocacao.create(None)
+        telaLocacao.Show()
 
     def OnBtnDevolucaoButton(self, event):
         event.Skip()
