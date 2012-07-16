@@ -9,8 +9,10 @@ from negocio.Veiculo import *
 from db.VeiculoDAO import *
 from db.VeiculoDAO import VeiculoDAO
 from negocio.Veiculo import *
+from wx.tools.Editra.src.ebmlib.miscutil import Singleton
 
 def create(parent):
+    
     return frmVeiculo(parent)
 
 [wxID_FRMVEICULO, wxID_FRMVEICULOBTNATUALIZAR, wxID_FRMVEICULOBTNCANCELAR, 
@@ -26,6 +28,8 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(24)]
 
 class frmVeiculo(wx.Frame):
+    #Luís explicou que é para que não abra mais de uma página de cliente.
+    __metaclass__ = Singleton
     def _init_coll_lstVeiculos_Columns(self, parent):
         # generated method, don't edit
 
