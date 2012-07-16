@@ -214,6 +214,7 @@ class frmTipoVeiculo(wx.Frame):
         rows = dao.getAllTipos()
         if rows:
             for row in rows:
+                print row
                 num_itens = lista.GetItemCount()
                 lista.InsertStringItem(num_itens,str(row[0]))
                 #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete

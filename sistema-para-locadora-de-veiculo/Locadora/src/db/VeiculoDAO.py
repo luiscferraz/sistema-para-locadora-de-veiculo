@@ -178,6 +178,23 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+                
+    def getVeiculosByModelo(self,modelo):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM VEICULOS WHERE MODELO = ? ",(modelo,))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
+
 
     
         
@@ -195,3 +212,4 @@ class VeiculoDAO(object):
 #dao.updateVeiculo(veiculo_encontrado)
 #print dao.getVeiculosByTipo(20)
 #print dao.getVeiculosByCor('PRETO')
+#print dao.getVeiculosByModelo("CELTA 1.0")
