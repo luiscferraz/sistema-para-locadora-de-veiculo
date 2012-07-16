@@ -250,7 +250,7 @@ class frmLocacao(wx.Frame):
             caixaDeDialogo.Destroy()
             
             self.txtCPF.Clear()
-        #event.skip()
+        
 
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
@@ -266,23 +266,35 @@ class frmLocacao(wx.Frame):
         if (self.radioBoxTipoBusca.GetSelection() == 0):
             self.lsTipoVeiculo.Enable()
             self.txtModelo.Disable()
+            
             self.txtCor.Disable()
+            self.btnPesquisarCor.Disable()
+            
             self.listCtrlBuscaTipoVeiculo.Destroy()
             self.criarTabela()
         elif (self.radioBoxTipoBusca.GetSelection() == 1):
+            
             self.txtModelo.Enable()
             self.btnPesquisarModelo.Enable()
+            
             self.txtCor.Disable()
+            self.btnPesquisarCor.Disable()
+            
             self.lsTipoVeiculo.Disable()
             self.lsTipoVeiculo.Select(-1)
+            
             self.listCtrlBuscaTipoVeiculo.Destroy()
             self.criarTabela()
         elif (self.radioBoxTipoBusca.GetSelection() == 2):
             self.txtModelo.Disable()
+            self.btnPesquisarModelo.Disable()
+            
             self.lsTipoVeiculo.Disable()
             self.lsTipoVeiculo.Select(-1)
+            
             self.txtCor.Enable()
             self.btnPesquisarCor.Enable()
+            
             self.listCtrlBuscaTipoVeiculo.Destroy()
             self.criarTabela()
 
@@ -295,7 +307,7 @@ class frmLocacao(wx.Frame):
       
         idTipoVeiculo = self.getIdTipo(self.lsTipoVeiculo)
         self.inserirInformacoesNaListctrlByTipo(self.listCtrlBuscaTipoVeiculo, idTipoVeiculo)
-        #event.Skip()
+        
 
     def OnGenBitmapButton1Button(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
