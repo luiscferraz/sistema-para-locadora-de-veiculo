@@ -102,6 +102,11 @@ class frmLocacao(wx.Frame):
         self.radioBoxTipoBusca.SetAutoLayout(True)
         self.radioBoxTipoBusca.SetSelection(2)
         self.radioBoxTipoBusca.SetStringSelection('Tipo de ve\xedculo')
+        self.radioBoxTipoBusca.Bind(wx.EVT_SET_FOCUS,
+              self.OnRadioBoxTipoBuscaSetFocus)
+        self.radioBoxTipoBusca.Bind(wx.EVT_RADIOBOX,
+              self.OnRadioBoxTipoBuscaRadiobox,
+              id=wxID_FRMLOCACAORADIOBOXTIPOBUSCA)
 
         self.stTipoVeiculo = wx.StaticText(id=wxID_FRMLOCACAOSTTIPOVEICULO,
               label='Tipo de Ve\xedculo : ', name='stTipoVeiculo',
@@ -160,10 +165,18 @@ class frmLocacao(wx.Frame):
               pos=wx.Point(24, 64), size=wx.Size(76, 25), style=0)
         self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
               id=wxID_FRMLOCACAOBTNCANCELAR)
+        
+        
+        
 
     def __init__(self, parent):
         self._init_ctrls(parent)
-
+        self.txtCor.Disable()
+        self.txtModelo.Disable()
+        self.lsTipoVeiculo.Disable()
+        self.radioBoxTipoBusca.Disable()
+    
+    
     def OnTxtCPFTextMaxlen(self, event):
         event.Skip()
 
@@ -177,16 +190,36 @@ class frmLocacao(wx.Frame):
         #print dao.verificarExistenciaCliente(cpf)
         if(dao.verificarExistenciaCliente(cpf) is True):
             cliente = dao.procurarCliente(cpf)
-            self.stNomeCliente.SetLabel(cliente.getNome())   
+            self.stNomeCliente.SetLabel(cliente.getNome())  
+            self.radioBoxTipoBusca.Enable() 
         else:
             caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
             self.txtCPF.Clear()
+        
 
     def OnBtnCancelarButton(self, event):
         event.Skip()
+
+    def OnRadioBoxTipoBuscaSetFocus(self, event):
+        event.Skip()
+
+    def OnRadioBoxTipoBuscaRadiobox(self, event):
+        if (self.radioBoxTipoBusca.GetSelection() == 0):
+            self.lsTipoVeiculo.Enable()
+            self.txtModelo.Disable()
+            self.txtCor.Disable()
+        elif (self.radioBoxTipoBusca.GetSelection() == 1):
+            self.txtModelo.Enable()
+            self.txtCor.Disable()
+            self.lsTipoVeiculo.Disable()
+
+        elif (self.radioBoxTipoBusca.GetSelection() == 2):
+            self.txtCor.Enable()
+            self.txtModelo.Disable()
+            self.lsTipoVeiculo.Disable()
 
     
         
