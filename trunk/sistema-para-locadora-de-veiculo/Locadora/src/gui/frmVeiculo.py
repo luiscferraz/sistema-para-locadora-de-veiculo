@@ -60,7 +60,7 @@ class frmVeiculo(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMVEICULO, name='frmVeiculo',
-              parent=prnt, pos=wx.Point(377, 152), size=wx.Size(967, 526),
+              parent=prnt, pos=wx.Point(350, 88), size=wx.Size(967, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Ve\xedculos')
         self.SetClientSize(wx.Size(951, 488))

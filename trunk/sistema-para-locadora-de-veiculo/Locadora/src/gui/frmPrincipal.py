@@ -22,7 +22,7 @@ class frmPrincipal(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMPRINCIPAL, name=u'frmPrincipal',
-              parent=prnt, pos=wx.Point(325, 142), size=wx.Size(986, 468),
+              parent=prnt, pos=wx.Point(175, 142), size=wx.Size(986, 468),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Sistema de Loca\xe7\xe3o de Ve\xedculos')
         self.SetClientSize(wx.Size(970, 433))
