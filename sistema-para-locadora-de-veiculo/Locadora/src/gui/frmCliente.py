@@ -47,7 +47,7 @@ class frmCliente(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMCLIENTE, name=u'frmCliente',
-              parent=prnt, pos=wx.Point(430, 98), size=wx.Size(641, 526),
+              parent=prnt, pos=wx.Point(350, 28), size=wx.Size(641, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Cliente')
         self.SetClientSize(wx.Size(825, 488))

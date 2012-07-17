@@ -51,7 +51,7 @@ class frmLocacao(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMLOCACAO, name='frmLocacao',
-              parent=prnt, pos=wx.Point(416, 54), size=wx.Size(962, 680),
+              parent=prnt, pos=wx.Point(350, 118), size=wx.Size(962, 680),
               style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION,
               title='Loca\xe7\xe3o de Ve\xedculo')
         self.SetClientSize(wx.Size(946, 642))
