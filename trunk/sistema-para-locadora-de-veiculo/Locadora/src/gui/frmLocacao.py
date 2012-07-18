@@ -281,16 +281,17 @@ class frmLocacao(wx.Frame):
             
             LocacaoDAO.insertLocacao(locacao)
             
-            self.Destroy()
+            self.listCtrlBuscaTipoVeiculo.Destroy()
             self.criarTabela()
             
-            print "Locação efetuada com sucesso" 
-                    
-
-        else:            
-            caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            #print "Locação efetuada com sucesso" 
+            caixaDeMensagem = wx.MessageDialog(self,'Locação efetuada com sucesso.', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
             caixaDeMensagem.ShowModal()
             caixaDeMensagem.Destroy()
+        else:            
+                caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
 
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
