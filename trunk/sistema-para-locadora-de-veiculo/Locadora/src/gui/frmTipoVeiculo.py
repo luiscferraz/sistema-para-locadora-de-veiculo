@@ -8,6 +8,7 @@ import wx.lib.buttons
 from negocio.TipoVeiculo import *
 from db.TipoVeiculoDAO import *
 from wx.tools.Editra.src.ebmlib.miscutil import Singleton
+
 #comentar até a linha acima
 
 def create(parent):

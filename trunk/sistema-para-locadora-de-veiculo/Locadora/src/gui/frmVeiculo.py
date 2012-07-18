@@ -48,15 +48,6 @@ class frmVeiculo(wx.Frame):
         parent.InsertColumn(col=6, format=wx.LIST_FORMAT_LEFT,
               heading='Km Atual', width=68)
         
-    def _init_opcoes_tipo_veiculo(self):
-        #Método feito para colocar todos os tipos
-        tipos = TipoVeiculoDAO().getAllTipos()
-        listaTipos = []
-        for i in tipos:
-            listaTipos.append(i[3])
-        return listaTipos
-
-
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMVEICULO, name='frmVeiculo',
@@ -132,7 +123,7 @@ class frmVeiculo(wx.Frame):
               parent=self.pnlVeiculo, pos=wx.Point(572, 88), size=wx.Size(90,
               13), style=0)
 
-        self.lstTipo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMVEICULOLSTTIPO,
+        self.lstTipo = wx.Choice(choices=TipoVeiculoDAO.listarTiposDeVeiculos(), id=wxID_FRMVEICULOLSTTIPO,
               name=u'lstTipo', parent=self.pnlVeiculo, pos=wx.Point(572, 104),
               size=wx.Size(338, 21), style=0)
         self.lstTipo.Bind(wx.EVT_CHOICE, self.getIdTipo,

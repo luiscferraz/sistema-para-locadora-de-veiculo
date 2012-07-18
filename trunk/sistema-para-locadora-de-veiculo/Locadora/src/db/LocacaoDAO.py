@@ -10,7 +10,8 @@ from datetime import *
 
 class LocacaoDAO(object):
     
-    def insertLocacao(self,locacao):
+    @staticmethod
+    def insertLocacao(locacao):
         
         INSERT_LOCACAO = "INSERT INTO LOCACAO (DATA_LOCACAO, QUILOMETRAGEM_SAIDA, VALOR_CONTA_PARCIAL ,  \
         FK_CPF_CLIENTE, FK_ID_VEICULO) VALUES ( ?, ?, ?, ?, ?)"
@@ -35,8 +36,9 @@ class LocacaoDAO(object):
                     sys.exit(1)   
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
-                
-    def verificarExistenciaLocacao(self, idLocacao):
+    
+    @staticmethod            
+    def verificarExistenciaLocacao(idLocacao):
         
         try:
             conexao = ConnectionUtil.conectar()
@@ -58,7 +60,8 @@ class LocacaoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
     
-    def deleteLocacao(self, idLocacao):
+    @staticmethod
+    def deleteLocacao(idLocacao):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -80,7 +83,8 @@ class LocacaoDAO(object):
             ConnectionUtil.fecharConexao(cur,conexao)
             
     
-    def procurarLocacaoById(self, idLocacao):
+    @staticmethod
+    def procurarLocacaoById(idLocacao):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -105,8 +109,9 @@ class LocacaoDAO(object):
             print "\nLocação Inexistente"   
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
-            
-    def updateLocacao(self, locacao):
+    
+    @staticmethod       
+    def updateLocacao(locacao):
         if(locacao != None):
             try:                                                             
                 conexao = ConnectionUtil.conectar()
@@ -134,7 +139,8 @@ class LocacaoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
     
-    def getAllLocacoes(self):
+    @staticmethod
+    def getAllLocacoes():
         try:    
             conexao = ConnectionUtil.conectar()
             with conexao:

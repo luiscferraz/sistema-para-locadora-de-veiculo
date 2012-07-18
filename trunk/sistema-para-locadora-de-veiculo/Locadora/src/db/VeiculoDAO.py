@@ -167,13 +167,30 @@ class VeiculoDAO(object):
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
     
+#    @staticmethod
+#    def getVeiculosByCor(cor):
+#        conexao = ConnectionUtil.conectar()
+#        try:
+#            with conexao:
+#                cur = conexao.cursor()
+#                cur.execute("SELECT * FROM VEICULOS WHERE COR LIKE ? ",(cor+"%",))
+#                row = cur.fetchall()      
+#                return row
+#        except lite.Error, e:
+#            if conexao:
+#                conexao.rollback()        
+#                print "Error %s:" % e.args[0]
+#                sys.exit(1)    
+#        finally:
+#                ConnectionUtil.fecharConexao(cur,conexao)
+                
     @staticmethod
-    def getVeiculosByCor(cor):
+    def getVeiculosDisponiveisByCor(cor,disponibilidade):
         conexao = ConnectionUtil.conectar()
         try:
             with conexao:
                 cur = conexao.cursor()
-                cur.execute("SELECT * FROM VEICULOS WHERE COR LIKE ? ",(cor+"%",))
+                cur.execute("SELECT * FROM VEICULOS WHERE COR LIKE ? AND DISPONIBILIDADE = ?",(cor+"%",disponibilidade,))
                 row = cur.fetchall()      
                 return row
         except lite.Error, e:
@@ -183,6 +200,7 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+
                 
     @staticmethod
     def getVeiculosByModelo(modelo):
