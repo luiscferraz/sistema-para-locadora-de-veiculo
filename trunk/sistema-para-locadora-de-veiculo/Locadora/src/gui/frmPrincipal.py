@@ -130,7 +130,7 @@ class frmPrincipal(wx.Frame):
         event.Skip()
 
     def OnBtnSairButton(self, event):
-        event.Skip()
+        self.Destroy()
 
 
 if __name__ == '__main__':
