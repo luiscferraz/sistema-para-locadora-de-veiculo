@@ -9,8 +9,8 @@ from db.ConnectionUtil import *
 from negocio.Veiculo import *
 
 class VeiculoDAO(object):
-    
-    def insertVeiculo(self,veiculo):
+    @staticmethod
+    def insertVeiculo(veiculo):
         
         INSERT_VEICULO = "INSERT INTO VEICULOS (PLACA, MARCA, COR , MODELO , DISPONIBILIDADE,  \
         FK_ID_TIPO_VEICULO, QUILOMETRAGEM_ATUAL) VALUES ( ?, ?, ?, ?, ?, ?,?)"
@@ -36,8 +36,8 @@ class VeiculoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
                 
-                
-    def verificarExistenciaVeiculo(self, placa):
+    @staticmethod           
+    def verificarExistenciaVeiculo(placa):
         
         try:
             conexao = ConnectionUtil.conectar()
@@ -59,14 +59,14 @@ class VeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
             
-            
-    def deleteVeiculo(self, placa):
+    @staticmethod        
+    def deleteVeiculo(placa):
                 
         try:
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                if self.verificarExistenciaVeiculo(placa) is True:
+                if VeiculoDAO.verificarExistenciaVeiculo(placa) is True:
                     cur.execute("DELETE FROM VEICULOS WHERE PLACA = ?" , (placa,))
                     print "Removeu do banco"
                     conexao.commit()
@@ -80,8 +80,9 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
-            
-    def procurarVeiculo(self, placa):
+    
+    @staticmethod
+    def procurarVeiculo(placa):
                 
         try:
             conexao = ConnectionUtil.conectar()
@@ -106,13 +107,14 @@ class VeiculoDAO(object):
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
     
-    def updateVeiculo(self, veiculo):
+    @staticmethod
+    def updateVeiculo(veiculo):
         if(veiculo != None):
             try:                                                             
                 conexao = ConnectionUtil.conectar()
                 with conexao:
                     cur = conexao.cursor()
-                    if self.verificarExistenciaVeiculo(veiculo.getPlaca()) is True:
+                    if VeiculoDAO.verificarExistenciaVeiculo(veiculo.getPlaca()) is True:
                         lista = veiculo.getAtributos()
                         cur.execute("UPDATE VEICULOS SET MARCA=?, COR=?, MODELO=? , \
                      DISPONIBILIDADE=?, FK_ID_TIPO_VEICULO=? , QUILOMETRAGEM_ATUAL=? WHERE PLACA = ?", \
@@ -130,8 +132,9 @@ class VeiculoDAO(object):
                     sys.exit(1)    
             finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
-                
-    def getAllVeiculos(self):
+    
+    @staticmethod
+    def getAllVeiculos():
         try:    
             conexao = ConnectionUtil.conectar()
             with conexao:
@@ -146,8 +149,9 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
-                
-    def getVeiculosByTipo(self,idTipoVeiculo):
+    
+    @staticmethod
+    def getVeiculosByTipo(idTipoVeiculo):
         conexao = ConnectionUtil.conectar()
         try:
             with conexao:
@@ -162,8 +166,9 @@ class VeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
-                
-    def getVeiculosByCor(self,cor):
+    
+    @staticmethod
+    def getVeiculosByCor(cor):
         conexao = ConnectionUtil.conectar()
         try:
             with conexao:
@@ -179,7 +184,8 @@ class VeiculoDAO(object):
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
                 
-    def getVeiculosByModelo(self,modelo):
+    @staticmethod
+    def getVeiculosByModelo(modelo):
         conexao = ConnectionUtil.conectar()
         try:
             with conexao:
@@ -202,14 +208,14 @@ class VeiculoDAO(object):
 #dao = VeiculoDAO()
 #print veiculo.getAtributos()
 #dao.insertVeiculo(veiculo)
-#print dao.verificarExistenciaVeiculo("WHK-2010")
-#dao.deleteVeiculo("WHK-2010")
-#veiculo_encontrado1 = dao.procurarVeiculo("WHK-2010")
-#veiculo_encontrado = dao.procurarVeiculo("HZG-1000")
+#print VeiculoDAO.verificarExistenciaVeiculo("WHK-2010")
+#VeiculoDAO.deleteVeiculo("WHK-2010")
+#veiculo_encontrado1 = VeiculoDAO.procurarVeiculo("WHK-2010")
+#veiculo_encontrado = VeiculoDAO.procurarVeiculo("HZG-1000")
 #veiculo_encontrado.toString()
 #veiculo_encontrado.setMarca("FORD")
 #veiculo_encontrado.toString()
-#dao.updateVeiculo(veiculo_encontrado)
-#print dao.getVeiculosByTipo(20)
-#print dao.getVeiculosByCor('PRETO')
-#print dao.getVeiculosByModelo("u")
+#VeiculoDAO.updateVeiculo(veiculo_encontrado)
+#print VeiculoDAO.getVeiculosByTipo(20)
+#print VeiculoDAO.getVeiculosByCor('PRETO')
+#print VeiculoDAO.getVeiculosByModelo("u")

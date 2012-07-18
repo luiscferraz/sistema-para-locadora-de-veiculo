@@ -60,7 +60,7 @@ class frmVeiculo(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMVEICULO, name='frmVeiculo',
-              parent=prnt, pos=wx.Point(350, 88), size=wx.Size(967, 526),
+              parent=prnt, pos=wx.Point(350, 28), size=wx.Size(967, 526),
               style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX,
               title=u'Cadastro de Ve\xedculos')
         self.SetClientSize(wx.Size(951, 488))
@@ -278,9 +278,9 @@ class frmVeiculo(wx.Frame):
     
     def inserirInformacoesNaListctrl(self,lista):
         #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = VeiculoDAO()
+        
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = dao.getAllVeiculos()
+        rows = VeiculoDAO.getAllVeiculos()
         if rows:
             for row in rows:
                 num_itens = lista.GetItemCount()
@@ -296,10 +296,9 @@ class frmVeiculo(wx.Frame):
     def OnBtnPesquisarButton(self, event):
         placaInformada = str(self.txtPesquisa.GetValue())
         #print placaInformada.upper()
-        dao = VeiculoDAO()
         
         try:
-            veiculo = dao.procurarVeiculo(placaInformada.upper())
+            veiculo = VeiculoDAO.procurarVeiculo(placaInformada.upper())
             idTipoVeiculo = veiculo.getIdTipoVeiculo()
             posicao = self.getDescricaoById(idTipoVeiculo)
             
@@ -329,8 +328,7 @@ class frmVeiculo(wx.Frame):
             veiculo = Veiculo(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5])                        
             if (veiculo.validarPlaca() is True):
                 
-                dao = VeiculoDAO()
-                dao.insertVeiculo(veiculo)
+                VeiculoDAO.insertVeiculo(veiculo)
                 
                 self.updateListctrl()
                            
@@ -361,9 +359,7 @@ class frmVeiculo(wx.Frame):
 
     def OnBtnEditarButton(self, event):
         #Método para editar um veículo selecionado na Listctrl
-        
-        dao = VeiculoDAO()
-        
+                
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstVeiculos.GetFocusedItem()
         
@@ -377,7 +373,7 @@ class frmVeiculo(wx.Frame):
             #print placa
             
             #busca o veículo selecionado no banco de dados         
-            veiculoSelecionado = dao.procurarVeiculo(placa)
+            veiculoSelecionado = VeiculoDAO.procurarVeiculo(placa)
             #print veiculoSelecionado.toString()
             idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
             
@@ -411,9 +407,8 @@ class frmVeiculo(wx.Frame):
         #guardando informações em um veículo
         veiculo = Veiculo(lista[0],lista[1],lista[2],lista[3],lista[4],lista[5]) 
         
-        dao = VeiculoDAO()
         #atualizando um veículo no banco de dados
-        dao.updateVeiculo(veiculo)
+        VeiculoDAO.updateVeiculo(veiculo)
         
         #atualiza a Listctrl
         self.updateListctrl()
@@ -429,7 +424,6 @@ class frmVeiculo(wx.Frame):
         self.btnAtualizar.Disable()
 
     def OnBtnExcluirButton(self, event):
-        dao = VeiculoDAO()
         
         #pegar o indice do item selecionado no Listctrl
         indice = self.lstVeiculos.GetFocusedItem()
@@ -439,7 +433,7 @@ class frmVeiculo(wx.Frame):
             placa = self.lstVeiculos.GetItemText(indice)
             try:                
                 #deleta o veículo do banco
-                dao.deleteVeiculo(placa)
+                VeiculoDAO.deleteVeiculo(placa)
                 #para atualizar a Listctrl retirando o veículo que existia nela
                 self.updateListctrl()                
             except:
