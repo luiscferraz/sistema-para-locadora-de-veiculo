@@ -28,17 +28,18 @@ def create(parent):
 class frmLocacao(wx.Frame):
     def _init_coll_listCtrlBuscaTipoVeiculo_Columns(self, parent):
         # generated method, don't edit
-
-        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
-              width=300)
-        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Cor',
-              width=150)
-        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT,
-              heading='Taxa Base - R$', width=100)
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Placa',
+              width=70)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
+              width=260)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='Cor',
+              width=100)
         parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT,
-              heading='Pre\xe7o/KM - R$', width=100)
+              heading='Taxa Base - R$', width=100)
         parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT,
-              heading='Cau\xe7\xe3o - R$', width=89)
+              heading='Pre\xe7o/KM - R$', width=100)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
+              heading='Cau\xe7\xe3o - R$', width=90)
     
     def _init_opcoes_tipo_veiculo(self):
         #Método feito para colocar todos os tipos
@@ -51,7 +52,7 @@ class frmLocacao(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMLOCACAO, name='frmLocacao',
-              parent=prnt, pos=wx.Point(350, 118), size=wx.Size(962, 680),
+              parent=prnt, pos=wx.Point(350, 28), size=wx.Size(962, 680),
               style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION,
               title='Loca\xe7\xe3o de Ve\xedculo')
         self.SetClientSize(wx.Size(946, 642))
@@ -172,6 +173,8 @@ class frmLocacao(wx.Frame):
         self.btnIncluir = wx.lib.buttons.GenButton(id=wxID_FRMLOCACAOBTNINCLUIR,
               label='Incluir', name='btnIncluir', parent=self.panel1,
               pos=wx.Point(24, 24), size=wx.Size(76, 25), style=0)
+        self.btnIncluir.Bind(wx.EVT_BUTTON, self.OnBtnIncluirButton,
+              id=wxID_FRMLOCACAOBTNINCLUIR)
         self.btnIncluir.SetConstraints(LayoutAnchors(self.btnIncluir, True,
               True, False, False))
 
@@ -193,7 +196,7 @@ class frmLocacao(wx.Frame):
               wx.BITMAP_TYPE_PNG), id=wxID_FRMLOCACAOBTNPESQUISARCOR,
               name='btnPesquisarCor', parent=self.panel1, pos=wx.Point(891,
               184), size=wx.Size(31, 21), style=0)
-        self.btnPesquisarCor.Bind(wx.EVT_BUTTON, self.OnGenBitmapButton2Button,
+        self.btnPesquisarCor.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarCor,
               id=wxID_FRMLOCACAOBTNPESQUISARCOR)
         
     
@@ -237,10 +240,10 @@ class frmLocacao(wx.Frame):
     def OnBtnPesquisarCpfButton(self, event):  
         cpf = self.txtCPF.GetValue() 
         #print cpf
-        dao = ClienteDAO()
-        #print dao.verificarExistenciaCliente(cpf)
-        if(dao.verificarExistenciaCliente(cpf) is True):
-            cliente = dao.procurarCliente(cpf)
+        
+        #print ClienteDAO.verificarExistenciaCliente(cpf)
+        if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
+            cliente = ClienteDAO.procurarCliente(cpf)
             self.stNomeCliente.SetLabel(cliente.getNome())  
             self.radioBoxTipoBusca.Enable() 
             self.getValorRadioBox(self.radioBoxTipoBusca)
@@ -251,6 +254,31 @@ class frmLocacao(wx.Frame):
             
             self.txtCPF.Clear()
         
+    def OnBtnIncluirButton(self, event):
+        #Método para editar um veículo selecionado na Listctrl
+                
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.listCtrlBuscaTipoVeiculo.GetFocusedItem()
+        #print indice
+        
+                #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            placa = self.listCtrlBuscaTipoVeiculo.GetItemText(indice)
+            #print placa
+            
+            #busca o veículo selecionado no banco de dados         
+            veiculoSelecionado = VeiculoDAO.procurarVeiculo(placa)
+            print veiculoSelecionado.toString()
+            #idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
+            
+            #pegando a posição que este id tá no lstTipo
+            #posicao = self.getDescricaoById(idTipoVeiculo)
+            
+
+        else:            
+            caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeMensagem.ShowModal()
+            caixaDeMensagem.Destroy()
 
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
@@ -318,7 +346,7 @@ class frmLocacao(wx.Frame):
         self.inserirInformacoesNaListctrlByModelo(self.listCtrlBuscaTipoVeiculo, modelo.upper())
         self.txtModelo.Clear()
 
-    def OnGenBitmapButton2Button(self, event):
+    def OnBtnPesquisarCor(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
         self.criarTabela()
                 
@@ -331,66 +359,51 @@ class frmLocacao(wx.Frame):
     def OnLsTipoVeiculoSetFocus(self, event):
         event.Skip()
         
-    def inserirInformacoesNaListctrlByCor(self,lista,cor):
+    def inserirInformacoesNaListctrlByCor(self,listCtrl,cor):
         #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = VeiculoDAO()
-        daoTipo = TipoVeiculoDAO()
+        
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = dao.getVeiculosByCor(cor)
+        rows = VeiculoDAO.getVeiculosByCor(cor)
+        
+        #usa este método para inserir os dados nas colunas da ListCtrl do frame
+        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+                
+    def inserirInformacoesNaListctrlByTipo(self,listCtrl,idTipoVeiculo):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega todos os tipos de veículos presentes no banco de dados
+        rows = VeiculoDAO.getVeiculosByTipo(idTipoVeiculo)
+        
+        #usa este método para inserir os dados nas colunas da ListCtrl do frame
+        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+                
+    def inserirInformacoesNaListctrlByModelo(self,listCtrl,modelo):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega todos os tipos de veículos presentes no banco de dados
+        rows = VeiculoDAO.getVeiculosByModelo(modelo)
+        
+        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+    
+    def inserirDadosNasColunasDaTabela(self,listCtrl,rows):        
+        #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
+        #Desenvolvido para evitar a repetição de código nos 3 tipos de buscas de um veículo.
+        #Recebe como parâmetro a ListCtrl na qual deseja inserir dados e as linhas
+        #de informações obtidas numa busca no banco de dados.
         if rows:
             for row in rows:
-                num_itens = lista.GetItemCount()
-                lista.InsertStringItem(num_itens,str(row[4]))
+                num_itens = listCtrl.GetItemCount()
+                listCtrl.InsertStringItem(num_itens,str(row[1]))
+                listCtrl.SetStringItem(num_itens,1,row[4])
                 #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete
                 #do banco de dados. 
-                lista.SetStringItem(num_itens,1,row[3])
+                listCtrl.SetStringItem(num_itens,2,row[3])
                 
-                tipoVeiculo = daoTipo.procurarTipo(row[6]) 
+                tipoVeiculo = TipoVeiculoDAO.procurarTipo(row[6]) 
                 #referente à tabela de tipo de veículos
-                lista.SetStringItem(num_itens,2,str(tipoVeiculo.getTaxaBase()))
-                lista.SetStringItem(num_itens,3,str(tipoVeiculo.getPrecoKm()))
-                lista.SetStringItem(num_itens,4,str(tipoVeiculo.getCaucao()))
-                
-    def inserirInformacoesNaListctrlByTipo(self,lista,idTipoVeiculo):
-        #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = VeiculoDAO()
-        daoTipo = TipoVeiculoDAO()
-        #Pega todos os tipos de veículos presentes no banco de dados
-        rows = dao.getVeiculosByTipo(idTipoVeiculo)
-        if rows:
-            for row in rows:
-                num_itens = lista.GetItemCount()
-                lista.InsertStringItem(num_itens,str(row[4]))
-                #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete
-                #do banco de dados. 
-                lista.SetStringItem(num_itens,1,row[3])
-                
-                tipoVeiculo = daoTipo.procurarTipo(row[6]) 
-                #referente à tabela de tipo de veículos
-                lista.SetStringItem(num_itens,2,str(tipoVeiculo.getTaxaBase()))
-                lista.SetStringItem(num_itens,3,str(tipoVeiculo.getPrecoKm()))
-                lista.SetStringItem(num_itens,4,str(tipoVeiculo.getCaucao()))
-                
-    def inserirInformacoesNaListctrlByModelo(self,lista,modelo):
-        #Método que pegará a informação do banco e colocará na ListCtrl.
-        dao = VeiculoDAO()
-        daoTipo = TipoVeiculoDAO()
-        #Pega todos os tipos de veículos presentes no banco de dados
-        rows = dao.getVeiculosByModelo(modelo)
-        if rows:
-            for row in rows:
-                num_itens = lista.GetItemCount()
-                lista.InsertStringItem(num_itens,str(row[4]))
-                #Vai na coluna correspondente da Listctrl e coloca a coluna correspondete
-                #do banco de dados. 
-                lista.SetStringItem(num_itens,1,row[3])
-                
-                tipoVeiculo = daoTipo.procurarTipo(row[6]) 
-                #referente à tabela de tipo de veículos
-                lista.SetStringItem(num_itens,2,str(tipoVeiculo.getTaxaBase()))
-                lista.SetStringItem(num_itens,3,str(tipoVeiculo.getPrecoKm()))
-                lista.SetStringItem(num_itens,4,str(tipoVeiculo.getCaucao()))
-
+                listCtrl.SetStringItem(num_itens,3,str(tipoVeiculo.getTaxaBase()))
+                listCtrl.SetStringItem(num_itens,4,str(tipoVeiculo.getPrecoKm()))
+                listCtrl.SetStringItem(num_itens,5,str(tipoVeiculo.getCaucao()))
     
         
 if __name__ == '__main__':
