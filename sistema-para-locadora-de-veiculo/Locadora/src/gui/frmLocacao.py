@@ -9,6 +9,10 @@ import wx.lib.masked.textctrl
 from db.ClienteDAO import *
 from db.VeiculoDAO import *
 from db.TipoVeiculoDAO import TipoVeiculoDAO
+from datetime import *
+from negocio.Locacao import *
+from db.LocacaoDAO import *
+
 
 def create(parent):
     return frmLocacao(parent)
@@ -41,14 +45,6 @@ class frmLocacao(wx.Frame):
         parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
               heading='Cau\xe7\xe3o - R$', width=90)
     
-    def _init_opcoes_tipo_veiculo(self):
-        #Método feito para colocar todos os tipos
-        tipos = TipoVeiculoDAO().getAllTipos()
-        listaTipos = []
-        for i in tipos:
-            listaTipos.append(i[3])
-        return listaTipos
-
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMLOCACAO, name='frmLocacao',
@@ -125,7 +121,7 @@ class frmLocacao(wx.Frame):
               parent=self.panel1, pos=wx.Point(296, 116), size=wx.Size(82, 13),
               style=0)
 
-        self.lsTipoVeiculo = wx.Choice(choices=self._init_opcoes_tipo_veiculo(), id=wxID_FRMLOCACAOLSTIPOVEICULO, name='lsTipoVeiculo',
+        self.lsTipoVeiculo = wx.Choice(choices=TipoVeiculoDAO.listarTiposDeVeiculos(), id=wxID_FRMLOCACAOLSTIPOVEICULO, name='lsTipoVeiculo',
               parent=self.panel1, pos=wx.Point(296, 136), size=wx.Size(624, 21),
               style=0)
         self.lsTipoVeiculo.Bind(wx.EVT_CHOICE, self.OnLsTipoVeiculoChoice,
@@ -188,8 +184,7 @@ class frmLocacao(wx.Frame):
               wx.BITMAP_TYPE_PNG), id=wxID_FRMLOCACAOBTNPESQUISARMODELO,
               name='btnPesquisarModelo', parent=self.panel1, pos=wx.Point(696,
               184), size=wx.Size(31, 21), style=0)
-        self.btnPesquisarModelo.Bind(wx.EVT_BUTTON,
-              self.OnGenBitmapButton1Button,
+        self.btnPesquisarModelo.Bind(wx.EVT_BUTTON,self.OnBtnPesquisarModelo,
               id=wxID_FRMLOCACAOBTNPESQUISARMODELO)
 
         self.btnPesquisarCor = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
@@ -261,7 +256,7 @@ class frmLocacao(wx.Frame):
         indice = self.listCtrlBuscaTipoVeiculo.GetFocusedItem()
         #print indice
         
-                #se o indice for -1 é pq nada foi selecionado
+        #se o indice for -1 é pq nada foi selecionado
         if indice != -1: 
             placa = self.listCtrlBuscaTipoVeiculo.GetItemText(indice)
             #print placa
@@ -269,11 +264,28 @@ class frmLocacao(wx.Frame):
             #busca o veículo selecionado no banco de dados         
             veiculoSelecionado = VeiculoDAO.procurarVeiculo(placa)
             print veiculoSelecionado.toString()
-            #idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
+            veiculoSelecionado.setDisponibilidade("LOCADO")
             
-            #pegando a posição que este id tá no lstTipo
-            #posicao = self.getDescricaoById(idTipoVeiculo)
+            idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
+            tipoVeiculo = TipoVeiculoDAO.procurarTipo(idTipoVeiculo)
             
+            #atualizando a disponibilidade do veículo no banco de dados
+            VeiculoDAO.updateVeiculo(veiculoSelecionado)
+            
+            dataLocacao = datetime.today()
+            quilometragemDeSaida = veiculoSelecionado.getQuilometragemAtual()
+            valorContaParcial = tipoVeiculo.getCaucao()
+            cpfCliente = self.txtCPF.GetValue()
+            
+            locacao = Locacao(dataLocacao,quilometragemDeSaida,valorContaParcial,cpfCliente,idTipoVeiculo)
+            
+            LocacaoDAO.insertLocacao(locacao)
+            
+            self.Destroy()
+            self.criarTabela()
+            
+            print "Locação efetuada com sucesso" 
+                    
 
         else:            
             caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
@@ -282,9 +294,7 @@ class frmLocacao(wx.Frame):
 
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaTipoVeiculo.Destroy()
-        self.criarTabela()
-        
-        
+        self.criarTabela()        
 
     def OnRadioBoxTipoBuscaSetFocus(self, event):
         event.Skip()
@@ -330,28 +340,38 @@ class frmLocacao(wx.Frame):
         event.Skip()
 
     def OnLsTipoVeiculoChoice(self, event):
+        #Destrói a tabela anterior para que seja reconstruída de acordo com a escolha
         self.listCtrlBuscaTipoVeiculo.Destroy()
+        #Cria uma nova tabela
         self.criarTabela()
       
+        #Pega o id do tipo de veículo selecionado
         idTipoVeiculo = self.getIdTipo(self.lsTipoVeiculo)
+        #insere na tabela os dados de acordo com o tipo de veículo escolhido
         self.inserirInformacoesNaListctrlByTipo(self.listCtrlBuscaTipoVeiculo, idTipoVeiculo)
         
 
-    def OnGenBitmapButton1Button(self, event):
+    def OnBtnPesquisarModelo(self, event):
+        #Destrói a tabela anterior para que seja reconstruída de acordo com a escolha
         self.listCtrlBuscaTipoVeiculo.Destroy()
         self.criarTabela()
         
+        #obtém o modelo informado
         modelo = str(self.txtModelo.GetValue())
         
+        #insere na tabela os dados de acordo com a cor fornecida
         self.inserirInformacoesNaListctrlByModelo(self.listCtrlBuscaTipoVeiculo, modelo.upper())
         self.txtModelo.Clear()
 
     def OnBtnPesquisarCor(self, event):
+        #Destrói a tabela anterior para que seja reconstruída de acordo com a escolha
         self.listCtrlBuscaTipoVeiculo.Destroy()
         self.criarTabela()
                 
+        #obtém a cor informada        
         cor = str(self.txtCor.GetValue())
         
+        #insere na tabela os dados de acordo com a cor fornecida
         self.inserirInformacoesNaListctrlByCor(self.listCtrlBuscaTipoVeiculo, cor.upper())
         
         self.txtCor.Clear()
@@ -363,7 +383,7 @@ class frmLocacao(wx.Frame):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = VeiculoDAO.getVeiculosByCor(cor)
+        rows = VeiculoDAO.getVeiculosDisponiveisByCor(cor,'DISPONIVEL')
         
         #usa este método para inserir os dados nas colunas da ListCtrl do frame
         self.inserirDadosNasColunasDaTabela(listCtrl, rows)
@@ -381,8 +401,7 @@ class frmLocacao(wx.Frame):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = VeiculoDAO.getVeiculosByModelo(modelo)
-        
+        rows = VeiculoDAO.getVeiculosByModelo(modelo)        
         self.inserirDadosNasColunasDaTabela(listCtrl, rows)
     
     def inserirDadosNasColunasDaTabela(self,listCtrl,rows):        

@@ -147,6 +147,16 @@ class TipoVeiculoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+ 
+    @staticmethod
+    def listarTiposDeVeiculos():
+        #Método feito para colocar todos os tipos de veículo numa lista para que seja
+        #usado nas classes de interface que necessitam desta informação
+        tipos = TipoVeiculoDAO().getAllTipos()
+        listaTipos = []
+        for i in tipos:
+            listaTipos.append(i[3])
+        return listaTipos
             
 
 
