@@ -67,7 +67,7 @@ class LocacaoDAO(object):
             conexao = ConnectionUtil.conectar()
             with conexao:
                 cur = conexao.cursor()
-                if self.verificarExistenciaLocacao(idLocacao) is True:
+                if LocacaoDAO.verificarExistenciaLocacao(idLocacao) is True:
                     cur.execute("DELETE FROM LOCACAO WHERE ID_LOCACAO = ?" , (idLocacao,))
                     print "Removeu do banco"
                     conexao.commit()
@@ -118,7 +118,7 @@ class LocacaoDAO(object):
                 with conexao:
                     cur = conexao.cursor()
                     #idLocacao = locacao.getIdLocacao()
-                    if self.verificarExistenciaLocacao(locacao.getIdLocacao()) is True:
+                    if LocacaoDAO.verificarExistenciaLocacao(locacao.getIdLocacao()) is True:
                         lista = locacao.getAtributos()
                         cur.execute("UPDATE LOCACAO SET DATA_LOCACAO = ?, QUILOMETRAGEM_SAIDA = ?, \
                                     VALOR_CONTA_PARCIAL = ? ,  FK_CPF_CLIENTE = ?, FK_ID_VEICULO = ? \

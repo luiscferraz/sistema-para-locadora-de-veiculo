@@ -384,7 +384,7 @@ class frmLocacao(wx.Frame):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = VeiculoDAO.getVeiculosDisponiveisByCor(cor,'DISPONIVEL')
+        rows = VeiculoDAO.getVeiculosByCorAndDisponibilidade(cor,'DISPONIVEL')
         
         #usa este método para inserir os dados nas colunas da ListCtrl do frame
         self.inserirDadosNasColunasDaTabela(listCtrl, rows)
@@ -393,7 +393,7 @@ class frmLocacao(wx.Frame):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = VeiculoDAO.getVeiculosByTipo(idTipoVeiculo)
+        rows = VeiculoDAO.getVeiculosByTipoAndDisponibilidade(idTipoVeiculo, "DISPONIVEL")
         
         #usa este método para inserir os dados nas colunas da ListCtrl do frame
         self.inserirDadosNasColunasDaTabela(listCtrl, rows)
@@ -402,7 +402,7 @@ class frmLocacao(wx.Frame):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
-        rows = VeiculoDAO.getVeiculosByModelo(modelo)        
+        rows = VeiculoDAO.getVeiculosByModeloAndDisponibilidade(modelo, "DISPONIVEL")        
         self.inserirDadosNasColunasDaTabela(listCtrl, rows)
     
     def inserirDadosNasColunasDaTabela(self,listCtrl,rows):        
