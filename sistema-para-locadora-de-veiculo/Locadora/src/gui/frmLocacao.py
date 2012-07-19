@@ -119,7 +119,7 @@ class frmLocacao(wx.Frame):
               label='Ve\xedculo', name='stVeiculo', parent=self.panel1,
               pos=wx.Point(128, 96), size=wx.Size(808, 536), style=0)
 
-        self.radioBoxTipoBusca = wx.RadioBox(choices=['Tipo de veículo',
+        self.radioBoxTipoBusca = wx.RadioBox(choices=['Tipo de Veículo',
               'Modelo', 'Cor'], id=wxID_FRMLOCACAORADIOBOXTIPOBUSCA,
               label='Efetuar busca por', majorDimension=1,
               name='radioBoxTipoBusca', parent=self.panel1, pos=wx.Point(144,
