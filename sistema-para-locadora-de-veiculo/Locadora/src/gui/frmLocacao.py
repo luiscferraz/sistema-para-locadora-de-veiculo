@@ -183,6 +183,7 @@ class frmLocacao(wx.Frame):
               name='lstCtrlLocacao', parent=self.panel1, pos=wx.Point(160,
               440), size=wx.Size(744, 160), style=wx.LC_REPORT)
         self._init_coll_listCtrlLocacao_Columns(self.lstCtrlLocacao)
+        
 
         self.btnIncluir = wx.lib.buttons.GenButton(id=wxID_FRMLOCACAOBTNINCLUIR,
               label='Incluir', name='btnIncluir', parent=self.panel1,
@@ -212,6 +213,8 @@ class frmLocacao(wx.Frame):
         self.btnPesquisarCor.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarCor,
               id=wxID_FRMLOCACAOBTNPESQUISARCOR)
         
+        
+        
     
 
     def __init__(self, parent):
@@ -222,6 +225,7 @@ class frmLocacao(wx.Frame):
         self.txtCor.Disable()
         self.btnPesquisarCor.Disable()
         self.lsTipoVeiculo.Disable()
+        self.inserirDadosNasColunasDaTabelaLocacao(self.lstCtrlLocacao)
         
     def criarTabela(self):
         self.listCtrlBuscaTipoVeiculo = wx.ListCtrl(id=wxID_FRMLOCACAOLISTCTRLBUSCATIPOVEICULO,
@@ -235,6 +239,7 @@ class frmLocacao(wx.Frame):
               name='lstCtrlLocacao', parent=self.panel1, pos=wx.Point(160,
               440), size=wx.Size(744, 160), style=wx.LC_REPORT)
         self._init_coll_listCtrlLocacao_Columns(self.lstCtrlLocacao)
+        self.inserirDadosNasColunasDaTabelaLocacao(self.lstCtrlLocacao)
         
     def getIdTipo(self,event):
         # pega o id do tipo de veículo selecionado
@@ -287,7 +292,7 @@ class frmLocacao(wx.Frame):
             
             #busca o veículo selecionado no banco de dados         
             veiculoSelecionado = VeiculoDAO.procurarVeiculo(placa)
-            print veiculoSelecionado.toString()
+            #print veiculoSelecionado.toString()
             veiculoSelecionado.setDisponibilidade("LOCADO")
             
             idTipoVeiculo = veiculoSelecionado.getIdTipoVeiculo()
@@ -301,7 +306,7 @@ class frmLocacao(wx.Frame):
             valorContaParcial = tipoVeiculo.getCaucao()
             cpfCliente = self.txtCPF.GetValue()
             
-            locacao = Locacao(dataLocacao,quilometragemDeSaida,valorContaParcial,cpfCliente,idTipoVeiculo)
+            locacao = Locacao(dataLocacao,quilometragemDeSaida,valorContaParcial,cpfCliente,placa)
             
             LocacaoDAO.insertLocacao(locacao)
             
@@ -312,6 +317,9 @@ class frmLocacao(wx.Frame):
             caixaDeMensagem = wx.MessageDialog(self,'Locação efetuada com sucesso.', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
             caixaDeMensagem.ShowModal()
             caixaDeMensagem.Destroy()
+            
+            self.lstCtrlLocacao.Destroy()
+            self.criarTabelaLocacao()
         else:            
                 caixaDeMensagem = wx.MessageDialog(self,'Selecione um veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeMensagem.ShowModal()
@@ -450,8 +458,26 @@ class frmLocacao(wx.Frame):
                 listCtrl.SetStringItem(num_itens,5,str(tipoVeiculo.getCaucao()))
                 
     def inserirDadosNasColunasDaTabelaLocacao(self,listCtrl):   
-        pass
-    
+        rows = LocacaoDAO.getAllLocacoes()
+        print rows 
+         
+        if rows:
+            for row in rows:
+                num_itens = listCtrl.GetItemCount()
+                #print num_itens
+                listCtrl.InsertStringItem(num_itens,str(row[0]))
+                listCtrl.SetStringItem(num_itens,1,row[1])
+                listCtrl.SetStringItem(num_itens,2,row[4])
+                listCtrl.SetStringItem(num_itens,3,row[5])
+                
+                veiculo = VeiculoDAO.procurarVeiculo(row[5])
+                modelo = veiculo.getModelo()
+                
+                listCtrl.SetStringItem(num_itens,4,modelo)
+                listCtrl.SetStringItem(num_itens,5,str(row[3]))
+                listCtrl.SetStringItem(num_itens,6,str(row[2]))
+                
+                  
         
 if __name__ == '__main__':
     app = wx.PySimpleApp()

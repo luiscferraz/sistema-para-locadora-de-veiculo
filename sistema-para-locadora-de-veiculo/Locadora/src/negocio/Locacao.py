@@ -8,13 +8,13 @@ Created on 07/07/2012
 
 class Locacao:
     
-    def __init__(self,dataLocacao, quilometragemDeSaida,valorContaParcial, cpfCliente, idVeiculo):
+    def __init__(self,dataLocacao, quilometragemDeSaida,valorContaParcial, cpfCliente, placaVeiculo):
         self.__idLocacao = None
         self.__dataLocacao = dataLocacao
         self.__quilometragemDeSaida = quilometragemDeSaida
         self.__valorContaParcial = valorContaParcial
         self.__cpfCliente = cpfCliente
-        self.__idVeiculo = idVeiculo
+        self.__placaVeiculo = placaVeiculo
         
     def getIdLocacao(self):
         return self.__idLocacao
@@ -41,10 +41,10 @@ class Locacao:
     def setIdCliente(self, cpfCliente):
         self.__cpfCliente = cpfCliente
         
-    def getIdVeiculo(self):
-        return self.__idVeiculo
-    def setIdVeiculo(self, idVeiculo):
-        self.__idVeiculo = idVeiculo
+    def getPlacaVeiculo(self):
+        return self.__placaVeiculo
+    def setPlacaVeiculo(self, placaVeiculo):
+        self.__placaVeiculo = placaVeiculo
         
             
     def getAtributos(self):
@@ -52,9 +52,9 @@ class Locacao:
         quilometragemDeSaida = self.getQuilometragemDeSaida()
         valorParcialConta = self.getValorContaParcial()
         cpfCliente = self.getCpfCliente()
-        idVeiculo = self.getIdVeiculo()
+        placaVeiculo = self.getPlacaVeiculo()
         
-        return [dataLocacao, quilometragemDeSaida, valorParcialConta,cpfCliente, idVeiculo]
+        return [dataLocacao, quilometragemDeSaida, valorParcialConta,cpfCliente, placaVeiculo]
     
     def toString(self):
         print "ID Locação : " + str(self.getIdLocacao()) + \
@@ -62,7 +62,7 @@ class Locacao:
             "\nQuilometragem de saída: " + str(self.getQuilometragemDeSaida()) + \
             "\nValor Parcial: " + str(self.getValorContaParcial()) + \
             "\nCPF Cliente: " + str(self.getCpfCliente()) + \
-            "\nId Veículo: " + str(self.getIdVeiculo()) 
+            "\nPlaca Veículo: " + str(self.getIdVeiculo()) 
             
             
         

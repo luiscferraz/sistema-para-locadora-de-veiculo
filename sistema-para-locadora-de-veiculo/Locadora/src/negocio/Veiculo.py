@@ -72,7 +72,8 @@ class Veiculo:
         return [placa,marca,cor,modelo,disponibilidade,idTipoVeiculo,quilometragemAtual]
     
     def toString(self):
-        print "\nPlaca: " + self.getPlaca() + \
+        print "\nId: " + str(self.getIdVeiculo()) + \
+            "\nPlaca: " + self.getPlaca() + \
             "\nMarca: " + self.getMarca() + \
             "\nCor: " + self.getCor() + \
             "\nModelo: " + self.getModelo() + \

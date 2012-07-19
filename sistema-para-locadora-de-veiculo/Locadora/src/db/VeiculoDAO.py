@@ -106,6 +106,32 @@ class VeiculoDAO(object):
             print "\nVeiculo Inexistente"   
         finally:
             ConnectionUtil.fecharConexao(cur,conexao)
+            
+    @staticmethod
+    def procurarVeiculoById(idVeiculo):
+                
+        try:
+            conexao = ConnectionUtil.conectar()
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM VEICULOS WHERE ID_VEICULO = ?", (idVeiculo,))
+                print "\nBuscou no banco"
+                row = cur.fetchone()
+                #print row
+                veiculoEncontrado = Veiculo(row[1],row[2],row[3],row[4],row[6],row[7])
+                veiculoEncontrado.setIdVeiculo(row[0])   
+                
+                return veiculoEncontrado
+            
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1) 
+        except:
+            print "\nVeiculo Inexistente"   
+        finally:
+            ConnectionUtil.fecharConexao(cur,conexao)
     
     @staticmethod
     def updateVeiculo(veiculo):
