@@ -164,7 +164,7 @@ class frmLocacao(wx.Frame):
               size=wx.Size(25, 13), style=0)
 
         self.stResultadoTipo = wx.StaticBox(id=wxID_FRMLOCACAOSTRESULTADOTIPO,
-              label='Resultado por tipo de ve\xedculo', name='stResultadoTipo',
+              label='Resultado da busca', name='stResultadoTipo',
               parent=self.panel1, pos=wx.Point(144, 224), size=wx.Size(776,
               176), style=0)
 
@@ -229,6 +229,12 @@ class frmLocacao(wx.Frame):
               pos=wx.Point(160, 248), size=wx.Size(744, 136),
               style=wx.LC_REPORT)
         self._init_coll_listCtrlBuscaTipoVeiculo_Columns(self.listCtrlBuscaTipoVeiculo)
+        
+    def criarTabelaLocacao(self):
+        self.lstCtrlLocacao = wx.ListCtrl(id=wxID_FRMLOCACAOLSTCTRLLOCACAO,
+              name='lstCtrlLocacao', parent=self.panel1, pos=wx.Point(160,
+              440), size=wx.Size(744, 160), style=wx.LC_REPORT)
+        self._init_coll_listCtrlLocacao_Columns(self.lstCtrlLocacao)
         
     def getIdTipo(self,event):
         # pega o id do tipo de veículo selecionado
@@ -405,7 +411,7 @@ class frmLocacao(wx.Frame):
         rows = VeiculoDAO.getVeiculosByCorAndDisponibilidade(cor,'DISPONIVEL')
         
         #usa este método para inserir os dados nas colunas da ListCtrl do frame
-        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
                 
     def inserirInformacoesNaListctrlByTipo(self,listCtrl,idTipoVeiculo):
         #Método que pegará a informação do banco e colocará na ListCtrl.
@@ -414,16 +420,16 @@ class frmLocacao(wx.Frame):
         rows = VeiculoDAO.getVeiculosByTipoAndDisponibilidade(idTipoVeiculo, "DISPONIVEL")
         
         #usa este método para inserir os dados nas colunas da ListCtrl do frame
-        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
                 
     def inserirInformacoesNaListctrlByModelo(self,listCtrl,modelo):
         #Método que pegará a informação do banco e colocará na ListCtrl.
         
         #Pega todos os tipos de veículos presentes no banco de dados
         rows = VeiculoDAO.getVeiculosByModeloAndDisponibilidade(modelo, "DISPONIVEL")        
-        self.inserirDadosNasColunasDaTabela(listCtrl, rows)
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
     
-    def inserirDadosNasColunasDaTabela(self,listCtrl,rows):        
+    def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
         #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
         #Desenvolvido para evitar a repetição de código nos 3 tipos de buscas de um veículo.
         #Recebe como parâmetro a ListCtrl na qual deseja inserir dados e as linhas
@@ -442,6 +448,9 @@ class frmLocacao(wx.Frame):
                 listCtrl.SetStringItem(num_itens,3,str(tipoVeiculo.getTaxaBase()))
                 listCtrl.SetStringItem(num_itens,4,str(tipoVeiculo.getPrecoKm()))
                 listCtrl.SetStringItem(num_itens,5,str(tipoVeiculo.getCaucao()))
+                
+    def inserirDadosNasColunasDaTabelaLocacao(self,listCtrl):   
+        pass
     
         
 if __name__ == '__main__':
