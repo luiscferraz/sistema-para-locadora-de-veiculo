@@ -20,11 +20,11 @@ def create(parent):
 [wxID_FRMLOCACAO, wxID_FRMLOCACAOBTNCANCELAR, wxID_FRMLOCACAOBTNINCLUIR, 
  wxID_FRMLOCACAOBTNPESQUISARCOR, wxID_FRMLOCACAOBTNPESQUISARCPF, 
  wxID_FRMLOCACAOBTNPESQUISARMODELO, wxID_FRMLOCACAOLISTCTRLBUSCATIPOVEICULO, 
- wxID_FRMLOCACAOLSTCTRLBUSCAMODELO, wxID_FRMLOCACAOLSTIPOVEICULO, 
+ wxID_FRMLOCACAOLSTCTRLLOCACAO, wxID_FRMLOCACAOLSTIPOVEICULO, 
  wxID_FRMLOCACAOPANEL1, wxID_FRMLOCACAORADIOBOXTIPOBUSCA, 
  wxID_FRMLOCACAOSTCLIENTE, wxID_FRMLOCACAOSTCOR, wxID_FRMLOCACAOSTCPF, 
  wxID_FRMLOCACAOSTMODELO, wxID_FRMLOCACAOSTNOME, wxID_FRMLOCACAOSTNOMECLIENTE, 
- wxID_FRMLOCACAOSTRESULTADOMODELO, wxID_FRMLOCACAOSTRESULTADOTIPO, 
+ wxID_FRMLOCACAOSTLOCACAO, wxID_FRMLOCACAOSTRESULTADOTIPO, 
  wxID_FRMLOCACAOSTTIPOVEICULO, wxID_FRMLOCACAOSTVEICULO, 
  wxID_FRMLOCACAOTXTCOR, wxID_FRMLOCACAOTXTCPF, wxID_FRMLOCACAOTXTMODELO, 
 ] = [wx.NewId() for _init_ctrls in range(24)]
@@ -44,6 +44,23 @@ class frmLocacao(wx.Frame):
               heading='Pre\xe7o/KM - R$', width=100)
         parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT,
               heading='Cau\xe7\xe3o - R$', width=90)
+        
+    def _init_coll_listCtrlLocacao_Columns(self,parent):
+        # generated method, don't edit
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Id',
+              width=50)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Data',
+              width=140)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='CPF',
+              width=100)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='Placa',
+              width=70)
+        parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
+              width=220)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT, heading='Km Saída',
+              width=70)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT, heading='Valor Parcial',
+              width=90)
     
     def _init_ctrls(self, prnt):
         # generated method, don't edit
@@ -157,14 +174,15 @@ class frmLocacao(wx.Frame):
               style=wx.LC_REPORT)
         self._init_coll_listCtrlBuscaTipoVeiculo_Columns(self.listCtrlBuscaTipoVeiculo)
 
-        self.stResultadoModelo = wx.StaticBox(id=wxID_FRMLOCACAOSTRESULTADOMODELO,
-              label='Resultado por modelo do ve\xedculo',
-              name='stResultadoModelo', parent=self.panel1, pos=wx.Point(144,
+        self.stLocacoes = wx.StaticBox(id=wxID_FRMLOCACAOSTLOCACAO,
+              label='Loca\xe7\xe3o',
+              name='stLocacao', parent=self.panel1, pos=wx.Point(144,
               412), size=wx.Size(776, 204), style=0)
 
-        self.lstCtrlBuscaModelo = wx.ListCtrl(id=wxID_FRMLOCACAOLSTCTRLBUSCAMODELO,
-              name='lstCtrlBuscaModelo', parent=self.panel1, pos=wx.Point(160,
-              440), size=wx.Size(744, 160), style=wx.LC_ICON)
+        self.lstCtrlLocacao = wx.ListCtrl(id=wxID_FRMLOCACAOLSTCTRLLOCACAO,
+              name='lstCtrlLocacao', parent=self.panel1, pos=wx.Point(160,
+              440), size=wx.Size(744, 160), style=wx.LC_REPORT)
+        self._init_coll_listCtrlLocacao_Columns(self.lstCtrlLocacao)
 
         self.btnIncluir = wx.lib.buttons.GenButton(id=wxID_FRMLOCACAOBTNINCLUIR,
               label='Incluir', name='btnIncluir', parent=self.panel1,
