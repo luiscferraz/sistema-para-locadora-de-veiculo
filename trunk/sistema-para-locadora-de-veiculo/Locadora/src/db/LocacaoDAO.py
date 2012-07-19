@@ -20,7 +20,7 @@ class LocacaoDAO(object):
         if(locacao != None):
             try:
                 lista = locacao.getAtributos()
-                print lista
+                #print lista
                 conexao = ConnectionUtil.conectar()
                                 
                 with conexao:
@@ -93,7 +93,7 @@ class LocacaoDAO(object):
                 cur.execute("SELECT * FROM LOCACAO WHERE ID_LOCACAO = ?", (idLocacao,))
                 print "\nBuscou no banco"
                 row = cur.fetchone()
-                print row
+                #print row
                 locacaoEncontrada = Locacao(row[1],row[2],row[3],row[4],row[5])
                                                 
                 locacaoEncontrada.setIdLocacao(row[0])     

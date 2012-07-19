@@ -252,7 +252,7 @@ class frmLocacao(wx.Frame):
     
     def getValorRadioBox(self,event):
         retorno = self.radioBoxTipoBusca.GetSelection()
-        print retorno 
+        #print retorno 
         return retorno
     
     def OnTxtCPFTextMaxlen(self, event):
@@ -459,7 +459,7 @@ class frmLocacao(wx.Frame):
                 
     def inserirDadosNasColunasDaTabelaLocacao(self,listCtrl):   
         rows = LocacaoDAO.getAllLocacoes()
-        print rows 
+        #print rows 
          
         if rows:
             for row in rows:

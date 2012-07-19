@@ -1,4 +1,4 @@
-#Sun Jul 15 18:06:27 GMT-03:00 2012
+#Thu Jul 19 01:05:26 GMT-03:00 2012
 =\=\=\=\=\=\=
 <<<<<<<=.mine
 >>>>>>>=.r40
@@ -13,6 +13,7 @@ encoding//src/gui/frmLocacao.py=latin1
 encoding//src/gui/frmTipoVeiculo.py=latin1
 encoding//src/gui/frmVeiculo.py=latin1
 encoding//src/negocio/Cliente.py=latin1
+encoding//src/negocio/Impressao.py=utf-8
 encoding//src/negocio/Locacao.py=latin1
 encoding//src/negocio/Pessoa.py=latin1
 encoding//src/negocio/Veiculo.py=latin1
