@@ -14,7 +14,7 @@ class LocacaoDAO(object):
     def insertLocacao(locacao):
         
         INSERT_LOCACAO = "INSERT INTO LOCACAO (DATA_LOCACAO, QUILOMETRAGEM_SAIDA, VALOR_CONTA_PARCIAL ,  \
-        FK_CPF_CLIENTE, FK_ID_VEICULO) VALUES ( ?, ?, ?, ?, ?)"
+        FK_CPF_CLIENTE, FK_PLACA_VEICULO) VALUES ( ?, ?, ?, ?, ?)"
                      
                      
         if(locacao != None):
@@ -121,7 +121,7 @@ class LocacaoDAO(object):
                     if LocacaoDAO.verificarExistenciaLocacao(locacao.getIdLocacao()) is True:
                         lista = locacao.getAtributos()
                         cur.execute("UPDATE LOCACAO SET DATA_LOCACAO = ?, QUILOMETRAGEM_SAIDA = ?, \
-                                    VALOR_CONTA_PARCIAL = ? ,  FK_CPF_CLIENTE = ?, FK_ID_VEICULO = ? \
+                                    VALOR_CONTA_PARCIAL = ? ,  FK_CPF_CLIENTE = ?, FK_PLACA_VEICULO = ? \
                                     WHERE ID_LOCACAO = ?", \
                                     tuple([lista[0],lista[1],lista[2],lista[3],\
                                           lista[4], locacao.getIdLocacao()]))
