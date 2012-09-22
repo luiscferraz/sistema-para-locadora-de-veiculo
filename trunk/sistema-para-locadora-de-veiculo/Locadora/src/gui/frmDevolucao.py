@@ -76,7 +76,7 @@ class frmDevolucao(wx.Frame):
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMDEVOLUCAOBTNCANCELAR,
               label=u'Cancelar', name=u'btnCancelar', parent=self.pnlDevolucao,
               pos=wx.Point(24, 64), size=wx.Size(76, 25), style=0)
-        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnGenButton1Button,
+        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
               id=wxID_FRMDEVOLUCAOBTNCANCELAR)
 
         self.txtCpf = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMDEVOLUCAOTXTCPF,
@@ -152,6 +152,9 @@ class frmDevolucao(wx.Frame):
               wx.BITMAP_TYPE_PNG), id=wxID_FRMDEVOLUCAOBTNPLACA,
               name=u'btnPlaca', parent=self.pnlDevolucao, pos=wx.Point(536, 48),
               size=wx.Size(32, 32), style=0)
+        self.btnPlaca.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarPlacaButton,
+              id=wxID_FRMDEVOLUCAOBTNPLACA)
+
 
         self.stResultado = wx.StaticBox(id=wxID_FRMDEVOLUCAOSTRESULTADO,
               label=u'Resultado da busca', name=u'stResultado',
@@ -207,6 +210,34 @@ class frmDevolucao(wx.Frame):
         rows = LocacaoDAO.getLocacoesByCpf(cpf)        
         self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
         
+    def OnBtnPesquisarPlacaButton(self, event):
+        self.listCtrlBuscaLocacao.Destroy()  
+        placa = self.txtPlaca.GetValue().upper() 
+        #print placa
+        
+        #print VeiculoDAO.verificarExistenciaVeiculo(placa)
+        if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
+            self.criarTabela()
+            
+            #insere na tabela os dados de acordo com a cor fornecida
+            self.inserirInformacoesNaListctrlByPlaca(self.listCtrlBuscaLocacao, placa)
+            
+            self.txtCpf.Clear()
+                    
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+            
+            self.txtCpf.Clear()
+    
+    def inserirInformacoesNaListctrlByPlaca(self,listCtrl,placa):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega as locacoes feitas pela respectiva placa
+        rows = LocacaoDAO.getLocacoesByPlaca(placa)        
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
+        
     
     def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
         #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
@@ -235,8 +266,9 @@ class frmDevolucao(wx.Frame):
     def OnBtnFinalizarButton(self, event):
         event.Skip()
 
-    def OnGenButton1Button(self, event):
-        event.Skip()
+    def OnBtnCancelarButton(self, event):
+        self.listCtrlBuscaLocacao.Destroy()
+        self.criarTabela()
 
     def OnBtnCalcularButton(self, event):
         #pegar o indice do item selecionado no Listctrl

@@ -155,6 +155,23 @@ class LocacaoDAO(object):
                 sys.exit(1)    
         finally:
                 ConnectionUtil.fecharConexao(cur,conexao)
+                
+    @staticmethod            
+    def getLocacoesByPlaca(placa):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM LOCACAO WHERE FK_PLACA_VEICULO LIKE ? ",(placa+"%",))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
     
     @staticmethod
     def getAllLocacoes():
