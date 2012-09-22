@@ -27,7 +27,7 @@ class frmDevolucao(wx.Frame):
               style=wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.CLOSE_BOX | wx.CAPTION,
               title=u'Devolu\xe7\xe3o')
         self.SetClientSize(wx.Size(770, 424))
-        self.SetIcon(wx.Icon(u'C:/Users/luisc/workspace/sistema-para-locadora-de-veiculo/sistema-para-locadora-de-veiculo/Locadora/src/gui/icon/logo.ico',
+        self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',
               wx.BITMAP_TYPE_ICO))
 
         self.pnlDevolucao = wx.Panel(id=wxID_FRMDEVOLUCAOPNLDEVOLUCAO,
@@ -114,12 +114,12 @@ class frmDevolucao(wx.Frame):
         self.stTotal.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD, False,
               u'Tahoma'))
 
-        self.btnCpf = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'C:/Users/luisc/workspace/sistema-para-locadora-de-veiculo/sistema-para-locadora-de-veiculo/Locadora/src/gui/icon/search.png',
+        self.btnCpf = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMDEVOLUCAOBTNCPF, name=u'btnCpf',
               parent=self.pnlDevolucao, pos=wx.Point(312, 48), size=wx.Size(32,
               32), style=0)
 
-        self.btnPlaca = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'C:/Users/luisc/workspace/sistema-para-locadora-de-veiculo/sistema-para-locadora-de-veiculo/Locadora/src/gui/icon/search.png',
+        self.btnPlaca = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMDEVOLUCAOBTNPLACA,
               name=u'btnPlaca', parent=self.pnlDevolucao, pos=wx.Point(536, 48),
               size=wx.Size(32, 32), style=0)
