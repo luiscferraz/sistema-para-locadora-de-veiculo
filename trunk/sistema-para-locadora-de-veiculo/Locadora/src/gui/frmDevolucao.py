@@ -1,9 +1,18 @@
+# -*- coding: latin-1 -*-
 #Boa:Frame:frmDevolucao
 
 import wx
 import wx.lib.stattext
 import wx.lib.masked.textctrl
 import wx.lib.buttons
+
+from db.ClienteDAO import *
+from db.VeiculoDAO import *
+from db.TipoVeiculoDAO import TipoVeiculoDAO
+from datetime import *
+from negocio.Locacao import *
+from db.LocacaoDAO import *
+
 
 def create(parent):
     return frmDevolucao(parent)
@@ -16,10 +25,28 @@ def create(parent):
  wxID_FRMDEVOLUCAOSTBUSCAR, wxID_FRMDEVOLUCAOSTCALCULAR, 
  wxID_FRMDEVOLUCAOSTKMCHEGADA, wxID_FRMDEVOLUCAOSTRESULTADO, 
  wxID_FRMDEVOLUCAOSTTOTAL, wxID_FRMDEVOLUCAOSTVALOR, wxID_FRMDEVOLUCAOTXTCPF, 
- wxID_FRMDEVOLUCAOTXTKMCHEGADA, wxID_FRMDEVOLUCAOTXTPLACA, 
-] = [wx.NewId() for _init_ctrls in range(19)]
+ wxID_FRMDEVOLUCAOTXTKMCHEGADA, wxID_FRMDEVOLUCAOTXTPLACA, wxID_FRMDEVOLUCAOLISTCTRLBUSCALOCACAO, 
+ wxID_FRMDEVOLUCAOSTNOMECLIENTE
+] = [wx.NewId() for _init_ctrls in range(21)]
 
 class frmDevolucao(wx.Frame):
+    def _init_coll_listCtrlBuscaLocacao_Columns(self,parent):
+        # generated method, don't edit
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Id',
+              width=45)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='Data',
+              width=155)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='CPF',
+              width=95)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='Placa',
+              width=70)
+        parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT, heading='Modelo',
+              width=100)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT, heading='Km Saída',
+              width=70)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT, heading='Valor Parcial',
+              width=90)
+    
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMDEVOLUCAO, name=u'frmDevolucao',
@@ -86,7 +113,7 @@ class frmDevolucao(wx.Frame):
 
         self.lstBusca = wx.ListCtrl(id=wxID_FRMDEVOLUCAOLSTBUSCA,
               name=u'lstBusca', parent=self.pnlDevolucao, pos=wx.Point(144,
-              136), size=wx.Size(600, 160), style=wx.LC_ICON)
+              136), style=wx.LC_ICON)
 
         self.stKmChegada = wx.StaticText(id=wxID_FRMDEVOLUCAOSTKMCHEGADA,
               label=u'KM Chegada :', name=u'stKmChegada',
@@ -118,6 +145,8 @@ class frmDevolucao(wx.Frame):
               wx.BITMAP_TYPE_PNG), id=wxID_FRMDEVOLUCAOBTNCPF, name=u'btnCpf',
               parent=self.pnlDevolucao, pos=wx.Point(312, 48), size=wx.Size(32,
               32), style=0)
+        self.btnCpf.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarCpfButton,
+              id=wxID_FRMDEVOLUCAOBTNCPF)
 
         self.btnPlaca = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMDEVOLUCAOBTNPLACA,
@@ -128,6 +157,11 @@ class frmDevolucao(wx.Frame):
               label=u'Resultado da busca', name=u'stResultado',
               parent=self.pnlDevolucao, pos=wx.Point(128, 112),
               size=wx.Size(632, 200), style=0)
+        
+        self.listCtrlBuscaLocacao = wx.ListCtrl(id=wxID_FRMDEVOLUCAOLISTCTRLBUSCALOCACAO,
+              name='listCtrlBuscaLocacao', parent=self.pnlDevolucao, pos=wx.Point(144,
+              136), size=wx.Size(600, 160), style=wx.LC_REPORT)
+        self._init_coll_listCtrlBuscaLocacao_Columns(self.listCtrlBuscaLocacao)
 
         self.stCalcular = wx.StaticBox(id=wxID_FRMDEVOLUCAOSTCALCULAR,
               label=u'Calcular Pagamento', name=u'stCalcular',
@@ -136,6 +170,67 @@ class frmDevolucao(wx.Frame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        #self.inserirDadosNasColunasDaTabelaLocacao(self.listCtrlBuscaLocacao)
+        
+    def criarTabela(self):
+        self.listCtrlBuscaLocacao = wx.ListCtrl(id=wxID_FRMDEVOLUCAOLISTCTRLBUSCALOCACAO,
+              name='listCtrlBuscaLocacao', parent=self.pnlDevolucao,
+              pos=wx.Point(144,136), size=wx.Size(600, 170), style=wx.LC_REPORT)
+        self._init_coll_listCtrlBuscaLocacao_Columns(self.listCtrlBuscaLocacao)
+        
+    def OnBtnPesquisarCpfButton(self, event):
+        self.listCtrlBuscaLocacao.Destroy()  
+        cpf = self.txtCpf.GetValue() 
+        #print cpf
+        
+        #print ClienteDAO.verificarExistenciaCliente(cpf)
+        if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
+            self.criarTabela()
+            
+            #insere na tabela os dados de acordo com a cor fornecida
+            self.inserirInformacoesNaListctrlByCpf(self.listCtrlBuscaLocacao, cpf)
+            
+            self.txtCpf.Clear()
+                    
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+            
+            self.txtCpf.Clear()
+            
+            
+    def inserirInformacoesNaListctrlByCpf(self,listCtrl,cpf):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega as locacoes feitas pelo respectivo CPF
+        rows = LocacaoDAO.getLocacoesByCpf(cpf)        
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
+        
+    
+    def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
+        #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
+        #Desenvolvido para evitar a repetição de código nos 3 tipos de buscas de um veículo.
+        #Recebe como parâmetro a ListCtrl na qual deseja inserir dados e as linhas
+        #de informações obtidas numa busca no banco de dados.
+        if rows:
+            for row in rows:
+                num_itens = listCtrl.GetItemCount()
+                listCtrl.InsertStringItem(num_itens,str(row[0]))
+                listCtrl.SetStringItem(num_itens,1,row[1])
+                listCtrl.SetStringItem(num_itens,2,row[4])
+                listCtrl.SetStringItem(num_itens,3,row[5])
+                listCtrl.SetStringItem(num_itens,5,str(row[3]))
+                listCtrl.SetStringItem(num_itens,6,str(row[2]))
+                
+                veiculos = VeiculoDAO.getAllVeiculos()
+                for i in veiculos:
+                    if i[1] == row[5]:
+                        modelo = i[4]
+                #referente à tabela de tipo de veículos
+                listCtrl.SetStringItem(num_itens,4,str(modelo))
+                
+        
 
     def OnBtnFinalizarButton(self, event):
         event.Skip()
@@ -144,7 +239,64 @@ class frmDevolucao(wx.Frame):
         event.Skip()
 
     def OnBtnCalcularButton(self, event):
-        event.Skip()
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.listCtrlBuscaLocacao.GetFocusedItem()
+        print indice
+        
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            idLocacao = self.listCtrlBuscaLocacao.GetItemText(indice)
+            print idLocacao
+                        
+            #buscar todos os objetos relacionados à locacao        
+            listaObjetos = self.getObjetosLocacao(idLocacao)
+            
+            tipoVeiculo = listaObjetos[1]
+            locacao = listaObjetos[0]
+        
+            valorContaParcial = locacao.getValorContaParcial()
+            print valorContaParcial
+            precoKm = tipoVeiculo.getPrecoKm()
+            print precoKm
+            
+            quilometragemDeChegada = self.txtKmChegada.GetValue()
+            print int(quilometragemDeChegada)
+            kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
+        
+            valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
+            print valorContaTotal
+            
+            
+            self.listCtrlBuscaLocacao.Destroy()
+            self.criarTabela()
+            
+            #print "Locação efetuada com sucesso" 
+            caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+            caixaDeMensagem.ShowModal()
+            caixaDeMensagem.Destroy()
+        else:            
+                caixaDeMensagem = wx.MessageDialog(self,'Selecione a locação.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
+                
+                
+    def getObjetosLocacao(self, idLocacao):
+        #Encontrar dados de locacao a partir do idLocacao
+        locacao = LocacaoDAO().procurarLocacaoById(idLocacao)
+    
+        #Encontrar o id do tipoVeiculo e do Veiculo pela placa              
+        veiculos = VeiculoDAO().getAllVeiculos()
+        placa = locacao.getPlacaVeiculo()
+        for i in veiculos:
+            if (i[1] == placa):
+                idTipo = i[6]
+                idVeiculo = i[0]
+                    
+        tipoVeiculo = TipoVeiculoDAO.procurarTipo(idTipo)
+        veiculo = VeiculoDAO.procurarVeiculoById(idVeiculo)
+            
+        listaObjetos = [locacao, tipoVeiculo, veiculo]
+        return listaObjetos
 
 
 if __name__ == '__main__':
