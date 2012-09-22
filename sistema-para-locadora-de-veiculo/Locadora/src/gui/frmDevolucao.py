@@ -136,7 +136,7 @@ class frmDevolucao(wx.Frame):
               13), style=0)
 
         self.stTotal = wx.StaticText(id=wxID_FRMDEVOLUCAOSTTOTAL,
-              label=u'R$ 100,00', name=u'stTotal', parent=self.pnlDevolucao,
+              label=u'R$ 00,00', name=u'stTotal', parent=self.pnlDevolucao,
               pos=wx.Point(464, 368), size=wx.Size(82, 19), style=0)
         self.stTotal.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD, False,
               u'Tahoma'))
@@ -186,10 +186,9 @@ class frmDevolucao(wx.Frame):
         cpf = self.txtCpf.GetValue() 
         #print cpf
         
+        self.criarTabela()
         #print ClienteDAO.verificarExistenciaCliente(cpf)
         if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
-            self.criarTabela()
-            
             #insere na tabela os dados de acordo com a cor fornecida
             self.inserirInformacoesNaListctrlByCpf(self.listCtrlBuscaLocacao, cpf)
             
@@ -215,21 +214,20 @@ class frmDevolucao(wx.Frame):
         placa = self.txtPlaca.GetValue().upper() 
         #print placa
         
+        self.criarTabela()
         #print VeiculoDAO.verificarExistenciaVeiculo(placa)
         if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
-            self.criarTabela()
-            
             #insere na tabela os dados de acordo com a cor fornecida
             self.inserirInformacoesNaListctrlByPlaca(self.listCtrlBuscaLocacao, placa)
             
-            self.txtCpf.Clear()
+            self.txtPlaca.Clear()
                     
         else:
             caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
-            self.txtCpf.Clear()
+            self.txtPlaca.Clear()
     
     def inserirInformacoesNaListctrlByPlaca(self,listCtrl,placa):
         #Método que pegará a informação do banco e colocará na ListCtrl.
@@ -261,7 +259,6 @@ class frmDevolucao(wx.Frame):
                 #referente à tabela de tipo de veículos
                 listCtrl.SetStringItem(num_itens,4,str(modelo))
                 
-        
 
     def OnBtnFinalizarButton(self, event):
         event.Skip()
@@ -287,22 +284,20 @@ class frmDevolucao(wx.Frame):
             locacao = listaObjetos[0]
         
             valorContaParcial = locacao.getValorContaParcial()
-            print valorContaParcial
+            #print valorContaParcial
             precoKm = tipoVeiculo.getPrecoKm()
-            print precoKm
+            #print precoKm
             
             quilometragemDeChegada = self.txtKmChegada.GetValue()
-            print int(quilometragemDeChegada)
+            #print int(quilometragemDeChegada)
             kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
         
             valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
-            print valorContaTotal
+            #print valorContaTotal
+            
+            self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
             
             
-            self.listCtrlBuscaLocacao.Destroy()
-            self.criarTabela()
-            
-            #print "Locação efetuada com sucesso" 
             caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
             caixaDeMensagem.ShowModal()
             caixaDeMensagem.Destroy()
