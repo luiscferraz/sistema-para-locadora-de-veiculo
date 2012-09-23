@@ -7,6 +7,7 @@ import frmCliente
 import frmVeiculo
 import frmTipoVeiculo
 import frmLocacao
+import frmDevolucao
 
 def create(parent):
     return frmPrincipal(parent)
@@ -124,7 +125,8 @@ class frmPrincipal(wx.Frame):
         telaLocacao.Show()
 
     def OnBtnDevolucaoButton(self, event):
-        event.Skip()
+        telaDevolucao = frmDevolucao.create(None)
+        telaDevolucao.Show()
 
     def OnBtnPesquisarButton(self, event):
         event.Skip()
