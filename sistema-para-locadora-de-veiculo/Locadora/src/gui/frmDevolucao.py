@@ -372,6 +372,11 @@ class frmDevolucao(wx.Frame):
                     #Adicionar no banco
                     HistoricoDAO.insertHistorico(historico)
                     LocacaoDAO.deleteLocacao(idLocacao)
+                    self.listCtrlBuscaLocacao.Destroy()
+                    self.criarTabela()
+                    caixaDeMensagem = wx.MessageDialog(self,'Devolução concluída', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem.ShowModal()
+                    caixaDeMensagem.Destroy()
 
 
 if __name__ == '__main__':
