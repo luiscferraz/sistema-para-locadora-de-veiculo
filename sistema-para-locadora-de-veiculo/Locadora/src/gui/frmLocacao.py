@@ -303,7 +303,7 @@ class frmLocacao(wx.Frame):
             
             dataLocacao = datetime.today()
             quilometragemDeSaida = veiculoSelecionado.getQuilometragemAtual()
-            valorContaParcial = tipoVeiculo.getCaucao()
+            valorContaParcial = tipoVeiculo.getCaucao() + tipoVeiculo.getTaxaBase()
             cpfCliente = self.txtCPF.GetValue()
             
             locacao = Locacao(dataLocacao,quilometragemDeSaida,valorContaParcial,cpfCliente,placa)

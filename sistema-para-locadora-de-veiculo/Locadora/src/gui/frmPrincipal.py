@@ -14,10 +14,9 @@ def create(parent):
 
 [wxID_FRMPRINCIPAL, wxID_FRMPRINCIPALBACKGROUND, wxID_FRMPRINCIPALBTNCLIENTES, 
  wxID_FRMPRINCIPALBTNDEVOLUCAO, wxID_FRMPRINCIPALBTNLOCACAO, 
- wxID_FRMPRINCIPALBTNPESQUISAR, wxID_FRMPRINCIPALBTNSAIR, 
- wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
+ wxID_FRMPRINCIPALBTNSAIR, wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
  wxID_FRMPRINCIPALPNLPRINCIPAL, wxID_FRMPRINCIPALSTINDEX, 
-] = [wx.NewId() for _init_ctrls in range(11)]
+] = [wx.NewId() for _init_ctrls in range(10)]
 
 class frmPrincipal(wx.Frame):
     def _init_ctrls(self, prnt):
@@ -87,15 +86,6 @@ class frmPrincipal(wx.Frame):
         self.btnDevolucao.Bind(wx.EVT_BUTTON, self.OnBtnDevolucaoButton,
               id=wxID_FRMPRINCIPALBTNDEVOLUCAO)
 
-        self.btnPesquisar = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNPESQUISAR,
-              label=u'Pesquisar', name=u'btnPesquisar',
-              parent=self.pnlPrincipal, pos=wx.Point(24, 272), size=wx.Size(128,
-              32), style=0)
-        self.btnPesquisar.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
-              False, u'Tahoma'))
-        self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
-              id=wxID_FRMPRINCIPALBTNPESQUISAR)
-
         self.btnSair = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNSAIR,
               label=u'Sair', name=u'btnSair', parent=self.pnlPrincipal,
               pos=wx.Point(24, 368), size=wx.Size(128, 32), style=0)
@@ -127,9 +117,6 @@ class frmPrincipal(wx.Frame):
     def OnBtnDevolucaoButton(self, event):
         telaDevolucao = frmDevolucao.create(None)
         telaDevolucao.Show()
-
-    def OnBtnPesquisarButton(self, event):
-        event.Skip()
 
     def OnBtnSairButton(self, event):
         self.Destroy()
