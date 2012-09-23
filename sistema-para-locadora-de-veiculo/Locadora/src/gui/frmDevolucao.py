@@ -12,6 +12,8 @@ from db.TipoVeiculoDAO import TipoVeiculoDAO
 from datetime import *
 from negocio.Locacao import *
 from db.LocacaoDAO import *
+from negocio.Historico import *
+from db.HistoricoDAO import *
 
 
 def create(parent):
@@ -173,6 +175,7 @@ class frmDevolucao(wx.Frame):
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        self.calculoFeito = False
         #self.inserirDadosNasColunasDaTabelaLocacao(self.listCtrlBuscaLocacao)
         
     def criarTabela(self):
@@ -183,6 +186,7 @@ class frmDevolucao(wx.Frame):
         
     def OnBtnPesquisarCpfButton(self, event):
         self.listCtrlBuscaLocacao.Destroy()  
+        self.calculoFeito = False
         cpf = self.txtCpf.GetValue() 
         #print cpf
         
@@ -211,6 +215,7 @@ class frmDevolucao(wx.Frame):
         
     def OnBtnPesquisarPlacaButton(self, event):
         self.listCtrlBuscaLocacao.Destroy()  
+        self.calculoFeito = False
         placa = self.txtPlaca.GetValue().upper() 
         #print placa
         
@@ -258,19 +263,34 @@ class frmDevolucao(wx.Frame):
                         modelo = i[4]
                 #referente à tabela de tipo de veículos
                 listCtrl.SetStringItem(num_itens,4,str(modelo))
-                
-
-    def OnBtnFinalizarButton(self, event):
-        event.Skip()
 
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaLocacao.Destroy()
         self.criarTabela()
+        
+    def getObjetosLocacao(self, idLocacao):
+        #Encontrar dados de locacao a partir do idLocacao
+        locacao = LocacaoDAO().procurarLocacaoById(idLocacao)
+    
+        #Encontrar o id do tipoVeiculo e do Veiculo pela placa              
+        veiculos = VeiculoDAO().getAllVeiculos()
+        placa = locacao.getPlacaVeiculo()
+        for i in veiculos:
+            if (i[1] == placa):
+                idTipo = i[6]
+                idVeiculo = i[0]
+                    
+        tipoVeiculo = TipoVeiculoDAO.procurarTipo(idTipo)
+        veiculo = VeiculoDAO.procurarVeiculoById(idVeiculo)
+            
+        listaObjetos = [locacao, tipoVeiculo, veiculo]
+        return listaObjetos
+    
 
     def OnBtnCalcularButton(self, event):
         #pegar o indice do item selecionado no Listctrl
         indice = self.listCtrlBuscaLocacao.GetFocusedItem()
-        print indice
+        #print indice
         
         #se o indice for -1 é pq nada foi selecionado
         if indice != -1: 
@@ -291,39 +311,67 @@ class frmDevolucao(wx.Frame):
             quilometragemDeChegada = self.txtKmChegada.GetValue()
             #print int(quilometragemDeChegada)
             kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
-        
-            valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
-            #print valorContaTotal
+            if kmRodados > 0:
+                valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
+                #print valorContaTotal
+                
+                self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
+                
+                caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
+                
+                self.calculoFeito = True
+            else:
+                caixaDeMensagem = wx.MessageDialog(self,'Valor de quilometragem menor que a última cadastrada', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
             
-            self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
-            
-            
-            caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
-            caixaDeMensagem.ShowModal()
-            caixaDeMensagem.Destroy()
         else:            
                 caixaDeMensagem = wx.MessageDialog(self,'Selecione a locação.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeMensagem.ShowModal()
                 caixaDeMensagem.Destroy()
                 
                 
-    def getObjetosLocacao(self, idLocacao):
-        #Encontrar dados de locacao a partir do idLocacao
-        locacao = LocacaoDAO().procurarLocacaoById(idLocacao)
-    
-        #Encontrar o id do tipoVeiculo e do Veiculo pela placa              
-        veiculos = VeiculoDAO().getAllVeiculos()
-        placa = locacao.getPlacaVeiculo()
-        for i in veiculos:
-            if (i[1] == placa):
-                idTipo = i[6]
-                idVeiculo = i[0]
+    def OnBtnFinalizarButton(self, event):
+        if (self.calculoFeito == True):
+            indice = self.listCtrlBuscaLocacao.GetFocusedItem()
+            if indice != -1: 
+                idLocacao = self.listCtrlBuscaLocacao.GetItemText(indice)
+                listaObjetos = self.getObjetosLocacao(idLocacao)
+                if listaObjetos != []:
+                    veiculo = listaObjetos[2]
                     
-        tipoVeiculo = TipoVeiculoDAO.procurarTipo(idTipo)
-        veiculo = VeiculoDAO.procurarVeiculoById(idVeiculo)
-            
-        listaObjetos = [locacao, tipoVeiculo, veiculo]
-        return listaObjetos
+                    #Encontrar veiculo pelo id
+                    idVeiculo = veiculo.getIdVeiculo()
+                    veiculoLocado = VeiculoDAO().procurarVeiculoById(idVeiculo)
+                    
+                    #Atualizar a quilometragem do veiculo
+                    quilometragemAtual = int(self.txtKmChegada.GetValue())
+                    
+                    #Alterar dados do veiculo
+                    veiculoLocado.setQuilometragemAtual(quilometragemAtual)
+                    veiculoLocado.setDisponibilidade("DISPONIVEL")
+                    
+                    #Manter alteracoes no banco de dados
+                    VeiculoDAO().updateVeiculo(veiculoLocado)
+                    
+                    #Cadastrar no banco Historico
+                    locacao = listaObjetos[0]
+                    
+                    #Criar objeto historico
+                    dataLocacao = locacao.getDataLocacao()
+                    dataDevolucao = datetime.now()
+                    quilometragemDeSaida = locacao.getQuilometragemDeSaida()
+                    quilometragemDeChegada = quilometragemAtual
+                    cpfCliente = locacao.getCpfCliente()
+                    placaCarro = locacao.getPlacaVeiculo()
+                    valorContaTotal = (self.stTotal.GetLabel())[3:]
+                    
+                    historico = Historico(dataLocacao, dataDevolucao, quilometragemDeSaida, quilometragemDeChegada, placaCarro, cpfCliente, valorContaTotal)
+                    #Adicionar no banco
+                    HistoricoDAO.insertHistorico(historico)
+                    LocacaoDAO.deleteLocacao(idLocacao)
 
 
 if __name__ == '__main__':
