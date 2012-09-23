@@ -20,7 +20,8 @@ def create(parent):
     return frmDevolucao(parent)
 
 [wxID_FRMDEVOLUCAO, wxID_FRMDEVOLUCAOBTNCALCULAR, 
- wxID_FRMDEVOLUCAOBTNCANCELAR, wxID_FRMDEVOLUCAOBTNCPF, 
+ wxID_FRMDEVOLUCAO, wxID_FRMDEVOLUCAOBTNCALCULARSEMCAUCAO,
+ wxID_FRMDEVOLUCAOBTNCANCELAR, wxID_FRMDEVOLUCAOBTNCPF,
  wxID_FRMDEVOLUCAOBTNFINALIZAR, wxID_FRMDEVOLUCAOBTNPLACA, 
  wxID_FRMDEVOLUCAOLBLCPF, wxID_FRMDEVOLUCAOLBLPLACA, 
  wxID_FRMDEVOLUCAOLSTBUSCA, wxID_FRMDEVOLUCAOPNLDEVOLUCAO, 
@@ -29,7 +30,7 @@ def create(parent):
  wxID_FRMDEVOLUCAOSTTOTAL, wxID_FRMDEVOLUCAOSTVALOR, wxID_FRMDEVOLUCAOTXTCPF, 
  wxID_FRMDEVOLUCAOTXTKMCHEGADA, wxID_FRMDEVOLUCAOTXTPLACA, wxID_FRMDEVOLUCAOLISTCTRLBUSCALOCACAO, 
  wxID_FRMDEVOLUCAOSTNOMECLIENTE
-] = [wx.NewId() for _init_ctrls in range(21)]
+] = [wx.NewId() for _init_ctrls in range(23)]
 
 class frmDevolucao(wx.Frame):
     def _init_coll_listCtrlBuscaLocacao_Columns(self,parent):
@@ -127,10 +128,16 @@ class frmDevolucao(wx.Frame):
               368), size=wx.Size(160, 21), style=0, value=u'')
 
         self.btnCalcular = wx.lib.buttons.GenButton(id=wxID_FRMDEVOLUCAOBTNCALCULAR,
-              label=u'Calcular', name=u'btnCalcular', parent=self.pnlDevolucao,
-              pos=wx.Point(320, 360), size=wx.Size(76, 32), style=0)
-        self.btnCalcular.Bind(wx.EVT_BUTTON, self.OnBtnCalcularButton,
+              label=u'Com caução', name=u'btnCalcular', parent=self.pnlDevolucao,
+              pos=wx.Point(315, 338), size=wx.Size(80, 28), style=0)
+        self.btnCalcular.Bind(wx.EVT_BUTTON, self.OnBtnCalcularButtonComCaucao,
               id=wxID_FRMDEVOLUCAOBTNCALCULAR)
+        
+        self.btnCalcularSemCaucao = wx.lib.buttons.GenButton(id=wxID_FRMDEVOLUCAOBTNCALCULARSEMCAUCAO,
+              label=u'Sem caução', name=u'btnCalcularSemCaucao', parent=self.pnlDevolucao,
+              pos=wx.Point(315, 378), size=wx.Size(80, 28), style=0)
+        self.btnCalcularSemCaucao.Bind(wx.EVT_BUTTON, self.OnBtnCalcularButtonSemCaucao,
+              id=wxID_FRMDEVOLUCAOBTNCALCULARSEMCAUCAO)
 
         self.stValor = wx.StaticText(id=wxID_FRMDEVOLUCAOSTVALOR,
               label=u'Valor a Pagar :', name=u'stValor',
@@ -267,6 +274,8 @@ class frmDevolucao(wx.Frame):
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaLocacao.Destroy()
         self.criarTabela()
+        self.txtKmChegada.Clear()
+        self.stTotal.SetLabel("R$ 00,00")
         
     def getObjetosLocacao(self, idLocacao):
         #Encontrar dados de locacao a partir do idLocacao
@@ -287,7 +296,7 @@ class frmDevolucao(wx.Frame):
         return listaObjetos
     
 
-    def OnBtnCalcularButton(self, event):
+    def OnBtnCalcularButtonComCaucao(self, event):
         #pegar o indice do item selecionado no Listctrl
         indice = self.listCtrlBuscaLocacao.GetFocusedItem()
         #print indice
@@ -310,28 +319,82 @@ class frmDevolucao(wx.Frame):
             
             quilometragemDeChegada = self.txtKmChegada.GetValue()
             #print int(quilometragemDeChegada)
-            kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
-            if kmRodados > 0:
-                valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
-                #print valorContaTotal
+            if quilometragemDeChegada != "":
+                kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
+                if kmRodados > 0:
+                    valorContaTotal =  valorContaParcial + (precoKm * kmRodados)
+                    #print valorContaTotal
                 
-                self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
+                    self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
                 
-                caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
-                caixaDeMensagem.ShowModal()
-                caixaDeMensagem.Destroy()
+                    caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado!', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem.ShowModal()
+                    caixaDeMensagem.Destroy()
                 
-                self.calculoFeito = True
+                    self.calculoFeito = True
+                else:
+                    caixaDeMensagem = wx.MessageDialog(self,'Valor de quilometragem menor que a última cadastrada!', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem.ShowModal()
+                    caixaDeMensagem.Destroy()
             else:
-                caixaDeMensagem = wx.MessageDialog(self,'Valor de quilometragem menor que a última cadastrada', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem = wx.MessageDialog(self,'Informe a quilometragem de chegada!', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeMensagem.ShowModal()
                 caixaDeMensagem.Destroy()
-            
+                
         else:            
                 caixaDeMensagem = wx.MessageDialog(self,'Selecione a locação.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeMensagem.ShowModal()
                 caixaDeMensagem.Destroy()
                 
+    def OnBtnCalcularButtonSemCaucao(self, event):
+        #pegar o indice do item selecionado no Listctrl
+        indice = self.listCtrlBuscaLocacao.GetFocusedItem()
+        #print indice
+        
+        #se o indice for -1 é pq nada foi selecionado
+        if indice != -1: 
+            idLocacao = self.listCtrlBuscaLocacao.GetItemText(indice)
+            print idLocacao
+                        
+            #buscar todos os objetos relacionados à locacao        
+            listaObjetos = self.getObjetosLocacao(idLocacao)
+            
+            tipoVeiculo = listaObjetos[1]
+            locacao = listaObjetos[0]
+        
+            valorContaParcial = locacao.getValorContaParcial()
+            #print valorContaParcial
+            precoKm = tipoVeiculo.getPrecoKm()
+            #print precoKm
+            
+            quilometragemDeChegada = self.txtKmChegada.GetValue()
+            #print int(quilometragemDeChegada)
+            if quilometragemDeChegada != "":
+                kmRodados = int(quilometragemDeChegada) - locacao.getQuilometragemDeSaida()
+                if kmRodados > 0:
+                    valorContaTotal =  tipoVeiculo.getTaxaBase() + (precoKm * kmRodados)
+                    #print valorContaTotal
+                
+                    self.stTotal.SetLabel("R$ %.2f" %(valorContaTotal))
+                
+                    caixaDeMensagem = wx.MessageDialog(self,'Valor de locação calculado!', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem.ShowModal()
+                    caixaDeMensagem.Destroy()
+                
+                    self.calculoFeito = True
+                else:
+                    caixaDeMensagem = wx.MessageDialog(self,'Valor de quilometragem menor que a última cadastrada!', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem.ShowModal()
+                    caixaDeMensagem.Destroy()
+            else:
+                caixaDeMensagem = wx.MessageDialog(self,'Informe a quilometragem de chegada!', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
+                
+        else:            
+                caixaDeMensagem = wx.MessageDialog(self,'Selecione a locação.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeMensagem.ShowModal()
+                caixaDeMensagem.Destroy()
                 
     def OnBtnFinalizarButton(self, event):
         if (self.calculoFeito == True):
@@ -374,7 +437,7 @@ class frmDevolucao(wx.Frame):
                     LocacaoDAO.deleteLocacao(idLocacao)
                     self.listCtrlBuscaLocacao.Destroy()
                     self.criarTabela()
-                    caixaDeMensagem = wx.MessageDialog(self,'Devolução concluída', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
+                    caixaDeMensagem = wx.MessageDialog(self,'Devolução concluída!', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
                     caixaDeMensagem.ShowModal()
                     caixaDeMensagem.Destroy()
 
