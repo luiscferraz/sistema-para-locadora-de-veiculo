@@ -39,6 +39,40 @@ class HistoricoDAO(object):
             finally:
                 ConnectionUtil.fecharConexao(cur, conexao) 
 
+    @staticmethod
+    def getHistoricoByCpf(cpf):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM HISTORICO WHERE FK_CPF_CLIENTE LIKE ? ",(cpf+"%",))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
+                
+    @staticmethod
+    def getHistoricoByPlaca(placa):
+        conexao = ConnectionUtil.conectar()
+        try:
+            with conexao:
+                cur = conexao.cursor()
+                cur.execute("SELECT * FROM HISTORICO WHERE FK_PLACA_VEICULO LIKE ? ",(placa+"%",))
+                row = cur.fetchall()      
+                return row
+        except lite.Error, e:
+            if conexao:
+                conexao.rollback()        
+                print "Error %s:" % e.args[0]
+                sys.exit(1)    
+        finally:
+                ConnectionUtil.fecharConexao(cur,conexao)
+
     
     @staticmethod
     def getAllHistorico():

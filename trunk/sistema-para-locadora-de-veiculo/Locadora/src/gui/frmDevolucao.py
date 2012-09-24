@@ -437,10 +437,12 @@ class frmDevolucao(wx.Frame):
                     LocacaoDAO.deleteLocacao(idLocacao)
                     self.listCtrlBuscaLocacao.Destroy()
                     self.criarTabela()
+                    self.txtKmChegada.Clear()
+                    self.stTotal.SetLabel("R$ 00,00")
                     caixaDeMensagem = wx.MessageDialog(self,'Devolução concluída!', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
                     caixaDeMensagem.ShowModal()
                     caixaDeMensagem.Destroy()
-
+                    
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
