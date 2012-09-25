@@ -102,3 +102,13 @@ class frmHistorico(wx.Frame):
 
     def OnGenBitmapToggleButton2Button(self, event):
         event.Skip()
+        
+        
+if __name__ == '__main__':
+    app = wx.PySimpleApp()
+    frame = create(None)
+    frame.Show()
+
+    app.MainLoop()
+        
+                
