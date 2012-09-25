@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 #Boa:Frame:frmPrincipal
 
 import wx
@@ -8,15 +9,16 @@ import frmVeiculo
 import frmTipoVeiculo
 import frmLocacao
 import frmDevolucao
+import frmHistorico
 
 def create(parent):
     return frmPrincipal(parent)
 
 [wxID_FRMPRINCIPAL, wxID_FRMPRINCIPALBACKGROUND, wxID_FRMPRINCIPALBTNCLIENTES, 
- wxID_FRMPRINCIPALBTNDEVOLUCAO, wxID_FRMPRINCIPALBTNLOCACAO, 
+ wxID_FRMPRINCIPALBTNDEVOLUCAO, wxID_FRMPRINCIPALBTNHISTORICO,  wxID_FRMPRINCIPALBTNLOCACAO, 
  wxID_FRMPRINCIPALBTNSAIR, wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
  wxID_FRMPRINCIPALPNLPRINCIPAL, wxID_FRMPRINCIPALSTINDEX, 
-] = [wx.NewId() for _init_ctrls in range(10)]
+] = [wx.NewId() for _init_ctrls in range(11)]
 
 class frmPrincipal(wx.Frame):
     def _init_ctrls(self, prnt):
@@ -85,6 +87,15 @@ class frmPrincipal(wx.Frame):
               False, u'Tahoma'))
         self.btnDevolucao.Bind(wx.EVT_BUTTON, self.OnBtnDevolucaoButton,
               id=wxID_FRMPRINCIPALBTNDEVOLUCAO)
+        
+        self.btnHistorico = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNHISTORICO,
+              label=u'Histórico', name=u'btnHistorico',
+              parent=self.pnlPrincipal, pos=wx.Point(24, 272), size=wx.Size(128,
+              32), style=0)
+        self.btnHistorico.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL,
+              False, u'Tahoma'))
+        self.btnHistorico.Bind(wx.EVT_BUTTON, self.OnBtnHistoricoButton,
+              id=wxID_FRMPRINCIPALBTNHISTORICO)
 
         self.btnSair = wx.lib.buttons.GenButton(id=wxID_FRMPRINCIPALBTNSAIR,
               label=u'Sair', name=u'btnSair', parent=self.pnlPrincipal,
@@ -117,6 +128,10 @@ class frmPrincipal(wx.Frame):
     def OnBtnDevolucaoButton(self, event):
         telaDevolucao = frmDevolucao.create(None)
         telaDevolucao.Show()
+        
+    def OnBtnHistoricoButton(self, event):
+        telaHistorico = frmHistorico.create(None)
+        telaHistorico.Show()
 
     def OnBtnSairButton(self, event):
         self.Destroy()
