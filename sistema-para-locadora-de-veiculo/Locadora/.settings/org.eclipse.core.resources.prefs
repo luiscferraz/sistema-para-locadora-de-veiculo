@@ -1,4 +1,4 @@
-#Tue Sep 25 13:36:49 GMT-03:00 2012
+#Tue Sep 25 14:07:33 GMT-03:00 2012
 =\=\=\=\=\=\=
 <<<<<<<=.mine
 >>>>>>>=.r40
@@ -12,6 +12,7 @@ encoding//src/db/TipoVeiculoDAO.py=latin1
 encoding//src/db/VeiculoDAO.py=latin1
 encoding//src/gui/frmCliente.py=latin1
 encoding//src/gui/frmDevolucao.py=latin1
+encoding//src/gui/frmHistorico.py=latin1
 encoding//src/gui/frmLocacao.py=latin1
 encoding//src/gui/frmPrincipal.py=latin1
 encoding//src/gui/frmTipoVeiculo.py=latin1
