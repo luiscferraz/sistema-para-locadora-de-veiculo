@@ -183,7 +183,7 @@ class frmDevolucao(wx.Frame):
     def __init__(self, parent):
         self._init_ctrls(parent)
         self.calculoFeito = False
-        #self.inserirDadosNasColunasDaTabelaLocacao(self.listCtrlBuscaLocacao)
+        self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         
     def criarTabela(self):
         self.listCtrlBuscaLocacao = wx.ListCtrl(id=wxID_FRMDEVOLUCAOLISTCTRLBUSCALOCACAO,
@@ -200,11 +200,16 @@ class frmDevolucao(wx.Frame):
         self.criarTabela()
         #print ClienteDAO.verificarExistenciaCliente(cpf)
         if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
-            #insere na tabela os dados de acordo com a cor fornecida
-            self.inserirInformacoesNaListctrlByCpf(self.listCtrlBuscaLocacao, cpf)
+            if LocacaoDAO.getLocacoesByCpf(cpf) != []:
+                #insere na tabela os dados de acordo com a cor fornecida
+                self.inserirInformacoesNaListctrlByCpf(self.listCtrlBuscaLocacao, cpf)
             
-            self.txtCpf.Clear()
-                    
+                self.txtCpf.Clear()
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este cliente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+                self.txtCpf.Clear()
         else:
             caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
@@ -229,11 +234,16 @@ class frmDevolucao(wx.Frame):
         self.criarTabela()
         #print VeiculoDAO.verificarExistenciaVeiculo(placa)
         if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
-            #insere na tabela os dados de acordo com a cor fornecida
-            self.inserirInformacoesNaListctrlByPlaca(self.listCtrlBuscaLocacao, placa)
+            if LocacaoDAO.getLocacoesByPlaca(placa) != []:
+                #insere na tabela os dados de acordo com a cor fornecida
+                self.inserirInformacoesNaListctrlByPlaca(self.listCtrlBuscaLocacao, placa)
             
-            self.txtPlaca.Clear()
-                    
+                self.txtPlaca.Clear()
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+                self.txtPlaca.Clear()
         else:
             caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
@@ -274,6 +284,7 @@ class frmDevolucao(wx.Frame):
     def OnBtnCancelarButton(self, event):
         self.listCtrlBuscaLocacao.Destroy()
         self.criarTabela()
+        self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         self.txtKmChegada.Clear()
         self.stTotal.SetLabel("R$ 00,00")
         
@@ -442,7 +453,26 @@ class frmDevolucao(wx.Frame):
                     caixaDeMensagem = wx.MessageDialog(self,'Devolução concluída!', 'CONFIRMAÇÃO', wx.OK | wx.ICON_INFORMATION)
                     caixaDeMensagem.ShowModal()
                     caixaDeMensagem.Destroy()
-                    
+    
+    def inserirDadosNasColunasDaTabela(self,listCtrl):   
+        rows = LocacaoDAO.getAllLocacoes()
+        #print rows 
+         
+        if rows:
+            for row in rows:
+                num_itens = listCtrl.GetItemCount()
+                #print num_itens
+                listCtrl.InsertStringItem(num_itens,str(row[0]))
+                listCtrl.SetStringItem(num_itens,1,row[1])
+                listCtrl.SetStringItem(num_itens,2,row[4])
+                listCtrl.SetStringItem(num_itens,3,row[5])
+                
+                veiculo = VeiculoDAO.procurarVeiculo(row[5])
+                modelo = veiculo.getModelo()
+                
+                listCtrl.SetStringItem(num_itens,4,modelo)
+                listCtrl.SetStringItem(num_itens,5,str(row[3]))
+                listCtrl.SetStringItem(num_itens,6,str(row[2]))
 
 if __name__ == '__main__':
     app = wx.PySimpleApp()
