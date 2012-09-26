@@ -146,6 +146,9 @@ class frmHistorico(wx.Frame):
             self.txtCpf.Clear()
                     
         else:
+            self.lstCtrlBuscaLocacaoFinalizada.Destroy()
+            self.criarTabela()
+            self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
             caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
@@ -173,6 +176,9 @@ class frmHistorico(wx.Frame):
             self.txtPlaca.Clear()
                     
         else:
+            self.lstCtrlBuscaLocacaoFinalizada.Destroy()
+            self.criarTabela()
+            self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
             caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()

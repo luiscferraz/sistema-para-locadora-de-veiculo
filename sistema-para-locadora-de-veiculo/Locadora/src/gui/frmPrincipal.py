@@ -136,6 +136,7 @@ class frmPrincipal(wx.Frame):
     def OnBtnHistoricoButton(self, event):
         telaHistorico = frmHistorico.create(None)
         telaHistorico.Show()
+        telaHistorico.Center()
 
     def OnBtnSairButton(self, event):
         self.Destroy()
