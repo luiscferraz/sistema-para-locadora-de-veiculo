@@ -206,13 +206,13 @@ class frmDevolucao(wx.Frame):
             
                 self.txtCpf.Clear()
             else:
-                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este cliente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este cliente.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
                 self.txtCpf.Clear()
                 self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         else:
-            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
@@ -241,13 +241,13 @@ class frmDevolucao(wx.Frame):
             
                 self.txtPlaca.Clear()
             else:
-                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este veículo.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo = wx.MessageDialog(self,'Não existem locações com este veículo.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
                 self.txtPlaca.Clear()
                 self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         else:
-            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
