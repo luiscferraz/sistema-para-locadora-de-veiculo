@@ -6,6 +6,15 @@ import wx.lib.stattext
 import wx.lib.masked.textctrl
 import wx.lib.buttons
 
+from db.ClienteDAO import *
+from db.VeiculoDAO import *
+from db.TipoVeiculoDAO import TipoVeiculoDAO
+from datetime import *
+from negocio.Locacao import *
+from db.LocacaoDAO import *
+from negocio.Historico import *
+from db.HistoricoDAO import *
+
 def create(parent):
     return frmHistorico(parent)
 
@@ -17,6 +26,23 @@ def create(parent):
 ] = [wx.NewId() for _init_ctrls in range(12)]
 
 class frmHistorico(wx.Frame):
+    def _init_coll_listCtrlBuscaLocacaoFinalizada_Columns(self,parent):
+        # generated method, don't edit
+        parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Placa de veículo',
+              width=100)
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='CPF cliente',
+              width=95)
+        parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='Data de Locação',
+              width=155)
+        parent.InsertColumn(col=3, format=wx.LIST_FORMAT_LEFT, heading='Km de saída',
+              width=90)
+        parent.InsertColumn(col=4, format=wx.LIST_FORMAT_LEFT, heading='Data de devolução',
+              width=155)
+        parent.InsertColumn(col=5, format=wx.LIST_FORMAT_LEFT, heading='Km de chegada',
+              width=100)
+        parent.InsertColumn(col=6, format=wx.LIST_FORMAT_LEFT, heading='Valor Total',
+              width=80)
+        
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMHISTORICO, name='', parent=prnt,
@@ -90,18 +116,64 @@ class frmHistorico(wx.Frame):
         self.lstCtrlBuscaLocacaoFinalizada = wx.ListCtrl(id=wxID_FRMHISTORICOLISTCTRLBUSCA, name='lstCtrlBuscaLocacaoFinalizada',
               parent=self.pnlHistorico, pos=wx.Point(160, 224), size=wx.Size(904,
               264), style=wx.LC_ICON)
+        self._init_coll_listCtrlBuscaLocacaoFinalizada_Columns(self.lstCtrlBuscaLocacaoFinalizada)
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        
+    def criarTabela(self):
+        self.lstCtrlBuscaLocacaoFinalizada = wx.ListCtrl(id=wxID_FRMHISTORICOLISTCTRLBUSCA,
+              name='lstCtrlBuscaLocacaoFinalizada', parent=self.pnlHistorico,
+              pos=wx.Point(170,236), size=wx.Size(880, 240), style=wx.LC_REPORT)
+        self._init_coll_listCtrlBuscaLocacaoFinalizada_Columns(self.lstCtrlBuscaLocacaoFinalizada)
     
     def OnBtnPesquisarCpfButton(self, event):
-        event.Skip()
+        self.lstCtrlBuscaLocacaoFinalizada.Destroy() 
+        cpf = self.txtCpf.GetValue() 
+        print cpf
+        
+        self.criarTabela()
+        print ClienteDAO.verificarExistenciaCliente(cpf)
+        if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
+            #insere na tabela os dados de acordo com a cor fornecida
+            self.inserirInformacoesNaListctrlByCpf(self.lstCtrlBuscaLocacaoFinalizada, cpf)
+            
+            self.txtCpf.Clear()
+                    
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+            
+            self.txtCpf.Clear()
+            
+    def inserirInformacoesNaListctrlByCpf(self,listCtrl,cpf):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega as locacoes feitas pelo respectivo CPF
+        rows = HistoricoDAO.getHistoricoByCpf(cpf)        
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
     
     def OnBtnPesquisarPlacaButton(self, event):
         event.Skip()
 
     def OnGenBitmapToggleButton2Button(self, event):
         event.Skip()
+        
+    def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
+        #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
+        #Recebe como parâmetro a ListCtrl na qual deseja inserir dados e as linhas
+        #de informações obtidas numa busca no banco de dados.
+        if rows:
+            for row in rows:
+                num_itens = listCtrl.GetItemCount()
+                listCtrl.InsertStringItem(num_itens,str(row[5]))
+                listCtrl.SetStringItem(num_itens,1,row[4])
+                listCtrl.SetStringItem(num_itens,2,row[0])
+                listCtrl.SetStringItem(num_itens,3,str(row[2]))
+                listCtrl.SetStringItem(num_itens,4,str(row[1]))
+                listCtrl.SetStringItem(num_itens,5,str(row[3]))
+                listCtrl.SetStringItem(num_itens,6,"R$ " + str(row[6]))
         
         
 if __name__ == '__main__':
