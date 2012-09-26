@@ -30,7 +30,7 @@ class frmHistorico(wx.Frame):
         # generated method, don't edit
         parent.InsertColumn(col=0, format=wx.LIST_FORMAT_LEFT, heading='Placa de veículo',
               width=100)
-        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='CPF cliente',
+        parent.InsertColumn(col=1, format=wx.LIST_FORMAT_LEFT, heading='CPF',
               width=95)
         parent.InsertColumn(col=2, format=wx.LIST_FORMAT_LEFT, heading='Data de Locação',
               width=155)
@@ -46,9 +46,9 @@ class frmHistorico(wx.Frame):
     def _init_ctrls(self, prnt):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMHISTORICO, name='', parent=prnt,
-              pos=wx.Point(115, 42), size=wx.Size(1132, 580),
+              pos=wx.Point(115, 42), size=wx.Size(932, 580),
               style=wx.DEFAULT_FRAME_STYLE, title=u'Histórico')
-        self.SetClientSize(wx.Size(1116, 542))
+        self.SetClientSize(wx.Size(1016, 542))
 
         self.pnlHistorico = wx.Panel(id=wxID_FRMHISTORICOPNLHISTORICO, name='pnlHistorico', parent=self,
               pos=wx.Point(0, 0), size=wx.Size(1116, 542),
@@ -56,16 +56,19 @@ class frmHistorico(wx.Frame):
 
         self.stHistorico = wx.StaticBox(id=wxID_FRMHISTORICOSTHISTORICO,
               label=u'Histórico', name='stHistorico', parent=self.pnlHistorico,
-              pos=wx.Point(144, 184), size=wx.Size(936, 328), style=0)
+              pos=wx.Point(144, 184), size=wx.Size(836, 328), style=0)
 
         self.stBuscar = wx.StaticBox(id=wxID_FRMHISTORICOSTBUSCAR,
               label=u'Buscar Loca\xe7\xe3o finalizada', name='stBuscar',
-              parent=self.pnlHistorico, pos=wx.Point(144, 32), size=wx.Size(936, 120),
+              parent=self.pnlHistorico, pos=wx.Point(144, 32), size=wx.Size(836, 120),
               style=0)
 
         self.btnCancelar = wx.lib.buttons.GenButton(id=wxID_FRMHISTORICOBTNCANCELAR,
               label=u'Cancelar', name='btnCancelar', parent=self.pnlHistorico,
               pos=wx.Point(24, 40), size=wx.Size(96, 25), style=0)
+        self.btnCancelar.Bind(wx.EVT_BUTTON, self.OnBtnCancelarButton,
+              id=wxID_FRMHISTORICOBTNCANCELAR)
+        
 
         self.txtCpf = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMHISTORICOLBLCPF,
               name=u'txtCpf', parent=self.pnlHistorico, pos=wx.Point(168, 88),
@@ -114,17 +117,19 @@ class frmHistorico(wx.Frame):
               id=wxID_FRMHISTORICOBTNPESQUISARPLACA)
 
         self.lstCtrlBuscaLocacaoFinalizada = wx.ListCtrl(id=wxID_FRMHISTORICOLISTCTRLBUSCA, name='lstCtrlBuscaLocacaoFinalizada',
-              parent=self.pnlHistorico, pos=wx.Point(160, 224), size=wx.Size(904,
+              parent=self.pnlHistorico, pos=wx.Point(160, 224), size=wx.Size(804,
               264), style=wx.LC_ICON)
         self._init_coll_listCtrlBuscaLocacaoFinalizada_Columns(self.lstCtrlBuscaLocacaoFinalizada)
 
     def __init__(self, parent):
         self._init_ctrls(parent)
+        self.criarTabela()
+        self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
         
     def criarTabela(self):
         self.lstCtrlBuscaLocacaoFinalizada = wx.ListCtrl(id=wxID_FRMHISTORICOLISTCTRLBUSCA,
               name='lstCtrlBuscaLocacaoFinalizada', parent=self.pnlHistorico,
-              pos=wx.Point(170,236), size=wx.Size(880, 240), style=wx.LC_REPORT)
+              pos=wx.Point(160,224), size=wx.Size(804, 264), style=wx.LC_REPORT)
         self._init_coll_listCtrlBuscaLocacaoFinalizada_Columns(self.lstCtrlBuscaLocacaoFinalizada)
     
     def OnBtnPesquisarCpfButton(self, event):
@@ -153,12 +158,40 @@ class frmHistorico(wx.Frame):
         #Pega as locacoes feitas pelo respectivo CPF
         rows = HistoricoDAO.getHistoricoByCpf(cpf)        
         self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
-    
+        
     def OnBtnPesquisarPlacaButton(self, event):
-        event.Skip()
-
-    def OnGenBitmapToggleButton2Button(self, event):
-        event.Skip()
+        self.lstCtrlBuscaLocacaoFinalizada.Destroy()  
+        placa = self.txtPlaca.GetValue().upper() 
+        #print placa
+        
+        self.criarTabela()
+        #print VeiculoDAO.verificarExistenciaVeiculo(placa)
+        if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
+            #insere na tabela os dados de acordo com a cor fornecida
+            self.inserirInformacoesNaListctrlByPlaca(self.lstCtrlBuscaLocacaoFinalizada, placa)
+            
+            self.txtPlaca.Clear()
+                    
+        else:
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo.ShowModal()
+            caixaDeDialogo.Destroy()
+            
+            self.txtPlaca.Clear()
+        
+    def inserirInformacoesNaListctrlByPlaca(self,listCtrl,placa):
+        #Método que pegará a informação do banco e colocará na ListCtrl.
+        
+        #Pega as locacoes feitas pela respectiva placa
+        rows = HistoricoDAO.getHistoricoByPlaca(placa)        
+        self.inserirDadosNasColunasDaTabelaDeResultados(listCtrl, rows)
+    
+    def OnBtnCancelarButton(self, event):
+        self.lstCtrlBuscaLocacaoFinalizada.Destroy()
+        self.criarTabela()
+        self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
+        self.txtPlaca.Clear()
+        self.txtCpf.Clear()
         
     def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
         #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
@@ -174,7 +207,22 @@ class frmHistorico(wx.Frame):
                 listCtrl.SetStringItem(num_itens,4,str(row[1]))
                 listCtrl.SetStringItem(num_itens,5,str(row[3]))
                 listCtrl.SetStringItem(num_itens,6,"R$ " + str(row[6]))
-        
+    
+    def inserirDadosNasColunasDaTabelaHistorico(self,listCtrl):   
+        rows = HistoricoDAO.getAllHistorico()
+        #print rows 
+         
+        if rows:
+            for row in rows:
+                num_itens = listCtrl.GetItemCount()
+                listCtrl.InsertStringItem(num_itens,str(row[5]))
+                listCtrl.SetStringItem(num_itens,1,row[4])
+                listCtrl.SetStringItem(num_itens,2,row[0])
+                listCtrl.SetStringItem(num_itens,3,str(row[2]))
+                listCtrl.SetStringItem(num_itens,4,str(row[1]))
+                listCtrl.SetStringItem(num_itens,5,str(row[3]))
+                listCtrl.SetStringItem(num_itens,6,"R$ " + str(row[6]))
+                
         
 if __name__ == '__main__':
     app = wx.PySimpleApp()
