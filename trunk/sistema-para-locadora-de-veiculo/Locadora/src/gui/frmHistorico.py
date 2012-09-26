@@ -140,6 +140,18 @@ class frmHistorico(wx.Frame):
         self.criarTabela()
         print ClienteDAO.verificarExistenciaCliente(cpf)
         if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
+            if HistoricoDAO.getHistoricoByCpf(cpf) != []:
+                #insere na tabela os dados de acordo com a cor fornecida
+                self.inserirInformacoesNaListctrlByCpf(self.lstCtrlBuscaLocacaoFinalizada, cpf)
+            
+                self.txtCpf.Clear()
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Este cliente ainda não realizou locações.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+                self.txtCpf.Clear()
+                self.criarTabela()
+                self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
             #insere na tabela os dados de acordo com a cor fornecida
             self.inserirInformacoesNaListctrlByCpf(self.lstCtrlBuscaLocacaoFinalizada, cpf)
             
@@ -170,6 +182,18 @@ class frmHistorico(wx.Frame):
         self.criarTabela()
         #print VeiculoDAO.verificarExistenciaVeiculo(placa)
         if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
+            if HistoricoDAO.getHistoricoByPlaca(placa) != []:
+                #insere na tabela os dados de acordo com a cor fornecida
+                self.inserirInformacoesNaListctrlByPlaca(self.lstCtrlBuscaLocacaoFinalizada, placa)
+            
+                self.txtPlaca.Clear()
+            else:
+                caixaDeDialogo = wx.MessageDialog(self,'Não foram feitas locações com este veículo.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
+                caixaDeDialogo.ShowModal()
+                caixaDeDialogo.Destroy()
+                self.txtPlaca.Clear()
+                self.criarTabela()
+                self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
             #insere na tabela os dados de acordo com a cor fornecida
             self.inserirInformacoesNaListctrlByPlaca(self.lstCtrlBuscaLocacaoFinalizada, placa)
             
