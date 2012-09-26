@@ -166,7 +166,7 @@ class frmDevolucao(wx.Frame):
 
 
         self.stResultado = wx.StaticBox(id=wxID_FRMDEVOLUCAOSTRESULTADO,
-              label=u'Resultado da busca', name=u'stResultado',
+              label=u'Locações', name=u'stResultado',
               parent=self.pnlDevolucao, pos=wx.Point(128, 112),
               size=wx.Size(632, 200), style=0)
         
