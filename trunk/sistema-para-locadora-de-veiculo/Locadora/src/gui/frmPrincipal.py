@@ -111,23 +111,27 @@ class frmPrincipal(wx.Frame):
     def OnBtnClientesButton(self, event):
         telaCliente = frmCliente.create(None)
         telaCliente.Show()
-        
+        telaCliente.Center()
 
     def OnBtnTiposButton(self, event):
         telaTipoVeiculo = frmTipoVeiculo.create(None)
         telaTipoVeiculo.Show()
+        telaTipoVeiculo.Center()
 
     def OnBtnVeiculosButton(self, event):
         telaVeiculo = frmVeiculo.create(None)
         telaVeiculo.Show()
+        telaVeiculo.Center()
 
     def OnBtnLocacaoButton(self, event):
         telaLocacao = frmLocacao.create(None)
         telaLocacao.Show()
+        telaLocacao.Center()
 
     def OnBtnDevolucaoButton(self, event):
         telaDevolucao = frmDevolucao.create(None)
         telaDevolucao.Show()
+        telaDevolucao.Center()
         
     def OnBtnHistoricoButton(self, event):
         telaHistorico = frmHistorico.create(None)
