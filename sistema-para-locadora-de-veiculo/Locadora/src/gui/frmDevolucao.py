@@ -210,8 +210,9 @@ class frmDevolucao(wx.Frame):
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
                 self.txtCpf.Clear()
+                self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         else:
-            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
@@ -244,8 +245,9 @@ class frmDevolucao(wx.Frame):
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
                 self.txtPlaca.Clear()
+                self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         else:
-            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)
+            caixaDeDialogo = wx.MessageDialog(self,'Veículo inexistente.', 'AVISO!', wx.OK | wx.ICON_INFORMATION)
             caixaDeDialogo.ShowModal()
             caixaDeDialogo.Destroy()
             
