@@ -165,9 +165,19 @@ class frmCliente(wx.Frame):
               name=u'txtEmail', parent=self.pnlCliente, pos=wx.Point(376, 200),
               size=wx.Size(424, 21), style=0, value=u'')
 
-        self.txtPesquisa = wx.TextCtrl(id=wxID_FRMCLIENTETXTPESQUISA,
+        self.txtPesquisa = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMCLIENTETXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlCliente, pos=wx.Point(144,
-              288), size=wx.Size(400, 21), style=0, value=u'')
+              288), size=wx.Size(400, 21), style=0, value='')
+        self.txtPesquisa.SetMask(u'XXX.XXX.XXX-XX')
+        self.txtPesquisa.SetAutoformat('')
+        self.txtPesquisa.SetDatestyle('MDY')
+        self.txtPesquisa.SetFormatcodes('')
+        self.txtPesquisa.SetDescription('')
+        self.txtPesquisa.SetExcludeChars('')
+        self.txtPesquisa.SetValidRegex('')
+        self.txtPesquisa.SetMaxLength(14)
+        self.txtPesquisa.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
+              u'Tahoma'))
 
         self.btnPesquisar = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMCLIENTEBTNPESQUISAR,
