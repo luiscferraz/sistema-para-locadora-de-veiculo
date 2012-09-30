@@ -49,6 +49,7 @@ class frmHistorico(wx.Frame):
               pos=wx.Point(115, 42), size=wx.Size(932, 580),
               style=wx.DEFAULT_FRAME_STYLE, title=u'Histórico')
         self.SetClientSize(wx.Size(1016, 542))
+        self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
         self.pnlHistorico = wx.Panel(id=wxID_FRMHISTORICOPNLHISTORICO, name='pnlHistorico', parent=self,
               pos=wx.Point(0, 0), size=wx.Size(1116, 542),
