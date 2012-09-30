@@ -181,9 +181,9 @@ class UsuarioDAO():
         
         
     
-usuario = Usuario("allan", "1994")
-dao = UsuarioDAO()
-print usuario.getAtributos()
-dao.insertUsuario(usuario)
-print UsuarioDAO.verificarExistenciaUsuario("allan", "1994")
+#usuario = Usuario("allan", "1994")
+#dao = UsuarioDAO()
+#print usuario.getAtributos()
+#dao.insertUsuario(usuario)
+#print UsuarioDAO.verificarExistenciaUsuario("allan", "1994")
 #UsuarioDAO.deleteUsuario("allan", "1994")

@@ -10,7 +10,6 @@ import frmTipoVeiculo
 import frmLocacao
 import frmDevolucao
 import frmHistorico
-import frmAlterarSenha
 
 def create(parent):
     return frmPrincipal(parent)
