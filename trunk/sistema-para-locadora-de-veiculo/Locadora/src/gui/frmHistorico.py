@@ -47,7 +47,7 @@ class frmHistorico(wx.Frame):
         # generated method, don't edit
         wx.Frame.__init__(self, id=wxID_FRMHISTORICO, name='', parent=prnt,
               pos=wx.Point(115, 42), size=wx.Size(932, 580),
-              style=wx.DEFAULT_FRAME_STYLE, title=u'Histórico')
+              style=wx.CAPTION | wx.CLOSE_BOX | wx.SYSTEM_MENU | wx.MINIMIZE_BOX, title=u'Histórico')
         self.SetClientSize(wx.Size(1016, 542))
         self.SetIcon(wx.Icon(u'../gui/icon/logo.ico',wx.BITMAP_TYPE_ICO))
 
