@@ -134,13 +134,23 @@ class frmVeiculo(wx.Frame):
               parent=self.pnlVeiculo, pos=wx.Point(128, 168), size=wx.Size(800,
               312), style=0)
 
-        self.txtPesquisa = wx.TextCtrl(id=wxID_FRMVEICULOTXTPESQUISA,
+        self.txtPesquisa = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMVEICULOTXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlVeiculo, pos=wx.Point(144,
-              200), size=wx.Size(400, 21), style=0, value=u'')
+              200), size=wx.Size(100, 21), style=0, value=u'')
+        self.txtPesquisa.SetMask(u'XXX-XXXX')
+        self.txtPesquisa.SetAutoformat('')
+        self.txtPesquisa.SetDatestyle('MDY')
+        self.txtPesquisa.SetFormatcodes('')
+        self.txtPesquisa.SetDescription('')
+        self.txtPesquisa.SetExcludeChars('')
+        self.txtPesquisa.SetValidRegex('')
+        self.txtPesquisa.SetMaxLength(8)
+        self.txtPesquisa.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, False,
+              u'Tahoma'))
 
         self.btnPesquisar = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMVEICULOBTNPESQUISAR,
-              name=u'btnPesquisar', parent=self.pnlVeiculo, pos=wx.Point(568,
+              name=u'btnPesquisar', parent=self.pnlVeiculo, pos=wx.Point(250,
               192), size=wx.Size(31, 32), style=0)
         self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
               id=wxID_FRMVEICULOBTNPESQUISAR)

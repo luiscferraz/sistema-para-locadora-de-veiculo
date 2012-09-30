@@ -167,7 +167,7 @@ class frmCliente(wx.Frame):
 
         self.txtPesquisa = wx.lib.masked.textctrl.TextCtrl(id=wxID_FRMCLIENTETXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlCliente, pos=wx.Point(144,
-              288), size=wx.Size(400, 21), style=0, value='')
+              288), size=wx.Size(130, 21), style=0, value='')
         self.txtPesquisa.SetMask(u'XXX.XXX.XXX-XX')
         self.txtPesquisa.SetAutoformat('')
         self.txtPesquisa.SetDatestyle('MDY')
@@ -181,7 +181,7 @@ class frmCliente(wx.Frame):
 
         self.btnPesquisar = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMCLIENTEBTNPESQUISAR,
-              name=u'btnPesquisar', parent=self.pnlCliente, pos=wx.Point(568,
+              name=u'btnPesquisar', parent=self.pnlCliente, pos=wx.Point(278,
               280), size=wx.Size(31, 32), style=0)
         self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
               id=wxID_FRMCLIENTEBTNPESQUISAR)
