@@ -101,12 +101,12 @@ class frmTipoVeiculo(wx.Frame):
 
         self.txtPesquisa = wx.TextCtrl(id=wxID_FRMTIPOVEICULOTXTPESQUISA,
               name=u'txtPesquisa', parent=self.pnlTipoVeiculo, pos=wx.Point(144,
-              200), size=wx.Size(400, 21), style=0, value=u'')
+              200), size=wx.Size(100, 21), style=0, value=u'')
 
         self.btnPesquisar = wx.lib.buttons.GenBitmapButton(bitmap=wx.Bitmap(u'../gui/icon/search.png',
               wx.BITMAP_TYPE_PNG), id=wxID_FRMTIPOVEICULOBTNPESQUISAR,
               name=u'btnPesquisar', parent=self.pnlTipoVeiculo,
-              pos=wx.Point(568, 192), size=wx.Size(31, 32), style=0)
+              pos=wx.Point(258, 192), size=wx.Size(31, 32), style=0)
         self.btnPesquisar.Bind(wx.EVT_BUTTON, self.OnBtnPesquisarButton,
               id=wxID_FRMTIPOVEICULOBTNPESQUISAR)
 

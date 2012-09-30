@@ -210,6 +210,7 @@ class frmDevolucao(wx.Frame):
                 caixaDeDialogo.ShowModal()
                 caixaDeDialogo.Destroy()
                 self.txtCpf.Clear()
+                self.criarTabela()
                 self.inserirDadosNasColunasDaTabela(self.listCtrlBuscaLocacao)
         else:
             caixaDeDialogo = wx.MessageDialog(self,'Cliente inexistente.', 'ERRO!', wx.OK | wx.ICON_INFORMATION)

@@ -152,11 +152,6 @@ class frmHistorico(wx.Frame):
                 self.txtCpf.Clear()
                 self.criarTabela()
                 self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
-            #insere na tabela os dados de acordo com a cor fornecida
-            self.inserirInformacoesNaListctrlByCpf(self.lstCtrlBuscaLocacaoFinalizada, cpf)
-            
-            self.txtCpf.Clear()
-                    
         else:
             self.lstCtrlBuscaLocacaoFinalizada.Destroy()
             self.criarTabela()
@@ -194,11 +189,6 @@ class frmHistorico(wx.Frame):
                 self.txtPlaca.Clear()
                 self.criarTabela()
                 self.inserirDadosNasColunasDaTabelaHistorico(self.lstCtrlBuscaLocacaoFinalizada)
-            #insere na tabela os dados de acordo com a cor fornecida
-            self.inserirInformacoesNaListctrlByPlaca(self.lstCtrlBuscaLocacaoFinalizada, placa)
-            
-            self.txtPlaca.Clear()
-                    
         else:
             self.lstCtrlBuscaLocacaoFinalizada.Destroy()
             self.criarTabela()
