@@ -10,15 +10,16 @@ import frmTipoVeiculo
 import frmLocacao
 import frmDevolucao
 import frmHistorico
+import frmAlterarSenha
 
 def create(parent):
     return frmPrincipal(parent)
 
 [wxID_FRMPRINCIPAL, wxID_FRMPRINCIPALBACKGROUND, wxID_FRMPRINCIPALBTNCLIENTES, 
  wxID_FRMPRINCIPALBTNDEVOLUCAO, wxID_FRMPRINCIPALBTNHISTORICO,  wxID_FRMPRINCIPALBTNLOCACAO, 
- wxID_FRMPRINCIPALBTNSAIR, wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
+ wxID_FRMPRINCIPALBTNSAIR, wxID_FRMPRINCIPALALTERAR, wxID_FRMPRINCIPALBTNTIPOS, wxID_FRMPRINCIPALBTNVEICULOS, 
  wxID_FRMPRINCIPALPNLPRINCIPAL, wxID_FRMPRINCIPALSTINDEX, 
-] = [wx.NewId() for _init_ctrls in range(11)]
+] = [wx.NewId() for _init_ctrls in range(12)]
 
 class frmPrincipal(wx.Frame):
     def _init_ctrls(self, prnt):
