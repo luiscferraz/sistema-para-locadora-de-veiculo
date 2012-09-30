@@ -201,7 +201,7 @@ class frmDevolucao(wx.Frame):
         #print ClienteDAO.verificarExistenciaCliente(cpf)
         if(ClienteDAO.verificarExistenciaCliente(cpf) is True):
             if LocacaoDAO.getLocacoesByCpf(cpf) != []:
-                #insere na tabela os dados de acordo com a cor fornecida
+                #insere na tabela os dados de acordo com o cpf fornecido
                 self.inserirInformacoesNaListctrlByCpf(self.listCtrlBuscaLocacao, cpf)
             
                 self.txtCpf.Clear()
@@ -238,7 +238,7 @@ class frmDevolucao(wx.Frame):
         #print VeiculoDAO.verificarExistenciaVeiculo(placa)
         if(VeiculoDAO.verificarExistenciaVeiculo(placa) is True):
             if LocacaoDAO.getLocacoesByPlaca(placa) != []:
-                #insere na tabela os dados de acordo com a cor fornecida
+                #insere na tabela os dados de acordo com a placa fornecida
                 self.inserirInformacoesNaListctrlByPlaca(self.listCtrlBuscaLocacao, placa)
             
                 self.txtPlaca.Clear()
@@ -266,9 +266,6 @@ class frmDevolucao(wx.Frame):
     
     def inserirDadosNasColunasDaTabelaDeResultados(self,listCtrl,rows):        
         #Método responsável por colocar as informações do banco nas colunas da ListCtrl.
-        #Desenvolvido para evitar a repetição de código nos 3 tipos de buscas de um veículo.
-        #Recebe como parâmetro a ListCtrl na qual deseja inserir dados e as linhas
-        #de informações obtidas numa busca no banco de dados.
         if rows:
             for row in rows:
                 num_itens = listCtrl.GetItemCount()
@@ -283,7 +280,7 @@ class frmDevolucao(wx.Frame):
                 for i in veiculos:
                     if i[1] == row[5]:
                         modelo = i[4]
-                #referente à tabela de tipo de veículos
+                #referente à tabela de veículos
                 listCtrl.SetStringItem(num_itens,4,str(modelo))
 
     def OnBtnCancelarButton(self, event):

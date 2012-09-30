@@ -61,7 +61,7 @@ class frmLogin(wx.Frame):
         
     def efetuarLogin(self, event):
         if UsuarioDAO().verificarExistenciaUsuario(self.textLogin.GetValue(), self.textSenha.GetValue()):
-            print "Usuario verificado com sucesso"
+            #print "Usuario verificado com sucesso"
             telaPrincipal = frmPrincipal.create(None)
             telaPrincipal.Show()
             self.Destroy()
